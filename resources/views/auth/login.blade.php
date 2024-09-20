@@ -49,7 +49,7 @@
                             </div>
                             <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">LOGIN</button>
                         </div>
-                        <!-- <p class="text-sm mt-3 mb-0">Already have an account? <a href="#" class="text-dark font-weight-bolder">Sign in</a></p> -->
+                        <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{url('/register')}}" class="text-dark font-weight-bolder">Sign in</a></p>
                     </form>
                 </div>
             </div>

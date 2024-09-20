@@ -43,9 +43,9 @@
                                     <option value="applicant">Applicant</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Register</button>
+                            <button type="submit" class="btn bg-gradient-danger w-100 my-4 mb-2">Register</button>
                         </div>
-                        <!-- <p class="text-sm mt-3 mb-0">Already have an account? <a href="#" class="text-dark font-weight-bolder">Sign in</a></p> -->
+                        <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{url('/login')}}" class="text-dark font-weight-bolder">Sign in</a></p>
                     </form>
                 </div>
             </div>
