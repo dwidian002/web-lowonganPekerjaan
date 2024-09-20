@@ -12,7 +12,13 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     protected $fillable = ['name', 'email', 'password', 'role'];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     protected $casts = [
         'role' => 'string',

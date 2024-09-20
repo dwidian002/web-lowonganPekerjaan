@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('Previous_status');
-            $table->string('New_status');
-            $table->string('Changed_add');
-            $table->foreignId('Application_id')->constrained('applications','Application_id')->onDelete('cascade');
+            $table->string('previous_status');
+            $table->string('new_status');
+            $table->string('changed_add');
+            $table->foreignId('application_id')->constrained('applications','application_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

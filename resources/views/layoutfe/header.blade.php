@@ -32,7 +32,8 @@
         <div class="offcanvas__auth">
             <ul>
                 <li><a href="#"><span class="icon_chat_alt"></span> Live chat</a></li>
-                <li><a href="#"><span class="fa fa-user"></span> Login / Register</a></li>
+                <li><a href={{url('/login')}}><span class="fa fa-user"></span> Login</a></li>
+                <li><a href={{url('/register')}}><span class="fa fa-user"></span> Register</a></li>
             </ul>
         </div>
         <div class="offcanvas__info">
@@ -61,7 +62,8 @@
                         <div class="header__info-right">
                             <ul>
                                 <li><a href="#"><span class="icon_chat_alt"></span> Live chat</a></li>
-                                <li><a href="#"><span class="fa fa-user"></span> Login / Register</a></li>
+                                <li><a href={{url('/login')}}><span class="fa fa-user"></span> Login</a></li>
+                                <li><a href={{url('/register')}}><span class="fa fa-user"></span> Register</a></li>
                             </ul>
                         </div>
                     </div>

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('experience', function (Blueprint $table) {
-            $table->id();
-            $table->string('job_Title');
-            $table->string('company_name');
-            $table->string('lama_bekerja');
-            $table->foreignId('id_profile')->constrained('applicant_profiles','id_profile')->onDelete('cascade');
+        Schema::create('user_verifications', function (Blueprint $table) {
+            $table->id('verif_id');
+            $table->string('token');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('experience');
+        Schema::dropIfExists('user_verifications');
     }
 };

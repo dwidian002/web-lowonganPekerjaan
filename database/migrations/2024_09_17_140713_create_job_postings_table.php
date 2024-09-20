@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('job_postings', function (Blueprint $table) {
-            $table->id('Job_id');
-            $table->string('Job_title');
-            $table->string('Job_description');
-            $table->decimal('Gaji', 20, 0);
-            $table->string('Lokasi');
-            $table->boolean('Status');
-            $table->boolean('Sembunyikan_Gaji');
-            $table->foreignId('Company_id')->constrained('company_profiles','Profile_id')->onDelete('cascade');
+            $table->id('job_id');
+            $table->string('job_title');
+            $table->string('job_description');
+            $table->decimal('gaji', 20, 0);
+            $table->string('lokasi');
+            $table->boolean('status');
+            $table->boolean('sembunyikan_gaji');
+            $table->foreignId('company_id')->constrained('company_profiles','profile_id')->onDelete('cascade');
             $table->timestamps();
         });        
     }

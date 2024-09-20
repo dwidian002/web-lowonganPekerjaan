@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->string('Degree');
-            $table->string('Institution_name');
-            $table->year('Starting_year');
-            $table->date('Finished_year');
-            $table->foreignId('id_Profile')->constrained('applicant_profiles','id_Profile')->onDelete('cascade');
+            $table->string('degree');
+            $table->string('institution_name');
+            $table->year('starting_year');
+            $table->date('finished_year');
+            $table->foreignId('id_profile')->constrained('applicant_profiles','id_profile')->onDelete('cascade');
             $table->timestamps();
         });
     }

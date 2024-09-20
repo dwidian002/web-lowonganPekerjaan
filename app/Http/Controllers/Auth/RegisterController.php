@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RegisterMail;
 use App\Models\User;
+use App\Models\UserVerifications;
+use Illuminate\Support\Str;
 use App\Models\CompanyProfile;
 use App\Models\ApplicantProfile;
 use Illuminate\Http\Request;
@@ -11,69 +14,49 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
-    // Menampilkan form pemilihan role (applicant/company)
-    public function showRoleSelection()
+    public function showRegistrationForm()
     {
-        return view('auth.role-select'); // Menampilkan form pemilihan role
+        return view('auth.register'); // Menampilkan form registrasi
     }
 
-    // Menampilkan form registrasi berdasarkan role
-    public function showRegistrationForm($role)
+    public function register(Request $request)
     {
-        if (!in_array($role, ['applicant', 'company'])) {
-            abort(404); // Menghentikan jika role tidak sesuai
-        }
-        return view('auth.register', ['role' => $role]); // Menampilkan form registrasi sesuai role
-    }
-
-    // Handle registrasi user berdasarkan role
-    public function handleRegistration(Request $request, $role)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+        // Validasi input
+        $this->validate($request, [
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'role' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
+        // Buat user baru
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $role, // Role 'company' atau 'applicant'
+            'role' => $request->role,
         ]);
 
-        event(new Registered($user)); // Kirim email aktivasi
+        // Token verifikasi
+        $token = Str::random(40);
 
-        return redirect()->route('verification.notice'); // Arahan ke halaman notifikasi verifikasi
+        // Simpan token ke tabel user_verifications
+        UserVerifications::create([
+            'user_id' => $user->user_id,
+            'token' => $token,
+        ]);
+
+        // Kirim email verifikasi
+        Mail::to($user->email)->send(new RegisterMail($user, $token));
+
+        // Redirect ke halaman notifikasi bahwa email telah dikirim
+        return redirect()->route('verification.notice');
     }
 
-    // Verifikasi email setelah link aktivasi diklik
-    public function verifyEmail($id, $hash)
+    public function verify()
     {
-        $user = User::find($id);
-
-        if (Hash::check($user->email, $hash)) {
-            $user->email_verified_at = now(); // Menandai email sebagai sudah diverifikasi
-            $user->save();
-
-            return redirect()->route('profile.complete', ['role' => $user->role]); // Arahkan ke form profil
-        }
-
-        return abort(403, 'Link aktivasi tidak valid.'); // Gagal verifikasi
-    }
-
-    // Menampilkan form untuk melengkapi profil setelah verifikasi
-    public function showProfileCompletion($role)
-    {
-        if (!in_array($role, ['applicant', 'company'])) {
-            abort(404); // Jika role tidak valid
-        }
-
-        return view('auth.complete-profile', ['role' => $role]); // Tampilkan form lengkap profil sesuai role
+        return view('emails.notice');
     }
 }

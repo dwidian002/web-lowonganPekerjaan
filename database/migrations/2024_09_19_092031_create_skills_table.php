@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->string('Proficiency');
-            $table->foreignId('id_Profile')->constrained('applicant_profiles','id_Profile')->onDelete('cascade');
+            $table->string('name');
+            $table->string('proficiency');
+            $table->foreignId('id_profile')->constrained('applicant_profiles','id_profile')->onDelete('cascade');
             $table->timestamps();
         });
     }

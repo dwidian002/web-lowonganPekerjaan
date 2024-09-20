@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('applicant_profiles', function (Blueprint $table) {
             $table->id('id_Profile');
-            $table->string('Alamat');
-            $table->string('Ttl');
-            $table->string('Phone_number');
-            $table->string('Experience');
-            $table->string('Education');
-            $table->string('Skills');
-            $table->foreignId('User_id')->constrained('users','User_id')->onDelete('cascade');
+            $table->string('name');
+            $table->string('alamat');
+            $table->string('ttl');
+            $table->string('phone_number');
+            $table->string('experience');
+            $table->string('education');
+            $table->string('skills');
+            $table->foreignId('user_id')->constrained('users','user_id')->onDelete('cascade');
             $table->timestamps();
         });      
     }

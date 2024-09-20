@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('master_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('Log_name');
-            $table->double('is_Send_email');
-            $table->foreignId('Application_id')->constrained('applications','Application_id')->onDelete('cascade');
+            $table->string('log_name');
+            $table->double('is_send_email');
+            $table->foreignId('aplication_id')->constrained('applications','application_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
