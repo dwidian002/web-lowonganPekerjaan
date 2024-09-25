@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('applicant_profiles', function (Blueprint $table) {
             $table->id('id_Profile');
             $table->string('name');
+            $table->date('tanggal_lahir');
             $table->string('alamat');
-            $table->string('ttl');
             $table->string('phone_number');
-            $table->string('experience');
-            $table->string('education');
-            $table->string('skills');
+            $table->string('resume')->nullable();
             $table->foreignId('user_id')->constrained('users','user_id')->onDelete('cascade');
             $table->timestamps();
         });      

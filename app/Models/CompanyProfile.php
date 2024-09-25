@@ -9,7 +9,12 @@ class CompanyProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_name', 'industry', 'location', 'description', 'website', 'logo', 'user_id'];
+    protected $primaryKey = 'profile_id';
+
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    protected $fillable = ['company_name', 'industry', 'tahun_berdiri','alamat', 'description', 'website', 'logo', 'user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

@@ -9,7 +9,9 @@ class Experience extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_title', 'company_name', 'lama_bekerja', 'applicant_profile_id'];
+    protected $table = 'experience';
+
+    protected $fillable = ['id_Profile', 'job_Title', 'company_name','position', 'lama_bekerja', 'applicant_profile_id'];
 
     public function applicantProfile() {
         return $this->belongsTo(ApplicantProfile::class);

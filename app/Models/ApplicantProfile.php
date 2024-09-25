@@ -9,26 +9,35 @@ class ApplicantProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['alamat', 'ttl', 'phone_number', 'experience', 'education', 'skills', 'user_id'];
+    protected $primaryKey = 'id_Profile';
 
-    public function user() {
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    protected $fillable = ['name', 'alamat', 'tanggal_lahir', 'phone_number', 'resume', 'user_id'];
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function experiences() {
+    public function experiences()
+    {
         return $this->hasMany(Experience::class);
     }
 
-    public function education() {
-        return $this->hasMany(Education::class);
+    public function education()
+    {
+        return $this->hasOne(Education::class);
     }
 
-    public function skills() {
+    public function skills()
+    {
         return $this->hasMany(Skill::class);
     }
 
-    public function applications() {
+    public function applications()
+    {
         return $this->hasMany(Application::class);
     }
 }
-

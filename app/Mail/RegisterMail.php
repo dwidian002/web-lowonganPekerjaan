@@ -22,14 +22,15 @@ class RegisterMail extends Mailable
 
     public function build()
     {
-        // Buat token verifikasi dan sesuaikan URL dengan role
         $url = '';
 
         if ($this->user->role == 'company') {
-            $url = url('/profile/complete-company/' . $this->token);
+            $url = url('/login?token=' . $this->token);
         } elseif ($this->user->role == 'applicant') {
-            $url = url('/profile/complete-applicant/' . $this->token);
+            $url = url('/profile/education-skills-experience/' . $this->token);
         }
+        
+        // dd($this->token, $url);
 
         return $this->view('emails.verify')
             ->with([

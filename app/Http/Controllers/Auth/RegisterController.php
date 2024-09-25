@@ -18,29 +18,44 @@ use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
-    public function showRegistrationForm()
+
+    public function showApplicantRegisterForm()
     {
-        return view('auth.register'); // Menampilkan form registrasi
+        return view('auth.registerapplicant');
     }
 
-    public function register(Request $request)
+    public function registerApplicant(Request $request)
     {
-        // Validasi input
+        // dd($request->all());
         $this->validate($request, [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'role' => 'required',
+            'name' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'phone_number' => 'required|string',
+            'resume' => 'nullable|string',
         ]);
 
-        // Buat user baru
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'applicant',
+        ]);
+
+        // dd($user->user_id);
+
+        ApplicantProfile::create([
+            'user_id' => $user->user_id, // Foreign key ke tabel users
+            'name' => $request->name,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'phone_number' => $request->phone_number,
+            'resume' => $request->resume,
         ]);
 
         // Token verifikasi
-        $token = Str::random(40);
+        $token = Str::random(60);
 
         // Simpan token ke tabel user_verifications
         UserVerifications::create([
@@ -58,5 +73,64 @@ class RegisterController extends Controller
     public function verify()
     {
         return view('emails.notice');
+    }
+
+    public function showCompanyRegisterForm()
+    {
+        return view('auth.registercompany');
+    }
+
+    public function registerCompany(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'company_name' => 'required',
+            'industry' => 'required',
+            'tahun_berdiri' => 'required',
+            'alamat' => 'required',
+            'description' => 'required',
+            'website' => 'required',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $user = User::create([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'company',
+        ]);
+
+        $logoPath = null;
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public'); // simpan di folder "logos" di storage
+        }
+
+        // dd($user->user_id);
+
+        CompanyProfile::create([
+            'user_id' => $user->user_id, // Foreign key ke tabel users
+            'company_name' => $request->company_name,
+            'industry' => $request->industry,
+            'tahun_berdiri' => $request->tahun_berdiri,
+            'alamat' => $request->alamat,
+            'description' => $request->description,
+            'website' => $request->website,
+            'logo' => $request->logo
+        ]);
+
+
+        $token = Str::random(60);
+
+        // Simpan token ke tabel user_verifications
+        UserVerifications::create([
+            'user_id' => $user->user_id,
+            'token' => $token,
+        ]);
+
+        // Kirim email verifikasi
+        Mail::to($user->email)->send(new RegisterMail($user, $token));
+
+        return redirect()->route('verification.notice');
     }
 }

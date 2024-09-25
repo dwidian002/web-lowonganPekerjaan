@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Skill extends Model
 {
 
-    protected $fillable = ['name', 'proficiency', 'applicant_profile_id'];
+    protected $fillable = ['id_Profile','name', 'applicant_profile_id'];
 
     public function applicantProfile() {
         return $this->belongsTo(ApplicantProfile::class);

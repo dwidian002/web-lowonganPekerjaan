@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('profile_id');
             $table->string('company_name');
             $table->string('industry');
-            $table->string('location');
+            $table->year('tahun_berdiri');
+            $table->string('alamat');
             $table->text('description');
             $table->string('website')->nullable();
             $table->binary('logo')->nullable();

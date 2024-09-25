@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('job_Title');
             $table->string('company_name');
+            $table->string('position');
             $table->string('lama_bekerja');
             $table->foreignId('id_profile')->constrained('applicant_profiles','id_profile')->onDelete('cascade');
             $table->timestamps();

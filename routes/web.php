@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ApplicantRegisterController;
 use App\Http\Controllers\Auth\CompanyRegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
@@ -33,17 +34,22 @@ Route::post('/login', [LoginController::class, 'verify'])->name('auth.verify');
 
 
 // Rute untuk form registrasi
-Route::get('register', [RegisterController::class, 'showRegistrationForm']);
-Route::post('register/proses', [RegisterController::class, 'register'])->name('register.proses');
+
+
+
+
+// Route untuk register applicant
+Route::get('register/applicant', [RegisterController::class, 'showApplicantRegisterForm'])->name('register.applicant');
+Route::post('register/applicant/submit', [RegisterController::class, 'registerApplicant'])->name('register.applicant.submit');
+
+//route untuk register company
+Route::get('register/company', [RegisterController::class, 'showCompanyRegisterForm'])->name('register.company');
+Route::post('register/company/submit', [RegisterController::class, 'registerCompany'])->name('register.company.submit');
 
 // Routes untuk verifikasi email
 Route::get('/verify-ur-email', [RegisterController::class, 'verify'])->name('verification.notice');
 Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->name('email.verify');
 
-// Route untuk verifikasi email dan melengkapi profil company
-Route::get('/profile/complete-company/{token}', [ProfileController::class, 'completeCompanyProfile'])->name('profile.complete-company');
-Route::post('/profile/complete-company/{token}', [ProfileController::class, 'storeCompanyProfile'])->name('profile.store-company');
-
-// Route untuk verifikasi email dan melengkapi profil applicant
-Route::get('/profile/complete-applicant/{token}', [ProfileController::class, 'completeApplicantProfile'])->name('profile.complete-applicant');
-Route::post('/profile/complete-applicant/{token}', [ProfileController::class, 'storeApplicantProfile'])->name('profile.store-applicant');
+//Route untuk mengisi education, skills dan exerience applicant
+Route::get('/profile/education-skills-experience/{token}', [ProfileController::class, 'exsForm'])->name('exs.form');
+Route::post('/profile/education-skills-experience/{token}', [ProfileController::class,'storeExs'])->name('exs.store');

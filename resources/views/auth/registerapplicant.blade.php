@@ -8,7 +8,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
                     <h1 class="text-white mb-2 mt-3">Welcome!</h1>
-                    <p class="text-lead text-white">Register Your Account as Company or Applicant</p>
+                    <p class="text-lead text-white">Register Your Account as Applicant</p>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
                 <div class="card z-index-0">
                     <div class="card-header text-center pt-4">
-                        <h5>Register Your Account Here</h5>
+                        <h5>Register Here</h5>
                     </div>
 
                     @if(session()->has('pesan'))
@@ -27,7 +27,7 @@
                     </div>
                     @endif
 
-                    <form action="{{route('register.proses')}}" method="POST">
+                    <form action="{{route('register.applicant.submit')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="mb-3">
@@ -37,11 +37,31 @@
                                 <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="mb-3">
-                                <select name="role" class="form-control" required>
-                                    <option value="">-- Choose Your Role Here --</option>
-                                    <option value="company">Company</option>
-                                    <option value="applicant">Applicant</option>
-                                </select>
+                                <input type="hidden" name="role" value="applicant">
+                            </div>
+                            <div class="card-header text-center pt-4">
+                                <h5>Complate Your Profile</h5>
+                            </div>
+                            <!-- -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" placeholder="Enter Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                                <input type="date" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="alamat" class="form-label">Address</label>
+                                <input type="text" name="alamat" class="form-control" placeholder="Enter Your Address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Phone Number</label>
+                                <input type="text" name="phone_number" class="form-control" placeholder="Enter Your Number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="resume" class="form-label">Resume (Optional)</label>
+                                <textarea name="resume" class="form-control" placeholder="Resume"></textarea>
                             </div>
                             <button type="submit" class="btn bg-gradient-danger w-100 my-4 mb-2">Register</button>
                         </div>
