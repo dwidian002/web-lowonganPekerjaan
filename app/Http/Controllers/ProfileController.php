@@ -10,22 +10,22 @@ use App\Models\Skill;
 use App\Models\User;
 use App\Models\UserVerifications;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function exsForm($token)
+    public function exsForm()
 
     {
-        // Cari user berdasarkan token
-        $verification = UserVerifications::where('token', $token)->firstOrFail();
-        $user = User::findOrFail($verification->user_id);
+        $user_id = Auth::guard('user')->user()->user_id;
+        $user = User::findOrFail($user_id);
         $profile = ApplicantProfile::where('user_id', $user->user_id)->first();
 
         // Return view untuk melengkapi profile
-        return view('profile.exs', ['profile' => $profile, 'token' => $token]);
+        return view('profile.exs', ['profile' => $profile]);
     }
 
-    public function storeExs(Request $request, $token)
+    public function storeExs(Request $request)
     {
 
         // Validasi input
@@ -43,9 +43,8 @@ class ProfileController extends Controller
             'skills.*.name' => 'required|string',
         ]);
 
-        // Temukan user berdasarkan token verifikasi
-        $verification = UserVerifications::where('token', $token)->firstOrFail();
-        $user = User::findOrFail($verification->user_id);
+        $user_id = Auth::guard('user')->user()->user_id;
+        $user = User::findOrFail($user_id);
         $profile = ApplicantProfile::where('user_id', $user->user_id)->firstOrFail();
 
         // dd($token);

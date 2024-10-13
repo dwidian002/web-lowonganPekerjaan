@@ -14,7 +14,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -44,8 +44,19 @@
 
 
     <!-- Navbar Start -->
-    @include('layoutfe.header')
+    @include('layoutapplicant.header')
     <!-- Navbar End -->
+
+    @if (session('incomplete_profile'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('incomplete_profile') }}</strong>
+        <div>
+            <a href="{{ route('exs.form') }}" class="btn btn-primary">Lengkapi Sekarang</a>
+            <a href="{{ route('indexUser') }}" class="btn btn-secondary">Nanti Saja</a>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
 
     <!-- Header Start -->

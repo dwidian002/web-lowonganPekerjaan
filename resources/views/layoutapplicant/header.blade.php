@@ -22,10 +22,10 @@
             </div>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
         </div>
+        @if(!auth()->check())
         <a href="{{url('/login')}}" class="custom-btn login-btn">
             <i class="fa fa-user"></i> Login
         </a>
-
         <div class="nav-item dropdown">
             <a class="custom-btn dropdown-toggle register-btn" href="#" role="button" data-bs-toggle="dropdown" id="registerDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-plus"></i> Register
@@ -35,6 +35,14 @@
                 <a class="dropdown-item" href="{{ url('register/applicant') }}">As Applicant</a> <!-- Redirect ke form Applicant -->
             </div>
         </div>
+        @else
+        <a href="{{url('/login')}}" class="custom-btn login-btn">
+            <i class="fa fa-user"></i> Dashboard
+        </a>
+        <a href="{{url('/login')}}" class="custom-btn login-btn">
+            <i class="fa fa-user"></i> Logout
+        </a>
+        @endif
     </div>
     </div>
 </nav>

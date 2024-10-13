@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\CompanyRegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -51,5 +52,7 @@ Route::get('/verify-ur-email', [RegisterController::class, 'verify'])->name('ver
 Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->name('email.verify');
 
 //Route untuk mengisi education, skills dan exerience applicant
-Route::get('/profile/education-skills-experience/{token}', [ProfileController::class, 'exsForm'])->name('exs.form');
-Route::post('/profile/education-skills-experience/{token}', [ProfileController::class,'storeExs'])->name('exs.store');
+Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
+Route::post('/profile/education-skills-experience/', [ProfileController::class,'storeExs'])->name('exs.store');
+
+Route::get('/all-job',[JobController::class,'index'])->name('all.job');

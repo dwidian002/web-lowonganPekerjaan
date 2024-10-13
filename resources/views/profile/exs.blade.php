@@ -25,7 +25,7 @@
                         {{session()->get('pesan')}}
                     </div>
                     @endif
-                    <form action="{{ route('exs.store', ['token' => $token]) }}" method="POST">
+                    <form action="{{ route('exs.store')}}" method="POST">
                         @csrf
 
                         <!-- Education Section -->

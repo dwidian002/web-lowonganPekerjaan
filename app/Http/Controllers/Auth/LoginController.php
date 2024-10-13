@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -18,19 +19,21 @@ class LoginController extends Controller
         // Validasi input
         $this->validate($request, [
             'email' => 'required|email',
-            'password' => 'required',
-            'role' => 'required'
+            'password' => 'required'
         ]);
 
-        // Coba login dengan data yang diberikan
-        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => $request->role])) {
+        // Ambil user berdasarkan email
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            Auth::login($user);
 
             // Redirect berdasarkan role
-            if ($request->role === 'admin') {
+            if ($user->role === 'admin') {
                 return redirect()->intended('/admin');
-            } elseif ($request->role === 'company') {
+            } elseif ($user->role === 'company') {
                 return redirect()->intended('/home'); // Halaman untuk company
-            } elseif ($request->role === 'applicant') {
+            } elseif ($user->role === 'applicant') {
                 return redirect()->intended('/home'); // Halaman untuk applicant
             }
         } else {

@@ -1,4 +1,4 @@
-@extends('layoutfe.main')
+@extends('layoutapplicant.main')
 @section('content')
 
 <section class="hero-section">

@@ -27,7 +27,7 @@ class RegisterMail extends Mailable
         if ($this->user->role == 'company') {
             $url = url('/login?token=' . $this->token);
         } elseif ($this->user->role == 'applicant') {
-            $url = url('/profile/education-skills-experience/' . $this->token);
+            $url = url('/login?token=' . $this->token);
         }
         
         // dd($this->token, $url);
