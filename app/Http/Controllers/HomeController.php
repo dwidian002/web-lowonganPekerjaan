@@ -37,8 +37,4 @@ class HomeController extends Controller
         return view('homecompany');
     }
 
-    public function admin()
-    {
-        return view('layoutadmin.dashboardAdmin');
-    }
 }

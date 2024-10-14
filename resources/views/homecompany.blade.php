@@ -18,10 +18,10 @@
 					<div class="divider mb-3"></div>
 					<span class="text-uppercase text-sm letter-spacing " style="color: white;">The Best Job Search Solution</span>
 					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1>
-					
-					<p class="mb-0 pr-2" style="color: white;">Find the best career opportunities that suit your interests and skills here.
-                        Don't miss this golden opportunity </p>
-                   <p style="color: white;">  
+					<div class="btn-container mb-3">
+						<a href="appoinment.html" target="_blank" class="btn btn-main-2 btn-icon btn-round-full">Make appoinment <i class="icofont-simple-right ml-2  "></i></a>
+					</div> 
+					<p style="color: white;">
                    — start applying now and create the career you dream of!
                    </p>
                     <div>
