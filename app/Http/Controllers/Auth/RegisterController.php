@@ -103,34 +103,33 @@ class RegisterController extends Controller
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
-
-            // dd($user->user_id);
-
-            $companyProfile = CompanyProfile::create([
-                'user_id' => $user->id,
-                'company_name' => $request->company_name,
-                'industry' => $request->industry,
-                'tahun_berdiri' => $request->tahun_berdiri,
-                'location_id' => $request->location,
-                'alamat_lengkap' => $request->alamat_lengkap,
-                'description' => $request->description,
-                'website' => $request->website,
-                'logo' => $request->logo
-            ]);
-
-            
-
-
-            $token = Str::random(60);
-
-            UserVerifications::create([
-                'user_id' => $user->id,
-                'token' => $token,
-            ]);
-
-            Mail::to($user->email)->send(new RegisterMail($user, $token));
-
-            return redirect()->route('verification.notice');
         }
+
+        // dd($user->user_id);
+
+        $companyProfile = CompanyProfile::create([
+            'user_id' => $user->id,
+            'company_name' => $request->company_name,
+            'industry' => $request->industry,
+            'tahun_berdiri' => $request->tahun_berdiri,
+            'location_id' => $request->location,
+            'alamat_lengkap' => $request->alamat_lengkap,
+            'description' => $request->description,
+            'website' => $request->website,
+            'logo' => $logoPath
+        ]);
+
+        // dd($companyProfile);
+
+        $token = Str::random(60);
+
+        UserVerifications::create([
+            'user_id' => $user->id,
+            'token' => $token,
+        ]);
+
+        Mail::to($user->email)->send(new RegisterMail($user, $token));
+
+        return redirect()->route('verification.notice');
     }
 }

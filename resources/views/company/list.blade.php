@@ -30,6 +30,8 @@
                             <th>Tahun Berdiri</th>
                             <th>Location</th>
                             <th>Alamat Lengkap</th>
+                            <th>Description</th>
+                            <th>Website</th>
                             <th>Logo</th>
                             <th>Action</th>
                         </tr>
@@ -38,10 +40,23 @@
                     @php
                     $no = 1;
                     @endphp
-                    @foreach ($company as $row)
+                    @foreach ($companyProfiles as $row)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$row->name}}</td>
+                            <td>{{$row->company_name}}</td>
+                            <td>{{$row->industry}}</td>
+                            <td>{{$row->tahun_berdiri}}</td>
+                            <td>{{$row->location->name}}</td>
+                            <td>{{$row->alamat_lengkap}}</td>
+                            <td>{{$row->description}}</td>
+                            <td>{{$row->website}}</td>
+                            <td>
+                                @if($row->logo)
+                                    <img src="{{ asset('storage/' . $row->logo) }}" alt="Company Logo" width="50" height="50" style="object-fit: cover; border-radius: 5px;">
+                                @else
+                                    <span>No Logo</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{route('company.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
                                 <a href="{{route('company.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>

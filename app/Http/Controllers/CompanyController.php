@@ -10,66 +10,54 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        $companyProfiles = CompanyProfile::with('location')->get();
+        return view('company.list', compact('companyProfiles'));
+    }
+
+    public function add()
+    {
         $location = Location::all();
-        return view('company.all', compact('location'));
+        return view('company.add', compact('location'));
     }
 
-    public function add(){
-        return view('company.add');
-    }
-
-    public function store(Request $request) {
-
+    public function store(Request $request)
+    {
         $this->validate($request, [
-            'name'=>'required'
+            'company_name' => 'required|string|max:255',
+            'industry' => 'required|string|max:255',
+            'tahun_berdiri' => 'required|integer',
+            'location' => 'required|exists:locations,id',
+            'alamat_lengkap' => 'required|string',
+            'description' => 'required|string',
+            'website' => 'required|url',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $company = new CompanyProfile();
-        $company->name= $request->name;
+        $user = auth()->user();
 
-        try{
-            $company->save();
-            return redirect(route('company.index'))->with('pesan',['success','Berhasil tambah company']);
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
 
-        }catch (\Exception $e){
-            return redirect(route('company.index'))->with('pesan',['danger','Gagal tambah company']);
-        }
-    }
+            $companyProfile = CompanyProfile::create([
+                'user_id' => $user->id,
+                'company_name' => $request->company_name,
+                'industry' => $request->industry,
+                'tahun_berdiri' => $request->tahun_berdiri,
+                'location_id' => $request->location,
+                'alamat_lengkap' => $request->alamat_lengkap,
+                'description' => $request->description,
+                'website' => $request->website,
+                'logo' => $logoPath
+            ]);
 
-    public function edit($id){
-        $company = Company::findOrFail($id);
-        return view('company.edit', compact('company'));
-    }
-
-    public function update(Request $request) {
-
-        $this->validate($request, [
-            'name'=>'required',
-        ]);
-
-        $company = Company::findOrFail($request->id);
-        $company->name= $request->name;
-
-        try{
-            $company->save();
-            return redirect(route('company.index'))->with('pesan',['success','Berhasil ubah company']);
-
-        }catch (\Exception $e){
-            return redirect(route('company.index'))->with('pesan',['danger','Gagal ubah company']);
-        }
-    }
-
-    public function delete($id) {
-
-        $company = Company::findOrFail($id);
-
-        try{
-            $company->delete();
-            return redirect(route('company.index'))->with('pesan',['success','Berhasil hapus company']);
-
-        }catch (\Exception $e){
-            return redirect(route('company.index'))->with('pesan',['danger','Gagal hapus company']);
+            try {
+                $companyProfile->save();
+                return redirect(route('company.index'))->with('pesan', ['success', 'Berhasil tambah companyProfile']);
+            } catch (\Exception $se) {
+                return redirect(route('company.index'))->with('pesan', ['danger', 'Gagal tambah companyProfile']);
+            }
         }
     }
 }

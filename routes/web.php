@@ -57,9 +57,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
         Route::get('/company/add', [CompanyController::class, 'add'])->name('company.add');
         Route::post('/company/store', [CompanyController::class, 'store'])->name('company.store');
-        Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
-        Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
-        Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
+        Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::post('/company/update', [CompanyController::class, 'update'])->name('company.update');
+        Route::get('/company/delete{id}', [CompanyController::class, 'delete'])->name('company.delete');
 
 
 

@@ -54,13 +54,21 @@
                                     <input type="year" name="tahun_berdiri" class="form-control" placeholder="Year Founded" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" name="location" class="form-control" placeholder="Location" required>
+                                    <label for="name" class="form-label">Location</label>
+                                    <select name="location" class="form-control" required>
+                                        <option value="">Select Location</option>
+                                        @foreach($location as $location)
+                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" name="alamat_lengkap" class="form-control" placeholder="Complete Address" required>
+                                    <label for="alamat_lengkap" class="form-label">Address</label>
+                                    <textarea name="alamat_lengkap" class="form-control" rows="3" placeholder="" required></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" name="description" class="form-control" placeholder="Description" required>
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" name="website" class="form-control" placeholder="Website" required>
