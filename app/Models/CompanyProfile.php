@@ -9,7 +9,7 @@ class CompanyProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_name','location', 'industry', 'tahun_berdiri','alamat_lengkap', 'description', 'website', 'logo', 'user_id'];
+    protected $fillable = ['company_name','location_id', 'industry', 'tahun_berdiri','alamat_lengkap', 'description', 'website', 'logo', 'user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);
