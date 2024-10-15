@@ -6,11 +6,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerificationController;
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,7 +54,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
 
 
-        
+        Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
+        Route::get('/company/add', [CompanyController::class, 'add'])->name('company.add');
+        Route::post('/company/store', [CompanyController::class, 'store'])->name('company.store');
+        Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
+        Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
+        Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
+
+
 
         Route::middleware(['auth', 'company'])->group(function () {
 

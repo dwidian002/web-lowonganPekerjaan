@@ -31,12 +31,10 @@
                         @csrf
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter Your Email" required>
+                                <input type="email" name="email" class="form-control" placeholder="Email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Enter Your Password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="mb-3">
                                 <input type="hidden" name="role" value="company">
@@ -47,36 +45,24 @@
                             <!-- -->
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Company Name</label>
-                                    <input type="text" name="company_name" class="form-control" required>
+                                    <input type="text" name="company_name" class="form-control" placeholder="Company_name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Industry</label>
-                                    <input type="text" name="industry" class="form-control" required>
+                                    <input type="text" name="industry" class="form-control" placeholder="Industry" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Year Founded</label>
-                                    <input type="year" name="tahun_berdiri" class="form-control" placeholder="" required>
+                                    <input type="year" name="tahun_berdiri" class="form-control" placeholder="Year Founded" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Location</label>
-                                    <select name="location" class="form-control" required>
-                                        <option value="">Select Location</option>
-                                        @foreach($location as $location)
-                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" name="location" class="form-control" placeholder="Location" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="alamat_lengkap" class="form-label">Address</label>
-                                    <textarea name="alamat_lengkap" class="form-control" rows="3" placeholder="" required></textarea>
+                                    <input type="text" name="alamat_lengkap" class="form-control" placeholder="Complete Address" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                    <input type="text" name="description" class="form-control" placeholder="Description" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">website</label>
                                     <input type="text" name="website" class="form-control" placeholder="Website" required>
                                 </div>
                                 <!-- Input logo (optional) -->
@@ -86,7 +72,7 @@
                                 </div>
                                 <button type="submit" class="btn bg-gradient-danger w-100 my-4 mb-2">Register</button>
                             </div>
-                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{route('auth.index')}}" class="text-dark font-weight-bolder">Sign in</a></p>
+                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{url('/login')}}" class="text-dark font-weight-bolder">Sign in</a></p>
                     </form>
                 </div>
             </div>
