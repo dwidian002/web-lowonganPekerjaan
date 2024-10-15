@@ -60,7 +60,7 @@
         <a href="{{url('/login')}}" class="custom-btn login-btn">
             <i class="fa fa-user"></i> Dashboard
         </a>
-        <a href="{{url('/login')}}" class="custom-btn login-btn">
+        <a href="{{route('auth.logout')}}" class="custom-btn login-btn">
             <i class="fa fa-user"></i> Logout
         </a>
         @endif

@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('company_profiles', function (Blueprint $table) {
-            $table->id('profile_id');
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');  
             $table->string('company_name');
             $table->string('industry');
             $table->year('tahun_berdiri');
@@ -20,9 +22,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('website')->nullable();
             $table->binary('logo')->nullable();
-            $table->foreignId('user_id')->constrained('users','user_id')->onDelete('cascade');
-            $table->timestamps();
-        });        
+            $table->timestamps(); 
+        }); 
     }
 
     /**

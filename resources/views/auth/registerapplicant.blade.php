@@ -53,7 +53,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="alamat" class="form-label">Address</label>
-                                <input type="text" name="alamat" class="form-control" placeholder="Enter Your Address" required>
+                                <input type="text" name="alamat_lengkap" class="form-control" placeholder="Enter Your Address" required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone_number" class="form-label">Phone Number</label>

@@ -33,7 +33,7 @@
                             <h6>Last Education</h6>
                             <div id="education-container">
                                 <div class="mb-3">
-                                    <input type="hidden" name="profile_id" value="{{ $profile->id_Profile }}">
+                                    <input type="hidden" name="id" value="{{ $profile->id }}">
                                     <input type="text" name="education[0][degree]" class="form-control" placeholder="Degree" required>
                                     <input type="text" name="education[0][institution_name]" class="form-control mt-2" placeholder="Institution Name" required>
                                     <input type="year" name="education[0][starting_year]" class="form-control mt-2" placeholder="Starting Year" required>
@@ -45,7 +45,7 @@
                             <h6>Experience</h6>
                             <div id="experience-container">
                                 <div class="mb-3">
-                                    <input type="hidden" name="profile_id" value="{{ $profile->id_Profile }}">
+                                    <input type="hidden" name="id" value="{{ $profile->id }}">
                                     <input type="text" name="experience[0][job_Title]" class="form-control" placeholder="Job Title" required>
                                     <input type="text" name="experience[0][company_name]" class="form-control mt-2" placeholder="Company Name" required>
                                     <input type="text" name="experience[0][position]" class="form-control mt-2" placeholder="Position" required>
@@ -60,7 +60,7 @@
                             <h6>Skills</h6>
                             <div id="skills-container">
                                 <div class="mb-3">
-                                    <input type="hidden" name="profile_id" value="{{ $profile->id_Profile }}">
+                                    <input type="hidden" name="id" value="{{ $profile->id }}">
                                     <input type="text" name="skills[0][name]" class="form-control" placeholder="Skill Name" required>
                                 </div>
                             </div>

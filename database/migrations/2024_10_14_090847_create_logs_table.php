@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_logs', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('log_name');
-            $table->double('is_send_email');
-            $table->foreignId('aplication_id')->constrained('applications','application_id')->onDelete('cascade');
+            $table->string('previous_status');
+            $table->foreignId('application_id')->constrained()->onDelete('cascade');
+            $table->string('new_status');
+            $table->string('changed_add');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_logs');
+        Schema::dropIfExists('logs');
     }
 };

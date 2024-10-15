@@ -15,8 +15,12 @@ class JobPosting extends Model
         return $this->belongsTo(CompanyProfile::class);
     }
 
+    public function Location() {
+        return $this->belongsToMany(Location::class);
+    }
+
     public function jobCategories() {
-        return $this->belongsToMany(JobCategory::class, 'job_posting_job_category');
+        return $this->belongsToMany(JobCategory::class,);
     }
 
     public function applications() {

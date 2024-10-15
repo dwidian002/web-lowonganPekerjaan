@@ -25,9 +25,12 @@ class LoginController extends Controller
         // Ambil user berdasarkan email
         $user = User::where('email', $request->email)->first();
 
-        if ($user && Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            Auth::login($user);
+        if (!$user) {
+            return redirect(route('auth.index'))->with('pesan', 'Email tidak terdaftar');
+        }
 
+        // Lakukan autentikasi
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Redirect berdasarkan role
             if ($user->role === 'admin') {
                 return redirect()->intended('/admin');
@@ -36,9 +39,9 @@ class LoginController extends Controller
             } elseif ($user->role === 'applicant') {
                 return redirect()->intended('/home'); // Halaman untuk applicant
             }
-        } else {
-            // Jika gagal login, kembali ke halaman login dengan pesan error
-            return redirect(route('auth.index'))->with('pesan', 'Kombinasi email dan password salah');
         }
+
+        // Jika gagal login, kembali ke halaman login dengan pesan error
+        return redirect(route('auth.index'))->with('pesan', 'Kombinasi email dan password salah');
     }
 }

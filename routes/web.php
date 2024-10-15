@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ApplicantRegisterController;
 use App\Http\Controllers\Auth\CompanyRegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
@@ -39,16 +40,19 @@ Route::post('/login', [LoginController::class, 'verify'])->name('auth.verify');
 
 
 // Route::group(['middleware' => 'auth:user'], function(){
-Route::prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'admin'])->name('indexAdmin');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [DashboardController::class, 'admin'])->name('indexAdmin');
 
-    Route::get('/location',[LocationController::class,'index'])->name('location.index');
-        Route::get('/location/add',[LocationController::class,'add'])->name('location.add');
-        Route::post('/location/store',[LocationController::class,'store'])->name('location.store');
-        Route::get('/location/edit/{id}',[LocationController::class,'edit'])->name('location.edit');
-        Route::post('/location/update',[LocationController::class,'update'])->name('location.update');
-        Route::get('/location/delete{id}',[LocationController::class,'delete'])->name('location.delete');
+        Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+        Route::get('/location/add', [LocationController::class, 'add'])->name('location.add');
+        Route::post('/location/store', [LocationController::class, 'store'])->name('location.store');
+        Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
+        Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
+        Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
+    });
 });
+
 
 // Route::get('/logout',[\App\Http\Controllers\AuthController::class,'logout'])->name('auth.logout');
 
@@ -70,4 +74,14 @@ Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->
 Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
 Route::post('/profile/education-skills-experience/', [ProfileController::class, 'storeExs'])->name('exs.store');
 
-Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+Route::middleware(['auth', 'company'])->group(function () {
+
+    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+});
+
+Route::middleware(['auth', 'applicant'])->group(function () {
+
+    Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
+});
+
+Route::get('/logout', [LogoutController::class, 'logout'])->name('auth.logout');

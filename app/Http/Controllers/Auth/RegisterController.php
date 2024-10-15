@@ -32,7 +32,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6',
             'name' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'alamat' => 'required|string',
+            'alamat_lengkap' => 'required|string',
             'phone_number' => 'required|string',
             'resume' => 'nullable|string',
         ]);
@@ -43,13 +43,13 @@ class RegisterController extends Controller
             'role' => 'applicant',
         ]);
 
-        // dd($user->user_id);
+        // dd($user->id);
 
         ApplicantProfile::create([
-            'user_id' => $user->user_id, // Foreign key ke tabel users
+            'user_id' => $user->id, // Foreign key ke tabel users
             'name' => $request->name,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'alamat' => $request->alamat,
+            'alamat_lengkap' => $request->alamat_lengkap,
             'phone_number' => $request->phone_number,
             'resume' => $request->resume,
         ]);
@@ -59,7 +59,7 @@ class RegisterController extends Controller
 
         // Simpan token ke tabel user_verifications
         UserVerifications::create([
-            'user_id' => $user->user_id,
+            'user_id' => $user->id,
             'token' => $token,
         ]);
 
@@ -89,7 +89,7 @@ class RegisterController extends Controller
             'company_name' => 'required',
             'industry' => 'required',
             'tahun_berdiri' => 'required',
-            'alamat' => 'required',
+            'alamat_lengkap' => 'required',
             'description' => 'required',
             'website' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -109,7 +109,7 @@ class RegisterController extends Controller
         // dd($user->user_id);
 
         CompanyProfile::create([
-            'user_id' => $user->user_id, // Foreign key ke tabel users
+            'user_id' => $user->id, // Foreign key ke tabel users
             'company_name' => $request->company_name,
             'industry' => $request->industry,
             'tahun_berdiri' => $request->tahun_berdiri,
@@ -124,7 +124,7 @@ class RegisterController extends Controller
 
         // Simpan token ke tabel user_verifications
         UserVerifications::create([
-            'user_id' => $user->user_id,
+            'user_id' => $user->id,
             'token' => $token,
         ]);
 

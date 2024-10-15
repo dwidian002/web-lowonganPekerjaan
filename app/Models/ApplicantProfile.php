@@ -9,12 +9,7 @@ class ApplicantProfile extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_Profile';
-
-    public $incrementing = true;
-    protected $keyType = 'int';
-
-    protected $fillable = ['name', 'alamat', 'tanggal_lahir', 'phone_number', 'resume', 'user_id'];
+    protected $fillable = ['user_id', 'name', 'tanggal_lahir', 'alamat_lengkap', 'phone_number', 'resume'];
 
     public function user()
     {

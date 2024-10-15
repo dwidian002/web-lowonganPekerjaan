@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->string('degree');
+            $table->foreignId('applicant_profile_id')->constrained('applicant_profiles')->onDelete('cascade');
             $table->string('institution_name');
             $table->year('starting_year');
             $table->year('finishing_year');
-            $table->foreignId('id_profile')->constrained('applicant_profiles','id_profile')->onDelete('cascade');
             $table->timestamps();
         });
     }

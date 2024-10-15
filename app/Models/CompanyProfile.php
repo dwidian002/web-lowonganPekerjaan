@@ -9,15 +9,14 @@ class CompanyProfile extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'profile_id';
-
-    public $incrementing = true;
-    protected $keyType = 'int';
-
     protected $fillable = ['company_name', 'industry', 'tahun_berdiri','alamat', 'description', 'website', 'logo', 'user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function Location() {
+        return $this->belongsToMany(Location::class);
     }
 
     public function jobPostings() {

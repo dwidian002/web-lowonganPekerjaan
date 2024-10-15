@@ -15,20 +15,17 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
     public function exsForm()
-
     {
-        $user_id = Auth::guard('user')->user()->user_id;
-        $user = User::findOrFail($user_id);
-        $profile = ApplicantProfile::where('user_id', $user->user_id)->first();
+        
+        $id = Auth::guard('user')->user()->id;
+        $user = User::findOrFail($id);
+        $profile = ApplicantProfile::where('user_id', $user->id)->first();
 
-        // Return view untuk melengkapi profile
         return view('profile.exs', ['profile' => $profile]);
     }
 
     public function storeExs(Request $request)
     {
-
-        // Validasi input
         $this->validate($request, [
             'education.*.degree' => 'required|string',
             'education.*.institution_name' => 'required|string',
@@ -43,16 +40,15 @@ class ProfileController extends Controller
             'skills.*.name' => 'required|string',
         ]);
 
-        $user_id = Auth::guard('user')->user()->user_id;
-        $user = User::findOrFail($user_id);
-        $profile = ApplicantProfile::where('user_id', $user->user_id)->firstOrFail();
+        $id = Auth::guard('user')->user()->id;
+        $user = User::findOrFail($id);
+        $profile = ApplicantProfile::where('user_id', $user->id)->firstOrFail();
 
-        // dd($token);
-        // Simpan education (gunakan perulangan jika ada banyak data)
+        // Simpan education
         if (isset($request->education) && is_array($request->education)) {
             foreach ($request->education as $education) {
                 Education::create([
-                    'id_Profile' => $profile->id_Profile,
+                    'applicant_profile_id' => $profile->id, // Gunakan 'applicant_profile_id' sebagai foreign key
                     'degree' => $education['degree'],
                     'institution_name' => $education['institution_name'],
                     'starting_year' => $education['starting_year'],
@@ -62,25 +58,28 @@ class ProfileController extends Controller
         }
 
         // Simpan experience
-        foreach ($request->experience as $experience) {
-            Experience::create([
-                'id_Profile' => $profile->id_Profile,
-                'job_Title' => $experience['job_Title'],
-                'company_name' => $experience['company_name'],
-                'position' => $experience['position'],
-                'lama_bekerja' => $experience['lama_bekerja'],
-            ]);
+        if (isset($request->experience) && is_array($request->experience)) {
+            foreach ($request->experience as $experience) {
+                Experience::create([
+                    'applicant_profile_id' => $profile->id, // Gunakan 'applicant_profile_id' sebagai foreign key
+                    'job_Title' => $experience['job_Title'],
+                    'company_name' => $experience['company_name'],
+                    'position' => $experience['position'],
+                    'lama_bekerja' => $experience['lama_bekerja'],
+                ]);
+            }
         }
 
         // Simpan skills
-        foreach ($request->skills as $skill) {
-            Skill::create([
-                'id_Profile' => $profile->id_Profile,
-                'name' => $skill['name'],
-            ]);
+        if (isset($request->skills) && is_array($request->skills)) {
+            foreach ($request->skills as $skill) {
+                Skill::create([
+                    'applicant_profile_id' => $profile->id, // Gunakan 'applicant_profile_id' sebagai foreign key
+                    'name' => $skill['name'],
+                ]);
+            }
         }
 
-        // Redirect ke halaman sukses atau halaman lain
         return redirect()->route('indexUser')->with('pesan', 'Profile completed successfully!');
     }
 }

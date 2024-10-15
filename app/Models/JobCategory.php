@@ -12,6 +12,6 @@ class JobCategory extends Model
     protected $fillable = ['category_name'];
 
     public function jobPostings() {
-        return $this->belongsToMany(JobPosting::class, 'job_posting_job_category');
+        return $this->belongsToMany(JobPosting::class,);
     }
 }
