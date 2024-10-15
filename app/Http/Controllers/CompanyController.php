@@ -13,13 +13,13 @@ class CompanyController extends Controller
     public function index()
     {
         $companyProfiles = CompanyProfile::with('location')->get();
-        return view('company.list', compact('companyProfiles'));
+        return view('admin.company.list', compact('companyProfiles'));
     }
 
     public function add()
     {
         $location = Location::all();
-        return view('company.add', compact('location'));
+        return view('admin.company.add', compact('location'));
     }
 
     public function store(Request $request)
@@ -60,4 +60,15 @@ class CompanyController extends Controller
             }
         }
     }
+
+    public function list() {
+        $companies = CompanyProfile::all();
+        return view('company.list', compact('companies'));
+    }
+
+    public function detail($id)
+{
+    $companies = CompanyProfile::findOrFail($id);
+    return view('company.detail', compact('companies'));
+}
 }

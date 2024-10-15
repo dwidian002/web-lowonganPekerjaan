@@ -37,14 +37,19 @@ Route::get('home', [HomeController::class, 'index'])->name('indexUser');
 Route::get('/login', [LoginController::class, 'index'])->name('auth.index');
 Route::post('/login', [LoginController::class, 'verify'])->name('auth.verify');
 
-Route::middleware(['auth', 'company'])->group(function () {
+Route::middleware(['auth','admin', 'company'])->group(function () {
 
     Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+    Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.show');
+
 });
 
-Route::middleware(['auth', 'applicant'])->group(function () {
+Route::middleware(['auth','applicant'])->group(function () {
     Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
     Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
+    Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
+    Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
+
 });
 
 // Route::group(['middleware' => 'auth:user'], function(){

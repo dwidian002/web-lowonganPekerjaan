@@ -1,74 +1,176 @@
-@extends('layoutadmin/dashboard')
+@extends('layoutcompany.main')
 @section('content')
 
-<div class="container-fluid">
-    <div class="row" style="margin-top: 25px;">
-        <div class="col-lg-12">
-            <h3 class="font-weight-bolder text-white mb-3 mt-0">List Company</h3>
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">Our Company Partner</span>
+            <h1 class="text-capitalize mb-5 text-lg">Company Partner</h1>
+  
+            <!-- <ul class="list-inline breadcumb-nav">
+              <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+              <li class="list-inline-item"><span class="text-white">/</span></li>
+              <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+            </ul> -->
+          </div>
         </div>
-        <div class="col-lg-12" style="margin-bottom: 15px;">
-            <a href="{{ route('company.add') }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add Company </a>
-        </div>
+      </div>
     </div>
+  </section>
+  
+  
+  <section class="section service-2">
+      <div class="container">
+          <div class="row">
+            <div class="row">
+                @foreach($companies as $company)
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="service-block mb-5" style="min-height: 400px;">
+                            @if ($company->logo)
+                                <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->company_name }}" style="max-width: 100%; height: 200px; object-fit: cover;">
+                            @else
+                                <img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" alt="Default Logo" style="max-width: 100%; height: 200px; object-fit: cover;">
+                            @endif
+                            <div class="content" style="overflow: hidden;">
+                                <h4 class="mt-4 mb-2 title-color" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                                    {{ Str::limit($company->company_name, 20) }}
+                                </h4>
+                                <ul style="list-style-type: none; padding: 0;">
+                                    <li><strong>Industry:</strong> {{ $company->industry }}</li>
+                                    <li><strong>Tahun Berdiri:</strong> {{ $company->tahun_berdiri }}</li>
+                                    <li><strong>Location:</strong> {{ $company->location->name }}</li>
+                                    <li><strong>Website:</strong> <a href="{{ $company->website }}" target="_blank">{{ Str::limit($company->website, 30) }}</a></li>
+                                </ul>
+                                
+                                <p class="mb-4" style="height: 60px; overflow: hidden; text-overflow: ellipsis;">
+                                    {{ Str::limit($company->description, 100) }}
+                                </p>
+                                <a href="{{ route('company.detail', $company->id) }}" class="btn btn-xs btn-primary mt-2" style="font-size: 12px; padding: 5px 10px;">View More</a>
 
-    @if (session()->has('pesan'))
-    <div class="alert alert-{{session()->get('pesan')[0]}}">
-        {{session()->get('pesan')[1]}}
-    </div>
-
-    @endif
-
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Industri</th>
-                            <th>Tahun Berdiri</th>
-                            <th>Location</th>
-                            <th>Alamat Lengkap</th>
-                            <th>Description</th>
-                            <th>Website</th>
-                            <th>Logo</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @php
-                    $no = 1;
-                    @endphp
-                    @foreach ($companyProfiles as $row)
-                        <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$row->company_name}}</td>
-                            <td>{{$row->industry}}</td>
-                            <td>{{$row->tahun_berdiri}}</td>
-                            <td>{{$row->location->name}}</td>
-                            <td>{{$row->alamat_lengkap}}</td>
-                            <td>{{$row->description}}</td>
-                            <td>{{$row->website}}</td>
-                            <td>
-                                @if($row->logo)
-                                    <img src="{{ asset('storage/' . $row->logo) }}" alt="Company Logo" width="50" height="50" style="object-fit: cover; border-radius: 5px;">
-                                @else
-                                    <span>No Logo</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{route('company.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{route('company.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
-
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+          </div>
+      </div>
+  </section>
+  <section class="section cta-page">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-7">
+                  <div class="cta-content">
+                      <div class="divider mb-4"></div>
+                      <h2 class="mb-5 text-lg">We are pleased to offer you the <span class="title-color">chance to have the healthy</span></h2>
+                      <a href="appoinment.html" class="btn btn-main-2 btn-round-full">Get appoinment<i class="icofont-simple-right  ml-2"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- footer Start -->
+  <footer class="footer section gray-bg">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4 mr-auto col-sm-6">
+                  <div class="widget mb-5 mb-lg-0">
+                      <div class="logo mb-4">
+                          <img src="layout/assets/images/logo.png" alt="" class="img-fluid">
+                      </div>
+                      <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+  
+                      <ul class="list-inline footer-socials mt-4">
+                          <li class="list-inline-item"><a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a></li>
+                          <li class="list-inline-item"><a href="https://twitter.com/themefisher"><i class="icofont-twitter"></i></a></li>
+                          <li class="list-inline-item"><a href="https://www.pinterest.com/themefisher/"><i class="icofont-linkedin"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+  
+              <div class="col-lg-2 col-md-6 col-sm-6">
+                  <div class="widget mb-5 mb-lg-0">
+                      <h4 class="text-capitalize mb-3">Department</h4>
+                      <div class="divider mb-4"></div>
+  
+                      <ul class="list-unstyled footer-menu lh-35">
+                          <li><a href="#">Surgery </a></li>
+                          <li><a href="#">Wome's Health</a></li>
+                          <li><a href="#">Radiology</a></li>
+                          <li><a href="#">Cardioc</a></li>
+                          <li><a href="#">Medicine</a></li>
+                      </ul>
+                  </div>
+              </div>
+  
+              <div class="col-lg-2 col-md-6 col-sm-6">
+                  <div class="widget mb-5 mb-lg-0">
+                      <h4 class="text-capitalize mb-3">Support</h4>
+                      <div class="divider mb-4"></div>
+  
+                      <ul class="list-unstyled footer-menu lh-35">
+                          <li><a href="#">Terms & Conditions</a></li>
+                          <li><a href="#">Privacy Policy</a></li>
+                          <li><a href="#">Company Support </a></li>
+                          <li><a href="#">FAQuestions</a></li>
+                          <li><a href="#">Company Licence</a></li>
+                      </ul>
+                  </div>
+              </div>
+  
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="widget widget-contact mb-5 mb-lg-0">
+                      <h4 class="text-capitalize mb-3">Get in Touch</h4>
+                      <div class="divider mb-4"></div>
+  
+                      <div class="footer-contact-block mb-4">
+                          <div class="icon d-flex align-items-center">
+                              <i class="icofont-email mr-3"></i>
+                              <span class="h6 mb-0">Support Available for 24/7</span>
+                          </div>
+                          <h4 class="mt-2"><a href="tel:+23-345-67890">Support@email.com</a></h4>
+                      </div>
+  
+                      <div class="footer-contact-block">
+                          <div class="icon d-flex align-items-center">
+                              <i class="icofont-support mr-3"></i>
+                              <span class="h6 mb-0">Mon to Fri : 08:30 - 18:00</span>
+                          </div>
+                          <h4 class="mt-2"><a href="tel:+23-345-67890">+23-456-6588</a></h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="footer-btm py-4 mt-5">
+              <div class="row align-items-center justify-content-between">
+                  <div class="col-lg-6">
+                      <div class="copyright">
+                          &copy; Copyright Reserved to <span class="text-color">Novena</span> by <a href="https://themefisher.com/" target="_blank">Themefisher</a>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
+                          <form action="#" class="subscribe">
+                              <input type="text" class="form-control" placeholder="Your Email address">
+                              <a href="#" class="btn btn-main-2 btn-round-full">Subscribe</a>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="row">
+                  <div class="col-lg-4">
+                      <a class="backtop js-scroll-trigger" href="#top">
+                          <i class="icofont-long-arrow-up"></i>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </footer>
 
 @endsection

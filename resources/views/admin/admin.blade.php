@@ -1,4 +1,4 @@
-@extends('layoutadmin/dashboard')
+@extends('admin/layout/dashboard')
 @section('content')
 
 <div class="container-fluid py-4">

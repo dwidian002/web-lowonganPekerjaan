@@ -37,10 +37,10 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  @include('layoutadmin.sidebar')
+  @include('admin.layout.sidebar')
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
-    @include('layoutadmin.topbar')
+    @include('admin.layout.topbar')
     <!-- End Navbar -->
     @yield('content')
 
