@@ -77,7 +77,8 @@ class RegisterController extends Controller
 
     public function showCompanyRegisterForm()
     {
-        return view('auth.registercompany');
+        $profile = CompanyProfile::with('location')->get();
+        return view('auth.registercompany', compact('profile'));
     }
 
     public function registerCompany(Request $request)

@@ -54,7 +54,10 @@
                                     <input type="year" name="tahun_berdiri" class="form-control" placeholder="Year Founded" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" name="alamat" class="form-control" placeholder="Location" required>
+                                    <input type="text" name="location" class="form-control" placeholder="Location" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" name="alamat_lengkap" class="form-control" placeholder="Complete Address" required>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" name="description" class="form-control" placeholder="Description" required>

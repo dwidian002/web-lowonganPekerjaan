@@ -50,6 +50,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
         Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
+
+
+        
+
+        Route::middleware(['auth', 'company'])->group(function () {
+
+            Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+        });
+
+        Route::middleware(['auth', 'applicant'])->group(function () {
+            Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+            Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
+        });
     });
 });
 
@@ -73,15 +86,5 @@ Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->
 //Route untuk mengisi education, skills dan exerience applicant
 Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
 Route::post('/profile/education-skills-experience/', [ProfileController::class, 'storeExs'])->name('exs.store');
-
-Route::middleware(['auth', 'company'])->group(function () {
-
-    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
-});
-
-Route::middleware(['auth', 'applicant'])->group(function () {
-
-    Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
-});
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('auth.logout');
