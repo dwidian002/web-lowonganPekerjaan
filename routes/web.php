@@ -37,9 +37,15 @@ Route::get('home', [HomeController::class, 'index'])->name('indexUser');
 Route::get('/login', [LoginController::class, 'index'])->name('auth.index');
 Route::post('/login', [LoginController::class, 'verify'])->name('auth.verify');
 
+Route::middleware(['auth', 'company'])->group(function () {
 
-// Rute untuk form registrasi
+    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+});
 
+Route::middleware(['auth', 'applicant'])->group(function () {
+    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+    Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
+});
 
 // Route::group(['middleware' => 'auth:user'], function(){
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -60,20 +66,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
         Route::post('/company/update', [CompanyController::class, 'update'])->name('company.update');
         Route::get('/company/delete{id}', [CompanyController::class, 'delete'])->name('company.delete');
-
-
-
-        Route::middleware(['auth', 'company'])->group(function () {
-
-            Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
-        });
-
-        Route::middleware(['auth', 'applicant'])->group(function () {
-            Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
-            Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
-        });
     });
+
+    
 });
+
+
+
 
 
 // Route::get('/logout',[\App\Http\Controllers\AuthController::class,'logout'])->name('auth.logout');
