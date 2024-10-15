@@ -19,7 +19,7 @@
 					<span class="text-uppercase text-sm letter-spacing " style="color: white;">The Best Job Search Solution</span>
 					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1>
 					<div class="btn-container mb-3">
-						<a href="appoinment.html" target="_blank" class="btn btn-main-2 btn-icon btn-round-full">Make appoinment <i class="icofont-simple-right ml-2  "></i></a>
+						<a href="appoinment.html" class="btn btn-main-2 btn-icon btn-round-full">Create Your Job Posting <i class="icofont-plus-circlee  "></i></a>
 					</div> 
 					<p style="color: white;">
                    — start applying now and create the career you dream of!
