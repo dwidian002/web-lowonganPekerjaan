@@ -17,21 +17,55 @@
 				<div class="block">
 					<div class="divider mb-3"></div>
 					<span class="text-uppercase text-sm letter-spacing " style="color: white;">The Best Job Search Solution</span>
-					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1>
-					<div class="btn-container mb-3">
-						<a href="appoinment.html" class="btn btn-main-2 btn-icon btn-round-full">Create Your Job Posting <i class="icofont-plus-circlee  "></i></a>
-					</div> 
+					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1> 
 					<p style="color: white;">
                    — start applying now and create the career you dream of!
                    </p>
                     <div>
-                    <div class="divider"></div>
+                    <div class="divider mb-3"></div>
+					<div class="sidebar-widget search  mb-0">
+						<h4 style="color: white;">What Job Are You Looking For?</h4>
+						<form action="#" method="GET">
+							<div class="search-wrapper">
+								<div class="search-input-container">
+									<input type="text" name="search" class="search-input" placeholder="Search">
+								</div>
+								<div class="select-container">
+									<select name="kategori" class="select-input">
+										<option value="">Pilih Kategori</option>
+										@foreach($categories as $category)
+											<option value="{{ $category->id }}">{{ $category->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="select-container">
+									<select name="lokasi" class="select-input">
+										<option value="">Pilih Lokasi</option>
+										@foreach($locations as $location)
+											<option value="{{ $location->id }}">{{ $location->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="select-container">
+									<select name="bidang" class="select-input">
+										<option value="">Pilih Bidang</option>
+										@foreach($fields as $field)
+											<option value="{{ $field->id }}">{{ $field->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<button type="submit" class="btn btn-main-2 btn-icon btn-round-full">SEARCH</button>
+							</div>
+						</form>
+					</div>
 				</div>
-            </div>
+				<div class="divider mb-3"></div>
 			</div>
 		</div>
 	</div>
+</div>
 </section>
+
 <section class="features">
 	<div class="container">
 		<div class="row">
@@ -125,7 +159,7 @@
 					<h2 class="title-color">Company Partner</h2>
 					<p class="mt-4 mb-5">We collaborate with various leading companies that open up opportunities for you to develop and achieve your dream career goals.</p>
 
-					<a href="service.html" class="btn btn-main-2 btn-round-full btn-icon">See All Companies<i class="icofont-simple-right ml-3"></i></a>
+					<a href="{{route('list.company')}}" class="btn btn-main-2 btn-round-full btn-icon">See All Companies<i class="icofont-simple-right ml-3"></i></a>
 				</div>
 			</div>
 		</div>

@@ -7,7 +7,7 @@
         <div class="col-md-12">
           <div class="block text-center">
             <span class="text-white">Our services</span>
-            <h1 class="text-capitalize mb-0 text-lg">All Jobs</h1>
+            <h1 class="text-capitalize mb-5 text-lg">All Jobs</h1>
   
             {{-- <!-- <ul class="list-inline breadcumb-nav">
               <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
@@ -15,50 +15,18 @@
               <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
             </ul> --> --}}
 
-            <div class="search-container">
-                <div class="sidebar-widget search  mb-0">
-                    <form action="#" method="GET">
-                        <div class="search-wrapper">
-                            <div class="search-input-container">
-                                <input type="text" name="search" class="search-input" placeholder="Search">
-                            </div>
-                            <div class="select-container">
-                                <select name="kategori" class="select-input">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="select-container">
-                                <select name="lokasi" class="select-input">
-                                    <option value="">Pilih Lokasi</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="select-container">
-                                <select name="bidang" class="select-input">
-                                    <option value="">Pilih Bidang</option>
-                                    @foreach($fields as $field)
-                                        <option value="{{ $field->id }}">{{ $field->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-main-2 btn-icon btn-round-full">SEARCH</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            
+  <div class="search-container">
+        <div class="btn-container mb-0">
+            <a href="{{ route('job-posting.add') }}" class="btn btn-main-2 btn-icon btn-round-full">Create New Job Posting <i class="icofont-plus"></i></a>
+        </div>
+</div>
 
           </div>
         </div>
       </div>
     </div>
-    
   </section>
-  
   <section class="section service-1">
       <div class="container">
           <div class="row">
@@ -67,68 +35,46 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="feature-block d-lg-flex">
-                            <div class="feature-item mb-5 mb-lg-0">
-                                <div class="feature-icon mb-4">
-                                    <h3>
-                                    <i class="icofont-search-job text-danger"></i>
-                                    CompanyName
-                                    </h3>
-                                </div>
-                                <span class="badge badge-info">category</span> 
-                                <span class="badge badge-info">bidang</span> 
-                                <span class="badge badge-success">status</span>
-                                
-                                <h4 class="mb-0">Posisi</h4>
-                                <div class="mt-1">
-                                    <i class="icofont-money text-warning"></i> gaji
-                                </div>
+                            @foreach($jobPostings as $jobPosting)
+                                <div class="feature-item mb-5 mb-lg-0">
+                                    <div class="feature-icon mb-4">
+                                        <h3>
+                                            @if ($company->logo)
+                                                <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->company_name }}" style="max-width: 160px; height: 160px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" alt="Default Logo" style="max-width: 100%; height: 200px; object-fit: cover;">
+                                            @endif
+                                            {{ $jobPosting->companyProfile->company_name ?? 'CompanyName' }}
+                                        </h3>
+                                    </div>
+    
+                                    <span class="badge badge-info">{{ $jobPosting->jobCategories->pluck('name')->first() ?? 'Category' }}</span> 
+                                    <span class="badge badge-success">{{ $jobPosting->status }}</span>
+    
+                                    <h4 class="mb-0">{{ $jobPosting->position }}</h4>
+    
+                                    <div class="mt-1">
+                                        <i class="icofont-money text-warning"></i> {{ $jobPosting->gaji }}
+                                    </div>
+    
                                     <div>
-                                    <i class="icofont-location-pin text-danger"></i> location
+                                        <i class="icofont-location-pin text-danger"></i> {{ $jobPosting->Location->pluck('name')->first() ?? 'Location' }}
+                                    </div>
+    
+                                    <p class="mb-4">{{ Str::limit($jobPosting->description, 100) }}</p>
+    
+                                    <ol>
+                                        @foreach(explode("\n", $jobPosting->job_description) as $task)
+                                    <li>{{ $task }}</li>
+                                    @endforeach
+                                    </ol>
+    
+                                    <a href="#" class="btn btn-primary custom-btn-sm">
+                                        View Detail
+                                    </a>
                                 </div>
-                                <p class="mb-4">description</p>
-                                <a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-                            </div>
+                            @endforeach
                         
-                            <div class="feature-item mb-5 mb-lg-0">
-                                <div class="feature-icon mb-4">
-                                    <h3>
-                                        <img src="{{ asset('path-to-company-logo.jpg') }}" alt="Company Logo" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                                    CompanyName
-                                    </h3>
-                                </div>
-                                <span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-                                <h4 class="mb-0">Posisi</h4>
-                                <div class="mt-1">
-                                    <i class="icofont-money text-warning"></i> gaji
-                                </div>
-                                    <div>
-                                    <i class="icofont-location-pin text-danger"></i> location
-                                </div>
-                                <p class="mb-4">description</p>
-                                
-                                <a href="#" class="btn btn-primary custom-btn-sm">
-                                    View Detail
-                                </a>
-                            </div>
-                        
-                            <div class="feature-item mb-5 mb-lg-0">
-                                <div class="feature-icon mb-4">
-                                    <h3>
-                                    <i class="icofont-search-job text-danger"></i>
-                                    CompanyName
-                                    </h3>
-                                </div>
-                                <span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-                                <h4 class="mb-0">Posisi</h4>
-                                <div class="mt-1">
-                                    <i class="icofont-money text-warning"></i> gaji
-                                </div>
-                                    <div>
-                                    <i class="icofont-location-pin text-danger"></i> location
-                                </div>
-                                <p class="mb-4">description</p>
-                                <a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-                            </div>
                         </div>
                     </div>
                 </div>

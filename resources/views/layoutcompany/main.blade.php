@@ -23,7 +23,64 @@
 
 </head>
 
+<style>
+
+.feature-item {
+  margin-top: -80px !important;
+}
+
+.feature-item-1 {
+  margin-top: -100px !important;
+}
+
+  .search-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.search-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.search-input,
+.select-input {
+    height: 45px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    flex: 1;
+}
+
+.select-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: auto;
+}
+
+.select-input {
+    min-width: 150px;
+    max-width: 200px;
+}
+
+.search-input {
+    min-width: 200px;
+    max-width: 300px;
+}
+</style>
+
 <body id="top">
+
+
 
 <header>
     @include('layoutcompany.header')

@@ -103,6 +103,7 @@ class RegisterController extends Controller
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
+            // dd($logoPath);
         }
 
         // dd($user->user_id);
@@ -119,7 +120,7 @@ class RegisterController extends Controller
             'logo' => $logoPath
         ]);
 
-        // dd($companyProfile);
+        dd($companyProfile); 
 
         $token = Str::random(60);
 

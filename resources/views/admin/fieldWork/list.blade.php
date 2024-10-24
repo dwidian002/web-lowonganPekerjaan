@@ -4,10 +4,10 @@
 <div class="container-fluid">
     <div class="row" style="margin-top: 25px;">
         <div class="col-lg-12">
-            <h3 class="font-weight-bolder text-white mb-3 mt-0">List Location</h3>
+            <h3 class="font-weight-bolder text-white mb-3 mt-0">List Field Of Work</h3>
         </div>
         <div class="col-lg-12" style="margin-bottom: 15px;">
-            <a href="{{ route('location.add') }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add Location </a>
+            <a href="{{ route('field-work.add') }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add Field Of Work </a>
         </div>
     </div>    
 
@@ -25,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Location</th>
+                            <th>Field Of Work</th>
                             <th>Action</th>
                             </tr>
                     </thead>
@@ -33,13 +33,13 @@
                     @php
                     $no = 1;
                     @endphp
-                    @foreach ($location as $row)
+                    @foreach ($fieldWork as $row)
                         <tr>
                             <td>{{$no++}}</td>
                             <td>{{$row->name}}</td>
                             <td>
-                                <a href="{{route('location.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{route('location.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{route('field-work.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="{{route('field-work.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>
                         </td>
                     </tr>
                     @endforeach

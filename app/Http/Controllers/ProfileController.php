@@ -16,15 +16,12 @@ class ProfileController extends Controller
 {
     public function exsForm()
     {
-        // Ambil pengguna yang sedang login
         $user = Auth::user();
 
-        // Pastikan pengguna sudah login
         if (!$user) {
             return redirect()->route('auth.index')->with('pesan', 'Anda harus login terlebih dahulu');
         }
 
-        // Ambil profil berdasarkan user_id
         $profile = ApplicantProfile::where('user_id', $user->id)->first();
 
         return view('profile.exs', ['profile' => $profile]);
@@ -32,7 +29,6 @@ class ProfileController extends Controller
 
     public function storeExs(Request $request)
     {
-        // Validasi input
         $this->validate($request, [
             'education.*.degree' => 'required|string',
             'education.*.institution_name' => 'required|string',
@@ -47,18 +43,14 @@ class ProfileController extends Controller
             'skills.*.name' => 'required|string',
         ]);
 
-        // Ambil user yang login
         $user = Auth::user();
 
-        // Pastikan user yang login ada
         if (!$user) {
             return redirect()->route('auth.index')->with('pesan', 'Anda harus login terlebih dahulu');
         }
 
-        // Cari profile berdasarkan user_id
         $profile = ApplicantProfile::where('user_id', $user->id)->firstOrFail();
 
-        // Simpan education
         if (isset($request->education) && is_array($request->education)) {
             foreach ($request->education as $education) {
                 Education::create([
@@ -71,7 +63,6 @@ class ProfileController extends Controller
             }
         }
 
-        // Simpan experience
         if (isset($request->experience) && is_array($request->experience)) {
             foreach ($request->experience as $experience) {
                 Experience::create([
@@ -84,7 +75,6 @@ class ProfileController extends Controller
             }
         }
 
-        // Simpan skills
         if (isset($request->skills) && is_array($request->skills)) {
             foreach ($request->skills as $skill) {
                 Skill::create([

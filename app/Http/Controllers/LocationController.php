@@ -9,11 +9,11 @@ class LocationController extends Controller
 {
     public function index(){
         $location = Location::all();
-        return view('location.list', compact('location'));
+        return view('admin.location.list', compact('location'));
     }
 
     public function add(){
-        return view('location.add');
+        return view('admin.location.add');
     }
 
     public function store(Request $request) {
@@ -36,7 +36,7 @@ class LocationController extends Controller
 
     public function edit($id){
         $location = Location::findOrFail($id);
-        return view('location.edit', compact('location'));
+        return view('admin.location.edit', compact('location'));
     }
 
     public function update(Request $request) {

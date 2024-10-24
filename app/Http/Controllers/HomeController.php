@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ApplicantProfile;
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\FieldOfWork;
+use App\Models\JobCategory;
+use App\Models\Location;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +37,11 @@ class HomeController extends Controller
             }
         }
 
-        return view('homecompany');
+        $categories = JobCategory::all();
+        $locations = Location::all();
+        $fields = FieldOfWork::all();
+
+        return view('homecompany', compact('categories', 'locations', 'fields'));
+
     }
 }

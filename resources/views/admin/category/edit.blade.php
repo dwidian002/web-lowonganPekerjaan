@@ -2,24 +2,24 @@
 @section('content')
 
 <div class="container-fluid">
-    <h3 class="font-weight-bolder text-white mb-3 mt-0">Edit Location</h3>
+    <h3 class="font-weight-bolder text-white mb-3 mt-0">Edit Category</h3>
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('location.update') }}" method="post">
+            <form action="{{ route('category.update') }}" method="post">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label">Location</label>
-                    <input type="text" name="name" value="{{$location->name}}"
+                    <label class="form-label">Category</label>
+                    <input type="text" name="category_name" value="{{$category->category_name}}"
                         class="form-control @error('name') is-invalid
             @enderror">
-                    @error('name')
+                    @error('category_name')
                         <span style="color: red; font-weight: 600; font-size:9pt">{{$message}}</font-sixe:9pt></span>
                     @enderror
                 </div>
-                <input type="hidden" name="id" value="{{$location->id}}">
+                <input type="hidden" name="id" value="{{$category->id}}">
                 <button type="submit" class="btn btn-primary">Edit</button>
-                <a href="{{ route('location.index') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ route('category.index') }}" class="btn btn-secondary">Back</a>
             </form>
         </div>
     </div>

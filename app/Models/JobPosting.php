@@ -9,7 +9,7 @@ class JobPosting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_title', 'job_description', 'gaji', 'lokasi', 'status', 'sembunyikan_gaji', 'company_id'];
+    protected $fillable = ['position', 'location_id', 'company_profile_id', 'job_category_id', 'job_description', 'requirements_desciption', 'gaji','status','sembunyikan_gaji'];
 
     public function companyProfile() {
         return $this->belongsTo(CompanyProfile::class);
@@ -17,6 +17,10 @@ class JobPosting extends Model
 
     public function Location() {
         return $this->belongsToMany(Location::class);
+    }
+
+    public function FieldOfWork() {
+        return $this->belongsToMany(FieldOfWork::class);
     }
 
     public function jobCategories() {

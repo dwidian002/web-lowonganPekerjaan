@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('job_postings', function (Blueprint $table) {
             $table->id();
             $table->string('position');
-            $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
+            $table->foreignId('field_of_work_id')->constrained('fields_of_work')->onDelete('cascade');
             $table->foreignId('company_profile_id')->constrained('company_profiles')->onDelete('cascade');
             $table->foreignId('job_category_id')->constrained('job_categories')->onDelete('cascade');
-            $table->string('job_description');
-            $table->string('requirements_desciption');
+            $table->text('job_description');
+            $table->text('requirements_desciption');
             $table->decimal('gaji', 20, 0);
             $table->boolean('status');
             $table->boolean('sembunyikan_gaji');

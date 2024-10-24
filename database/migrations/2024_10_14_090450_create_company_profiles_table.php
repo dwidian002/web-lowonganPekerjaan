@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('alamat_lengkap');
             $table->text('description');
             $table->string('website')->nullable();
-            $table->binary('logo')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps(); 
         }); 
     }

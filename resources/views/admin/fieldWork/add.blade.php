@@ -2,14 +2,14 @@
 @section('content')
 
 <div class="container-fluid">
-    <h3 class="font-weight-bolder text-white mb-3 mt-0">Add New Location</h3>
+    <h3 class="font-weight-bolder text-white mb-3 mt-0">Add New Field Of Work</h3>
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('location.store') }}" method="post">
+            <form action="{{ route('field-work.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label">Location</label>
+                    <label class="form-label">Field Of Work</label>
                     <input type="text" name="name" value="{{ old('name') }}"
                         class="form-control @error('name') is-invalid
             @enderror">
@@ -18,7 +18,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
-                <a href="{{ route('location.index') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ route('field-work.index') }}" class="btn btn-secondary">Back</a>
             </form>
         </div>
     </div>

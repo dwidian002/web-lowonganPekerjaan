@@ -4,10 +4,10 @@
 <div class="container-fluid">
     <div class="row" style="margin-top: 25px;">
         <div class="col-lg-12">
-            <h3 class="font-weight-bolder text-white mb-3 mt-0">List Location</h3>
+            <h3 class="font-weight-bolder text-white mb-3 mt-0">List Category</h3>
         </div>
         <div class="col-lg-12" style="margin-bottom: 15px;">
-            <a href="{{ route('location.add') }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add Location </a>
+            <a href="{{ route('category.add') }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add Category </a>
         </div>
     </div>    
 
@@ -25,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Location</th>
+                            <th>Category</th>
                             <th>Action</th>
                             </tr>
                     </thead>
@@ -33,13 +33,13 @@
                     @php
                     $no = 1;
                     @endphp
-                    @foreach ($location as $row)
+                    @foreach ($category as $row)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$row->name}}</td>
+                            <td>{{$row->category_name}}</td>
                             <td>
-                                <a href="{{route('location.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{route('location.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{route('category.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="{{route('category.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>
                         </td>
                     </tr>
                     @endforeach
