@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
   <meta name="author" content="themefisher.com">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>WonderWoman Loker</title>
 
@@ -21,6 +22,10 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{ asset('layout/assets/css/style.css') }}">
 
+  <!-- Load jQuery first -->
+  <script src="{{ asset('layout/assets/plugins/jquery/jquery.js') }}"></script>
+  <!-- jQuery Easing (dipindah setelah jQuery) -->
+  <script src="{{ asset('layout/assets/plugins/counterup/jquery.easing.js') }}"></script>
 </head>
 
 <style>
@@ -86,11 +91,31 @@
     @include('layoutcompany.header')
 </header>
 
+<!-- Flash Messages -->
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 
 <!-- Slider Start -->
 @yield('content')
 
    
+
 
     <!-- 
     Essential Scripts
@@ -111,12 +136,15 @@
     <script src="{{ asset('layout/assets/plugins/shuffle/shuffle.min.js') }}"></script>
     <script src="{{ asset('layout/assets/plugins/counterup/jquery.counterup.min.js') }}"></script>
     <!-- Google Map -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
     <script src="{{ asset('layout/assets/plugins/google-map/map.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>    
     
     <script src="{{ asset('layout/assets/js/script.js') }}"></script>
     <script src="{{ asset('layout/assets/js/contact.js') }}"></script>
 
+    
   </body>
+  
   </html>
    

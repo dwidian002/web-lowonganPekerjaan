@@ -28,24 +28,16 @@
             <div class="col-lg-4 col-md-6">
                 <div class="job-img-block">
                     <div class="job-img-block">
-                        @if ($company && $company->logo)
-                            <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->company_name }}" style="max-width: 160px; height: 160px; object-fit: cover;">
+                        @if ($companyProfile && $companyProfile->logo)
+                            <img src="{{ asset('storage/' . $companyProfile->logo) }}" alt="{{ $companyProfile->company_name }}" style="max-width: 160px; height: 160px; object-fit: cover;">
                         @else
                             <img src="{{ asset('layout/assets/images/service/default-logo.png') }}" alt="Default Logo" style="max-width: 100%; height: 200px; object-fit: cover;">
                         @endif
                     </div>
 
                     <div class="info-block mt-4">
-                        <h4 class="mb-0">{{$company->company_name}}</h4>
-                        <p>{{$company->industry}}</p>
-
-                        <ul class="list-inline mt-4 company-social-links">
-                            <li class="list-inline-item"><a href="#"><i class="icofont-facebook"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="icofont-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="icofont-skype"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="icofont-linkedin"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="icofont-pinterest"></i></a></li>
-                        </ul>
+                        <h4 class="mb-0">{{$companyProfile->company_name}}</h4>
+                        <p>{{$companyProfile->industry->name}}</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +58,7 @@
                         <div class="form-group">
                             <label for="location">Job Location</label>
                             <select class="form-control" name="location_id" id="location">
-                                @foreach($location as $location)
+                                @foreach($locations as $location)
                                     <option value="{{ $location->id }}">{{ $location->name }}</option>
                                 @endforeach
                             </select>
@@ -80,6 +72,18 @@
                         <div class="form-check mb-4">
                             <input type="checkbox" class="form-check-input" name="sembunyikan_gaji" id="hideSalary">
                             <label class="form-check-label" for="hideSalary">Hide Salary</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Field of Work</label>
+                            <select name="field_of_work_id" class="form-control" required>
+                                <option value="">Select Field of Work</option>
+                                @foreach($fieldOfWorks as $field)
+                                    <option value="{{ $field->id }}" {{ old('field_of_work_id') == $field->id ? 'selected' : '' }}>
+                                        {{ $field->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">

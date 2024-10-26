@@ -12,8 +12,13 @@ class UserVerifications extends Model
     protected $table = 'user_verifications';
 
     protected $fillable = [
-        'token',
         'user_id',
+        'token',
+        'expires_at'
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime'
     ];
 
     public function user()

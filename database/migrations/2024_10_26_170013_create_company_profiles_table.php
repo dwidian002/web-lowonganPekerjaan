@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
-            $table->foreignId('location_id')->constrained()->onDelete('cascade');  
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->foreignId('industry_id')->constrained('industry')->onDelete('cascade');  
+            $table->foreignId('type_company_id')->constrained('type_company')->onDelete('cascade'); 
             $table->string('company_name');
-            $table->string('industry');
             $table->year('tahun_berdiri');
             $table->string('alamat_lengkap');
             $table->text('description');
             $table->string('website')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps(); 
-        }); 
+        });
     }
 
     /**

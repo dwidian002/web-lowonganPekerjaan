@@ -48,7 +48,27 @@
                                     <input type="text" name="company_name" class="form-control" placeholder="Company_name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" name="industry" class="form-control" placeholder="Industry" required>
+                                    <label for="industry_id" class="form-label">Industry</label>
+                                    <select name="industry_id" class="form-control @error('industry_id') is-invalid @enderror" required>
+                                        <option value="">Select Industry</option>
+                                        @foreach($industry as $ind)
+                                            <option value="{{ $ind->id }}" {{ old('industry_id') == $ind->id ? 'selected' : '' }}>
+                                                {{ $ind->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('industry_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Type Company</label>
+                                    <select name="type_company" class="form-control" required>
+                                        <option value="">Select Type Company</option>
+                                        @foreach($type_company as $type_company)
+                                            <option value="{{ $type_company->id }}">{{ $type_company->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <input type="year" name="tahun_berdiri" class="form-control" placeholder="Year Founded" required>
@@ -73,10 +93,13 @@
                                 <div class="mb-3">
                                     <input type="text" name="website" class="form-control" placeholder="Website" required>
                                 </div>
-                                <!-- Input logo (optional) -->
                                 <div class="mb-3">
-                                    <label for="logo">Company Logo (Optional)</label>
-                                    <input type="file" name="logo" class="form-control" accept="image/*">
+                                    <label for="logo" class="form-label">Company Logo (Optional)</label>
+                                    <img id="logoPreview" 
+                                         src="{{ asset('layout/assets/images/service/default-logo.png') }}" 
+                                         alt="Logo Preview" 
+                                         style="max-width: 100px; display: block; margin-bottom: 10px;">
+                                    <input type="file" name="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">
                                 </div>
                                 <button type="submit" class="btn bg-gradient-danger w-100 my-4 mb-2">Register</button>
                             </div>
@@ -87,5 +110,20 @@
         </div>
     </div>
 </main>
+
+<script>
+    function previewLogo(event) {
+        const logoPreview = document.getElementById('logoPreview');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                logoPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 @endsection

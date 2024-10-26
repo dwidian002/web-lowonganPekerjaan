@@ -43,10 +43,25 @@
                         </div>
                         <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{url('/register')}}" class="text-dark font-weight-bolder">Sign in</a></p>
                     </form>
+
+                    
                 </div>
             </div>
         </div>
     </div>
+
+    @if(session('unverified_email'))
+        <div class="mt-4">
+            <p class="text-sm text-red-600">Email belum terverifikasi</p>
+            <form action="{{ route('verification.resend') }}" method="POST" class="mt-2">
+                @csrf
+                <input type="hidden" name="email" value="{{ session('unverified_email') }}">
+                <button type="submit" class="text-sm text-indigo-600 hover:text-indigo-500">
+                    Kirim ulang email verifikasi
+                </button>
+            </form>
+        </div>
+    @endif
 </main>
 
 @endsection

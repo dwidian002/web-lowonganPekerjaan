@@ -9,25 +9,41 @@ class JobPosting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['position', 'location_id', 'company_profile_id', 'job_category_id', 'job_description', 'requirements_desciption', 'gaji','status','sembunyikan_gaji'];
+    protected $fillable = [
+        'position',
+        'location_id',
+        'field_of_work_id',
+        'company_profile_id',
+        'job_category_id',
+        'job_description',
+        'requirements_desciption',
+        'gaji',
+        'status',
+        'sembunyikan_gaji'
+    ];
 
-    public function companyProfile() {
+    public function companyProfile()
+    {
         return $this->belongsTo(CompanyProfile::class);
     }
 
-    public function Location() {
-        return $this->belongsToMany(Location::class);
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 
-    public function FieldOfWork() {
-        return $this->belongsToMany(FieldOfWork::class);
+    public function fieldOfWork()
+    {
+        return $this->belongsTo(FieldOfWork::class);
     }
 
-    public function jobCategories() {
-        return $this->belongsToMany(JobCategory::class,);
+    public function jobCategory()
+    {
+        return $this->belongsTo(JobCategory::class);
     }
 
-    public function applications() {
+    public function applications()
+    {
         return $this->hasMany(Application::class);
     }
 }

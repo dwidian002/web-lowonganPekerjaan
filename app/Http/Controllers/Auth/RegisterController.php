@@ -9,7 +9,10 @@ use App\Models\UserVerifications;
 use Illuminate\Support\Str;
 use App\Models\CompanyProfile;
 use App\Models\ApplicantProfile;
+use App\Models\Industry;
 use App\Models\Location;
+use App\Models\TypeCompany;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,6 +45,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'applicant',
+            'email_verified_at' => null,
         ]);
 
         // dd($user->id);
@@ -60,6 +64,7 @@ class RegisterController extends Controller
         UserVerifications::create([
             'user_id' => $user->id,
             'token' => $token,
+            'expires_at' => Carbon::now()->addHours(24),
         ]);
 
         Mail::to($user->email)->send(new RegisterMail($user, $token));
@@ -74,8 +79,13 @@ class RegisterController extends Controller
 
     public function showCompanyRegisterForm()
     {
-        $location = Location::all();
-        return view('auth.registercompany', compact('location'));
+        $data = [
+            'industry' => Industry::all(),
+            'type_company' => TypeCompany::all(),
+            'location' => Location::all(),
+        ];
+
+        return view('auth.registercompany', $data);
     }
 
     public function registerCompany(Request $request)
@@ -85,7 +95,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'company_name' => 'required|string|max:255',
-            'industry' => 'required|string|max:255',
+            'industry_id' => 'required|exists:industry,id',
+            'type_company' => 'required|exists:type_company,id',
             'tahun_berdiri' => 'required|integer',
             'location' => 'required|exists:locations,id',
             'alamat_lengkap' => 'required|string',
@@ -98,12 +109,14 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'company',
+            'email_verified_at' => null,
         ]);
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
-            // dd($logoPath);
+        } else {
+            $logoPath = 'layout/assets/images/service/default-logo.png';
         }
 
         // dd($user->user_id);
@@ -111,7 +124,8 @@ class RegisterController extends Controller
         $companyProfile = CompanyProfile::create([
             'user_id' => $user->id,
             'company_name' => $request->company_name,
-            'industry' => $request->industry,
+            'industry_id' => $request->industry_id,
+            'type_company_id' => $request->type_company,
             'tahun_berdiri' => $request->tahun_berdiri,
             'location_id' => $request->location,
             'alamat_lengkap' => $request->alamat_lengkap,
@@ -119,14 +133,19 @@ class RegisterController extends Controller
             'website' => $request->website,
             'logo' => $logoPath
         ]);
+        // dd($companyProfile);
 
-        dd($companyProfile); 
+        $user->update([
+            'company_profile_id' => $companyProfile->id
+        ]);
+
 
         $token = Str::random(60);
 
         UserVerifications::create([
             'user_id' => $user->id,
             'token' => $token,
+            'expires_at' => Carbon::now()->addHours(24),
         ]);
 
         Mail::to($user->email)->send(new RegisterMail($user, $token));

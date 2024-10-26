@@ -10,12 +10,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldOfWorkController;
+use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TypeCompanyController;
 use App\Http\Controllers\VerificationController;
 use App\Models\Company;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,12 +37,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', [LoginController::class, 'index'])->name('auth.index');
+Route::post('/login', [LoginController::class, 'login'])->name('auth.verify');
+
+// Email Verification Routes
+Route::get('/verify-email', [LoginController::class, 'verifyEmail'])->name('verify.email');
+Route::get('/email/verify', [RegisterController::class, 'verify'])->name('verification.notice');
+Route::post('/email/resend', [LoginController::class, 'resendVerification'])->name('verification.resend');
+
+// Registration Routes
+Route::get('register/applicant', [RegisterController::class, 'showApplicantRegisterForm'])->name('register.applicant');
+Route::post('register/applicant/submit', [RegisterController::class, 'registerApplicant'])->name('register.applicant.submit');
+
+Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
+Route::post('/profile/education-skills-experience/', [ProfileController::class, 'storeExs'])->name('exs.store');
+
+Route::get('register/company', [RegisterController::class, 'showCompanyRegisterForm'])->name('register.company');
+Route::post('register/company/submit', [RegisterController::class, 'registerCompany'])->name('register.company.submit');
+
 
 Route::get('home', [HomeController::class, 'index'])->name('indexUser');
 
-
-Route::get('/login', [LoginController::class, 'index'])->name('auth.index');
-Route::post('/login', [LoginController::class, 'verify'])->name('auth.verify');
 
 Route::middleware(['auth', 'company'])->group(function () {
 
@@ -46,6 +65,7 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.show');
 
     Route::get('/job-posting', [JobPostingController::class, 'index'])->name('job-posting.index');
+    Route::get('/job-posting/detail', [JobPostingController::class, 'detail'])->name('job-posting.show');
     Route::get('/job-posting/add', [JobPostingController::class, 'add'])->name('job-posting.add');
     Route::post('/job-posting/store', [JobPostingController::class, 'store'])->name('job-posting.store');
     Route::get('/job-posting/edit/{id}', [JobPostingController::class, 'edit'])->name('job-posting.edit');
@@ -68,6 +88,20 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'admin'])->name('indexAdmin');
+
+        Route::get('/industry', [IndustryController::class, 'index'])->name('industry.index');
+        Route::get('/industry/add', [IndustryController::class, 'add'])->name('industry.add');
+        Route::post('/industry/store', [IndustryController::class, 'store'])->name('industry.store');
+        Route::get('/industry/edit/{id}', [IndustryController::class, 'edit'])->name('industry.edit');
+        Route::post('/industry/update', [IndustryController::class, 'update'])->name('industry.update');
+        Route::get('/industry/delete{id}', [IndustryController::class, 'delete'])->name('industry.delete');
+
+        Route::get('/type-company', [TypeCompanyController::class, 'index'])->name('type-company.index');
+        Route::get('/type-company/add', [TypeCompanyController::class, 'add'])->name('type-company.add');
+        Route::post('/type-company/store', [TypeCompanyController::class, 'store'])->name('type-company.store');
+        Route::get('/type-company/edit/{id}', [TypeCompanyController::class, 'edit'])->name('type-company.edit');
+        Route::post('/type-company/update', [TypeCompanyController::class, 'update'])->name('type-company.update');
+        Route::get('/type-company/delete{id}', [TypeCompanyController::class, 'delete'])->name('type-company.delete');
 
         Route::get('/location', [LocationController::class, 'index'])->name('location.index');
         Route::get('/location/add', [LocationController::class, 'add'])->name('location.add');
@@ -109,20 +143,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // });
 
-// Route untuk register applicant
-Route::get('register/applicant', [RegisterController::class, 'showApplicantRegisterForm'])->name('register.applicant');
-Route::post('register/applicant/submit', [RegisterController::class, 'registerApplicant'])->name('register.applicant.submit');
-
-//route untuk register company
-Route::get('register/company', [RegisterController::class, 'showCompanyRegisterForm'])->name('register.company');
-Route::post('register/company/submit', [RegisterController::class, 'registerCompany'])->name('register.company.submit');
-
-// Routes untuk verifikasi email
-Route::get('/verify-ur-email', [RegisterController::class, 'verify'])->name('verification.notice');
-Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->name('email.verify');
-
 //Route untuk mengisi education, skills dan exerience applicant
-Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
-Route::post('/profile/education-skills-experience/', [ProfileController::class, 'storeExs'])->name('exs.store');
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('auth.logout');
+
+
+Route::get('files/{filename}', function ($filename) {
+    $path = storage_path('app/public/logos' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+})->name('storage');

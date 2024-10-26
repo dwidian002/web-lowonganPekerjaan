@@ -9,18 +9,41 @@ class CompanyProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_name','location_id', 'industry', 'tahun_berdiri','alamat_lengkap', 'description', 'website', 'logo', 'user_id'];
+    protected $fillable = [
+        'company_name',
+        'location_id',
+        'industry_id',
+        'type_company_id',
+        'tahun_berdiri',
+        'alamat_lengkap',
+        'description',
+        'website',
+        'logo',
+        'user_id'
+    ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function location() {
+    public function location()
+    {
         return $this->belongsTo(Location::class, 'location_id');
     }
 
-    public function jobPostings() {
+    public function industry()
+    {
+        return $this->belongsTo(Industry::class, 'industry_id');
+    }
+
+    public function typeCompany()
+    {
+        return $this->belongsTo(TypeCompany::class, 'type_company_id');
+    }
+
+    public function jobPostings()
+    {
         return $this->hasMany(JobPosting::class);
     }
 }
-

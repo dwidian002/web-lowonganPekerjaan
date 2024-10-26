@@ -22,35 +22,82 @@
   </section>
   
   
-  <section class="section service-2">
-      <div class="container">
-          <div class="row">
-            <div class="row">
-                @foreach($companies as $company)
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="service-block mb-5" style="min-height: 400px;">
-                            @if ($company->logo)
-                                <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->company_name }}" style="max-width: 100%; height: 200px; object-fit: cover;">
-                            @else
-                                <img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" alt="Default Logo" style="max-width: 100%; height: 200px; object-fit: cover;">
-                            @endif
-                            <div class="content" style="overflow: hidden;">
-                                <h4 class="mt-4 mb-2 title-color" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                                    {{ Str::limit($company->company_name, 20) }}
-                                </h4>
-                                <ul style="list-style-type: none; padding: 0;">
-                                    <li><strong>Industry:</strong> {{ $company->industry }}</li>
-                                    <li><strong>Tahun Berdiri:</strong> {{ $company->tahun_berdiri }}</li>
-                                    <li><strong>Location:</strong> {{ $company->location->name }}</li>
-                                    <li><strong>Website:</strong> <a href="{{ $company->website }}" target="_blank">{{ Str::limit($company->website, 30) }}</a></li>
-                                </ul>
-                                
-                                <p class="mb-4" style="height: 60px; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ Str::limit($company->description, 100) }}
-                                </p>
-                                <a href="{{ route('company.detail', $company->id) }}" class="btn btn-xs btn-primary mt-2" style="font-size: 12px; padding: 5px 10px;">View More</a>
+  <section class="section service-1">
+    <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
 
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <div class="row">
+            @forelse($companies as $company)
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow job-card">
+                        <div class="card-body">
+                            <!-- Company Header -->
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="company-logo mr-3">
+                                    <a href="{{ route('company.detail', $company->id) }}">
+                                    @if ($company->logo)
+                                        <img src="{{ asset('storage/' . $company->logo) }}" 
+                                             alt="{{ $company->company_name }}" 
+                                             class="rounded"
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                             
+                                    @else
+                                        <img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" 
+                                             alt="Default Logo" 
+                                             class="rounded"
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h5 class="company-name mb-0">{{ $company->company_name }}</h5>
+                                </div>
                             </div>
+
+                            <div class="job-tags mb-3">
+                                <span class="badge badge-info mr-2">{{ $company->typeCompany->name }}</span>
+                                <span class="badge badge-success mr-2">Founded In {{ $company->tahun_berdiri }}</span>
+                            </div>
+
+                            <div class="job-info">
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-industries-2 mr-2 text-warning"></i>
+                                    <span> <strong>Industry :  </strong> {{ $company->industry->name }}</span>
+                                </div>
+                            </div>
+                            <div class="job-info">
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-location-pin mr-2 text-danger"></i>
+                                    <span> <strong>Location :  </strong> {{ $company->location->name }}</span>
+                                </div>
+                            </div>
+                            <div class="job-info">
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-web mr-2 text-secondary"></i>
+                                    <span><a href="{{ $company->website }}" target="_blank">{{ Str::limit($company->website, 30) }}</a></span>
+                                </div>
+                            </div>
+    
+                            {{-- <div class="text-center mt-4">
+                                <a href="{{ route('company.detail', $company->id) }}" 
+                                   class="btn btn-outline-primary btn-sm btn-block">
+                                    View more
+                                </a>
+                            </div>     --}}
                         </div>
                     </div>
                 @endforeach
@@ -172,5 +219,86 @@
           </div>
       </div>
   </footer>
+
+  <style>
+    .job-card {
+        transition: transform 0.2s ease-in-out;
+        border-radius: 12px;
+    }
+    
+    .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .company-logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    .company-logo img {
+        width: 70px !important;  
+        height: 70px !important; 
+        border: 1px solid #edf2f7;
+        object-fit: cover;
+    }
+    
+    .company-name {
+        color: #333;
+        font-size: 1.5rem !important; 
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0;
+    }
+    
+    .job-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2d3748;
+    }
+    
+    .job-tags .badge {
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 0.5em 1em;
+    }
+    
+    .job-info {
+        font-size: 0.9rem;
+        color: #4a5568;
+    }
+    
+    .job-info i {
+        font-size: 1.1rem;
+    }
+    
+    .btn-outline-primary {
+        border-radius: 20px;
+        padding: 0.5rem 2rem;
+        border-width: 2px;
+    }
+    
+    .pagination {
+        margin-bottom: 2rem;
+    }
+    
+    .card-body .d-flex.align-items-center.mb-3 {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .btn-outline-primary {
+        border-radius: 20px;
+        padding: 0.5rem 2rem;
+        border-width: 2px;
+        border-color: #e82454;    
+        color: #e82454;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #e82454;
+        border-color: #e82454;
+        color: white;            
+    }
+    </style>
 
 @endsection
