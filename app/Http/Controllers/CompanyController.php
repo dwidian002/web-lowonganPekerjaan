@@ -61,14 +61,15 @@ class CompanyController extends Controller
         }
     }
 
-    public function list() {
+    public function list()
+    {
         $companies = CompanyProfile::all();
         return view('company.list', compact('companies'));
     }
 
     public function detail($id)
-{
-    $companies = CompanyProfile::findOrFail($id);
-    return view('company.detail', compact('companies'));
-}
+    {
+        $companies = CompanyProfile::findOrFail($id);
+        return view('company.detail', compact('companies'));
+    }
 }
