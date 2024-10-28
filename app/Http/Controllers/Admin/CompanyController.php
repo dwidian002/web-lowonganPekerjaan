@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -61,15 +61,4 @@ class CompanyController extends Controller
         }
     }
 
-    public function list()
-    {
-        $companies = CompanyProfile::all();
-        return view('company.list', compact('companies'));
-    }
-
-    public function detail($id)
-    {
-        $companies = CompanyProfile::findOrFail($id);
-        return view('company.detail', compact('companies'));
-    }
 }

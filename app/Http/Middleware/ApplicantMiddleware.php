@@ -22,6 +22,6 @@ class ApplicantMiddleware
             return $next($request);
         }
 
-        return abort(403, "Anda tidak memiliki Hak Akses ke Halaman ini");
+        return redirect()->route('home')->with('error', 'You do not have access to this page.');
     }
 }

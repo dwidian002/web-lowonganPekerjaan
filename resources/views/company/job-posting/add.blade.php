@@ -1,4 +1,4 @@
-@extends('layoutcompany.main')
+@extends('company.layout.main')
 @section('content')
 
 <section class="page-title bg-1">

@@ -1,4 +1,4 @@
-@extends('layoutcompany.main')
+@extends('applicant.layout.main')
 @section('content')
 
 <section class="banner">

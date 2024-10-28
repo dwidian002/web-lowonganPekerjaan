@@ -77,15 +77,17 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
 
-            switch ($user->role) {
-                case 'admin':
-                    return redirect()->intended('/admin');
-                case 'company':
-                case 'applicant':
-                    return redirect()->intended('/home');
-                default:
-                    return redirect()->route('auth.index');
-            }
+            return redirect()->route('home');
+
+            // switch ($user->role) {
+            //     case 'admin':
+            //         return redirect()->intended('/admin');
+            //     case 'company':
+            //     case 'applicant':
+            //         return redirect()->intended('/home');
+            //     default:
+            //         return redirect()->route('auth.index');
+            // }
         }
 
         return redirect()->route('auth.index')

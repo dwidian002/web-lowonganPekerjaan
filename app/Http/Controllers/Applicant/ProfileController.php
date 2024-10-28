@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Applicant;
 
+use App\Http\Controllers\Controller;
 use App\Models\ApplicantProfile;
 use App\Models\CompanyProfile;
 use App\Models\Education;
@@ -24,7 +25,7 @@ class ProfileController extends Controller
 
         $profile = ApplicantProfile::where('user_id', $user->id)->first();
 
-        return view('profile.exs', ['profile' => $profile]);
+        return view('applicant.profile.exs', ['profile' => $profile]);
     }
 
     public function storeExs(Request $request)

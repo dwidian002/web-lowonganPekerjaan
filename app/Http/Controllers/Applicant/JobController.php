@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Applicant;
 
+use App\Http\Controllers\Controller;
 use App\Models\FieldOfWork;
 use App\Models\JobCategory;
 use App\Models\Location;
@@ -14,6 +15,6 @@ class JobController extends Controller
         $categories = JobCategory::all();
         $locations = Location::all();
         $fields = FieldOfWork::all();
-        return view('job.all', compact('categories', 'locations', 'fields'));
+        return view('applicant.job.all', compact('categories', 'locations', 'fields'));
     }
 }

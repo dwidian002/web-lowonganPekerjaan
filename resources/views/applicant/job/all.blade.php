@@ -1,4 +1,4 @@
-@extends('layoutcompany.main')
+@extends('applicant.layout.main')
 @section('content')
 <section class="page-title bg-1">
     <div class="overlay"></div>
@@ -45,7 +45,6 @@
         <div class="row">
             @forelse($jobPostings as $jobPosting)
             <div class="col-lg-4 col-md-6 mb-4">
-                <a href="{{ route('job-posting.show', $jobPosting->id) }}" class="card-link-wrapper">
             <div class="card h-100 shadow job-card">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
@@ -63,40 +62,43 @@
                             @endif
                         </div>
                         <div>
-                            <h5 class="company-name">{{ $jobPosting->companyProfile->company_name }}</h5>
+                            <a href="{{ route('company.detail', $jobPosting->companyProfile->id) }}" class="company-name-link">
+                                <h5 class="company-name">{{ $jobPosting->companyProfile->company_name }}</h5>
+                            </a>
                         </div>
                     </div>
+                    <a href="{{ route('job-posting.show', $jobPosting->id) }}" class="job-details-link">
+                        <div class="job-content">
+                            <h4 class="job-title mb-3">{{ $jobPosting->position }}</h4>
 
-                    <h4 class="job-title mb-3">{{ $jobPosting->position }}</h4>
-
-                    <div class="job-tags mb-3">
-                        <span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->category_name }}</span>
-                        <span class="badge {{ $jobPosting->status ? 'badge-success' : 'badge-secondary' }}">
-                            {{ $jobPosting->status ? 'Active' : 'Inactive' }}
-                        </span>
-                        <span class="badge badge-primary mr-2">{{ $jobPosting->fieldOfWork->name }}</span>
-                    </div>
-
-                    <div class="job-info">
-                        @unless($jobPosting->sembunyikan_gaji)
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="icofont-money mr-2 text-warning"></i>
-                                <span>Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }}</span>
+                            <div class="job-tags mb-3">
+                                <span class="badge {{ $jobPosting->status ? 'badge-success' : 'badge-secondary' }}">
+                                    {{ $jobPosting->status ? 'Active' : 'Inactive' }}
+                                </span>
+                                <span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->category_name }}</span>
+                                <span class="badge badge-primary mr-2">{{ $jobPosting->fieldOfWork->name }}</span>
                             </div>
-                        @endunless
-                        <div class="d-flex align-items-center">
-                            <i class="icofont-location-pin mr-2 text-danger"></i>
-                            <span>{{ $jobPosting->location->name }}</span>
+
+                            <div class="job-info">
+                                @unless($jobPosting->sembunyikan_gaji)
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="icofont-money mr-2 text-warning"></i>
+                                        <span>Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }}</span>
+                                    </div>
+                                @endunless
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-location-pin mr-2 text-danger"></i>
+                                    <span>{{ $jobPosting->location->name }}</span>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                     </a>
-                    </div>
-                    @empty
-    
-            @endforelse
+                    </a>
+                </div>
+            </div>
         </div>
+        @empty
+        @endforelse
+    </div>
 
         @if($jobPostings->count() > 0)
             <div class="row mt-4">
@@ -108,82 +110,4 @@
     </div>
 </section>
 
-<style>
-.job-card {
-    transition: transform 0.2s ease-in-out;
-    border-radius: 12px;
-    cursor: pointer; 
-}
-
-.job-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-}
-
-.company-logo {
-    display: flex;
-    align-items: center;
-}
-
-.company-logo img {
-    width: 70px !important;  
-    height: 70px !important; 
-    border: 1px solid #edf2f7;
-    object-fit: cover;
-}
-
-.company-name {
-    color: #333;
-    font-size: 1.5rem !important; 
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 0;
-    transition: color 0.2s ease; 
-}
-
-.company-name:hover {
-    color: #e82454;
-    text-decoration: none;
-}
-
-.job-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.job-tags .badge {
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 0.5em 1em;
-}
-
-.job-info {
-    font-size: 0.9rem;
-    color: #4a5568;
-}
-
-.job-info i {
-    font-size: 1.1rem;
-}
-
-.pagination {
-    margin-bottom: 2rem;
-}
-
-.card-body .d-flex.align-items-center.mb-3 {
-    margin-bottom: 1.5rem !important;
-}
-
-
-.card-link-wrapper {
-    color: inherit;
-    text-decoration: none;
-}
-
-.card-link-wrapper:hover {
-    text-decoration: none;
-    color: inherit;
-}
-</style>
 @endsection

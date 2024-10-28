@@ -81,6 +81,242 @@
     min-width: 200px;
     max-width: 300px;
 }
+
+.page-title {
+    position: relative;
+    padding: 60px 0;
+}
+
+.page-title .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.company-single {
+    padding: 60px 0 0;
+}
+
+.company-logo {
+    padding-right: 2rem;
+}
+
+.company-logo .logo-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.company-title {
+    font-size: 2.5rem;
+    color: #223a66;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.company-content {
+    max-height: 600px;
+    overflow: auto;
+}
+
+.content-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #223a66;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.section-text {
+    color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.company-sidebar {
+    padding-top: 3.7rem;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-item:last-child {
+    border-bottom: none;
+}
+
+.sidebar-item i {
+    font-size: 1.2rem;
+    width: 30px;
+}
+
+.sidebar-item a {
+    color: #6c757d;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.sidebar-item a:hover {
+    color: #223a66;
+}
+
+.job-postings {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+    margin-top: 0;
+}
+
+.job-card {
+    transition: transform 0.2s ease-in-out;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.card .company-logo {
+    display: flex;
+    align-items: center;
+    padding-right: 0;
+}
+
+.card .company-logo img {
+    width: 70px !important;
+    height: 70px !important;
+    border: 1px solid #edf2f7;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.company-name {
+    color: #333;
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0;
+    transition: color 0.2s ease;
+}
+
+.company-name:hover {
+    color: #e82454;
+    text-decoration: none;
+}
+
+.job-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.job-tags .badge {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.5em 1em;
+}
+
+.job-info {
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.job-info i {
+    font-size: 1.1rem;
+}
+
+.card-link-wrapper {
+    color: inherit;
+    text-decoration: none;
+}
+
+.card-link-wrapper:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-outline-primary {
+    border-radius: 20px;
+    padding: 0.5rem 2rem;
+    border-width: 2px;
+    border-color: #e82454;
+    color: #e82454;
+}
+
+.btn-outline-primary:hover {
+    background-color: #e82454;
+    border-color: #e82454;
+    color: white;
+}
+
+.card-body .d-flex.align-items-center.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.pagination {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 991px) {
+    .page-title {
+        padding: 40px 0;
+    }
+
+    .company-single {
+        padding: 40px 0 0;
+    }
+
+    .company-logo {
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+
+    .company-title {
+        text-align: center;
+    }
+
+    .company-sidebar {
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .job-postings {
+        padding: 30px 0;
+    }
+
+    .job-card {
+        margin-bottom: 1rem;
+    }
+
+    .company-name {
+        font-size: 1.25rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-logo .logo-img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .company-title {
+        font-size: 2rem;
+    }
+}
 </style>
 
 <body id="top">
@@ -88,7 +324,7 @@
 
 
 <header>
-    @include('layoutcompany.header')
+    @include('applicant.layout.header')
 </header>
 
 <!-- Flash Messages -->

@@ -1,23 +1,20 @@
 <?php
 
-use App\Http\Controllers\Auth\ApplicantRegisterController;
-use App\Http\Controllers\Auth\CompanyRegisterController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CompanyController as AdminCompanyController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FieldOfWorkController;
+use App\Http\Controllers\Admin\IndustryController;
+use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\TypeCompanyController;
+use App\Http\Controllers\Applicant\CompanyController;
+use App\Http\Controllers\Applicant\JobController;
+use App\Http\Controllers\Applicant\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FieldOfWorkController;
-use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\JobPostingController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TypeCompanyController;
-use App\Http\Controllers\VerificationController;
-use App\Models\Company;
+use App\Http\Controllers\Company\JobPostingController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -56,29 +53,28 @@ Route::get('register/company', [RegisterController::class, 'showCompanyRegisterF
 Route::post('register/company/submit', [RegisterController::class, 'registerCompany'])->name('register.company.submit');
 
 
-Route::get('home', [HomeController::class, 'index'])->name('indexUser');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
 
 Route::middleware(['auth', 'company'])->group(function () {
 
-    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
-    Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.show');
 
     Route::get('/job-posting', [JobPostingController::class, 'index'])->name('job-posting.index');
-    Route::get('/job-posting/detail', [JobPostingController::class, 'detail'])->name('job-posting.show');
+    Route::get('/job-posting/detail/{id}', [JobPostingController::class, 'detail'])->name('job-posting.show');
     Route::get('/job-posting/add', [JobPostingController::class, 'add'])->name('job-posting.add');
     Route::post('/job-posting/store', [JobPostingController::class, 'store'])->name('job-posting.store');
     Route::get('/job-posting/edit/{id}', [JobPostingController::class, 'edit'])->name('job-posting.edit');
-    Route::post('/job-posting/update', [JobPostingController::class, 'update'])->name('job-posting.update');
+    Route::post('/job-posting/update/{id}', [JobPostingController::class, 'update'])->name('job-posting.update');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
 
 
-    Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
-    Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
 });
 
 Route::middleware(['auth', 'applicant'])->group(function () {
-    // Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+    
+    Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
+    Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
+    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
     // Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
     // Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     // Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
@@ -126,12 +122,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/category/delete{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
 
-        Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
-        Route::get('/company/add', [CompanyController::class, 'add'])->name('company.add');
-        Route::post('/company/store', [CompanyController::class, 'store'])->name('company.store');
-        Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
-        Route::post('/company/update', [CompanyController::class, 'update'])->name('company.update');
-        Route::get('/company/delete{id}', [CompanyController::class, 'delete'])->name('company.delete');
+        Route::get('/company', [AdminCompanyController::class, 'index'])->name('company.index');
+        Route::get('/company/add', [AdminCompanyController::class, 'add'])->name('company.add');
+        Route::post('/company/store', [AdminCompanyController::class, 'store'])->name('company.store');
+        Route::get('/company/edit/{id}', [AdminCompanyController::class, 'edit'])->name('company.edit');
+        Route::post('/company/update', [AdminCompanyController::class, 'update'])->name('company.update');
+        Route::get('/company/delete{id}', [AdminCompanyController::class, 'delete'])->name('company.delete');
     });
 });
 

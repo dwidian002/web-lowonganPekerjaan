@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Company;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\CompanyProfile;
 use App\Models\FieldOfWork;
 use App\Models\JobCategory;
 use App\Models\JobPosting;
 use App\Models\Location;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -28,7 +29,7 @@ class JobPostingController extends Controller
             ->latest()
             ->paginate(9);
 
-        return view('job-posting.list', compact('jobPostings'));
+        return view('company.job-posting.list', compact('jobPostings'));
     }
 
     public function add()
@@ -51,7 +52,7 @@ class JobPostingController extends Controller
             $fieldOfWorks = FieldOfWork::all();
             $categories = JobCategory::all();
 
-            return view('job-posting.add', compact(
+            return view('company.job-posting.add', compact(
                 'companyProfile',
                 'locations',
                 'fieldOfWorks',
@@ -104,4 +105,75 @@ class JobPostingController extends Controller
                 ->with('error', 'Failed to create job posting. ' . $e->getMessage());
         }
     }
+
+    public function detail($id)
+    {
+        $jobPosting = JobPosting::with(['companyProfile', 'location', 'fieldOfWork', 'jobCategory'])
+            ->findOrFail($id);
+        return view('company.job-posting.detail', compact('jobPosting'));
+    }
+
+    public function edit($id)
+{
+    $jobPosting = JobPosting::findOrFail($id);
+    
+    $locations = Location::all();
+    $field_of_work = FieldOfWork::all();
+    $jobCategories = JobCategory::all();
+    $companyProfiles = CompanyProfile::all();
+    
+    return view('company.job-posting.edit', compact(
+        'jobPosting',
+        'locations',
+        'field_of_work',
+        'jobCategories',
+        'companyProfiles'
+    ));
+}
+
+public function update(Request $request, $id)
+{
+    // Validasi input dengan status boolean
+    $request->validate([
+        'position' => 'required|string|max:255',
+        'location_id' => 'required|exists:locations,id',
+        'field_of_work_id' => 'required|exists:fields_of_work,id',
+        'job_category_id' => 'required|exists:job_categories,id',
+        'job_description' => 'required|string',
+        'requirements_desciption' => 'required|string',
+        'gaji' => 'required|numeric',
+        'status' => 'required|boolean',  // Ubah validasi ke boolean
+        'sembunyikan_gaji' => 'boolean'
+    ]);
+
+    try {
+        $jobPosting = JobPosting::findOrFail($id);
+        
+        // Handle boolean values
+        $status = filter_var($request->status, FILTER_VALIDATE_BOOLEAN);
+        $sembunyikan_gaji = $request->has('sembunyikan_gaji');
+        
+        // Update data
+        $jobPosting->update([
+            'position' => $request->position,
+            'location_id' => $request->location_id,
+            'field_of_work_id' => $request->field_of_work_id,
+            'job_category_id' => $request->job_category_id,
+            'job_description' => $request->job_description,
+            'requirements_desciption' => $request->requirements_desciption,
+            'gaji' => $request->gaji,
+            'status' => $status,
+            'sembunyikan_gaji' => $sembunyikan_gaji
+        ]);
+
+        return redirect()
+            ->route('job-posting.index')
+            ->with('success', 'Job posting berhasil diperbarui');
+    } catch (\Exception $e) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Terjadi kesalahan saat memperbarui job posting: ' . $e->getMessage());
+    }
+}
 }
