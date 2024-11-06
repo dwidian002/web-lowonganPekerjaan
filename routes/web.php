@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FieldOfWorkController;
 use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\TypeCompanyController;
+use App\Http\Controllers\Applicant\ApplyJobController;
 use App\Http\Controllers\Applicant\CompanyController;
 use App\Http\Controllers\Applicant\JobController;
 use App\Http\Controllers\Applicant\ProfileController;
@@ -66,15 +67,17 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/job-posting/edit/{id}', [JobPostingController::class, 'edit'])->name('job-posting.edit');
     Route::post('/job-posting/update/{id}', [JobPostingController::class, 'update'])->name('job-posting.update');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
-
-
 });
 
 Route::middleware(['auth', 'applicant'])->group(function () {
-    
+
     Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
     Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
+    Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
+
+    Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
+    Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');
     // Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
     // Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     // Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
@@ -82,54 +85,52 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 
 // Route::group(['middleware' => 'auth:user'], function(){
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('/', [DashboardController::class, 'admin'])->name('indexAdmin');
 
-        Route::get('/industry', [IndustryController::class, 'index'])->name('industry.index');
-        Route::get('/industry/add', [IndustryController::class, 'add'])->name('industry.add');
-        Route::post('/industry/store', [IndustryController::class, 'store'])->name('industry.store');
-        Route::get('/industry/edit/{id}', [IndustryController::class, 'edit'])->name('industry.edit');
-        Route::post('/industry/update', [IndustryController::class, 'update'])->name('industry.update');
-        Route::get('/industry/delete{id}', [IndustryController::class, 'delete'])->name('industry.delete');
+    Route::get('/industry', [IndustryController::class, 'index'])->name('industry.index');
+    Route::get('/industry/add', [IndustryController::class, 'add'])->name('industry.add');
+    Route::post('/industry/store', [IndustryController::class, 'store'])->name('industry.store');
+    Route::get('/industry/edit/{id}', [IndustryController::class, 'edit'])->name('industry.edit');
+    Route::post('/industry/update', [IndustryController::class, 'update'])->name('industry.update');
+    Route::get('/industry/delete{id}', [IndustryController::class, 'delete'])->name('industry.delete');
 
-        Route::get('/type-company', [TypeCompanyController::class, 'index'])->name('type-company.index');
-        Route::get('/type-company/add', [TypeCompanyController::class, 'add'])->name('type-company.add');
-        Route::post('/type-company/store', [TypeCompanyController::class, 'store'])->name('type-company.store');
-        Route::get('/type-company/edit/{id}', [TypeCompanyController::class, 'edit'])->name('type-company.edit');
-        Route::post('/type-company/update', [TypeCompanyController::class, 'update'])->name('type-company.update');
-        Route::get('/type-company/delete{id}', [TypeCompanyController::class, 'delete'])->name('type-company.delete');
+    Route::get('/type-company', [TypeCompanyController::class, 'index'])->name('type-company.index');
+    Route::get('/type-company/add', [TypeCompanyController::class, 'add'])->name('type-company.add');
+    Route::post('/type-company/store', [TypeCompanyController::class, 'store'])->name('type-company.store');
+    Route::get('/type-company/edit/{id}', [TypeCompanyController::class, 'edit'])->name('type-company.edit');
+    Route::post('/type-company/update', [TypeCompanyController::class, 'update'])->name('type-company.update');
+    Route::get('/type-company/delete{id}', [TypeCompanyController::class, 'delete'])->name('type-company.delete');
 
-        Route::get('/location', [LocationController::class, 'index'])->name('location.index');
-        Route::get('/location/add', [LocationController::class, 'add'])->name('location.add');
-        Route::post('/location/store', [LocationController::class, 'store'])->name('location.store');
-        Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
-        Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
-        Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
+    Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+    Route::get('/location/add', [LocationController::class, 'add'])->name('location.add');
+    Route::post('/location/store', [LocationController::class, 'store'])->name('location.store');
+    Route::get('/location/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
+    Route::post('/location/update', [LocationController::class, 'update'])->name('location.update');
+    Route::get('/location/delete{id}', [LocationController::class, 'delete'])->name('location.delete');
 
-        Route::get('/field-work', [FieldOfWorkController::class, 'index'])->name('field-work.index');
-        Route::get('/field-work/add', [FieldOfWorkController::class, 'add'])->name('field-work.add');
-        Route::post('/field-work/store', [FieldOfWorkController::class, 'store'])->name('field-work.store');
-        Route::get('/field-work/edit/{id}', [FieldOfWorkController::class, 'edit'])->name('field-work.edit');
-        Route::post('/field-work/update', [FieldOfWorkController::class, 'update'])->name('field-work.update');
-        Route::get('/field-work/delete{id}', [FieldOfWorkController::class, 'delete'])->name('field-work.delete');
+    Route::get('/field-work', [FieldOfWorkController::class, 'index'])->name('field-work.index');
+    Route::get('/field-work/add', [FieldOfWorkController::class, 'add'])->name('field-work.add');
+    Route::post('/field-work/store', [FieldOfWorkController::class, 'store'])->name('field-work.store');
+    Route::get('/field-work/edit/{id}', [FieldOfWorkController::class, 'edit'])->name('field-work.edit');
+    Route::post('/field-work/update', [FieldOfWorkController::class, 'update'])->name('field-work.update');
+    Route::get('/field-work/delete{id}', [FieldOfWorkController::class, 'delete'])->name('field-work.delete');
 
 
-        Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-        Route::get('/category/add', [CategoryController::class, 'add'])->name('category.add');
-        Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
-        Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-        Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
-        Route::get('/category/delete{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/add', [CategoryController::class, 'add'])->name('category.add');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('/category/delete{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
 
-        Route::get('/company', [AdminCompanyController::class, 'index'])->name('company.index');
-        Route::get('/company/add', [AdminCompanyController::class, 'add'])->name('company.add');
-        Route::post('/company/store', [AdminCompanyController::class, 'store'])->name('company.store');
-        Route::get('/company/edit/{id}', [AdminCompanyController::class, 'edit'])->name('company.edit');
-        Route::post('/company/update', [AdminCompanyController::class, 'update'])->name('company.update');
-        Route::get('/company/delete{id}', [AdminCompanyController::class, 'delete'])->name('company.delete');
-    });
+    Route::get('/company', [AdminCompanyController::class, 'index'])->name('company.index');
+    Route::get('/company/add', [AdminCompanyController::class, 'add'])->name('company.add');
+    Route::post('/company/store', [AdminCompanyController::class, 'store'])->name('company.store');
+    Route::get('/company/edit/{id}', [AdminCompanyController::class, 'edit'])->name('company.edit');
+    Route::post('/company/update', [AdminCompanyController::class, 'update'])->name('company.update');
+    Route::get('/company/delete{id}', [AdminCompanyController::class, 'delete'])->name('company.delete');
 });
+
 
 
 

@@ -9,7 +9,16 @@ class ApplicantProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'tanggal_lahir', 'alamat_lengkap', 'phone_number', 'resume'];
+    protected $fillable = [
+        'user_id',
+        'name',
+        'tanggal_lahir',
+        'alamat_lengkap',
+        'phone_number',
+        'about_me',
+        'foto',
+        'gender'
+    ];
 
     public function user()
     {

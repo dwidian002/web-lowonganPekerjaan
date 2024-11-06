@@ -35,10 +35,12 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'name' => 'required|string',
+            'gender' => 'required|in:male,female',
             'tanggal_lahir' => 'required|date',
             'alamat_lengkap' => 'required|string',
             'phone_number' => 'required|string',
-            'resume' => 'nullable|string',
+            'about_me' => 'required|string',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $user = User::create([
@@ -48,15 +50,26 @@ class RegisterController extends Controller
             'email_verified_at' => null,
         ]);
 
-        // dd($user->id);
+        $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            $fotoPath = $request->file('foto')->store('fotos', 'public');
+        } else {
+            $fotoPath = 'layout/assets/images/service/default-foto.jpg';
+        }
 
-        ApplicantProfile::create([
+        $applicantProfile = ApplicantProfile::create([
             'user_id' => $user->id,
             'name' => $request->name,
+            'gender' => $request->gender,
             'tanggal_lahir' => $request->tanggal_lahir,
             'alamat_lengkap' => $request->alamat_lengkap,
             'phone_number' => $request->phone_number,
-            'resume' => $request->resume,
+            'about_me' => $request->about_me,
+            'foto' => $fotoPath
+        ]);
+
+        $user->update([
+            'applicant_profile_id' => $applicantProfile->id
         ]);
 
         $token = Str::random(60);
@@ -102,7 +115,7 @@ class RegisterController extends Controller
             'alamat_lengkap' => 'required|string',
             'description' => 'required|string',
             'website' => 'required|url',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $user = User::create([

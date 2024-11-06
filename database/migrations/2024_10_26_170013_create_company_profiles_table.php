@@ -21,8 +21,8 @@ return new class extends Migration
             $table->year('tahun_berdiri');
             $table->string('alamat_lengkap');
             $table->text('description');
-            $table->string('website')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('website');
+            $table->string('logo');
             $table->timestamps(); 
         });
     }

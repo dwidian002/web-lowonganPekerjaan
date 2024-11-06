@@ -94,7 +94,7 @@
                                     <input type="text" name="website" class="form-control" placeholder="Website" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="logo" class="form-label">Company Logo (Optional)</label>
+                                    <label for="logo" class="form-label">Company Logo</label>
                                     <img id="logoPreview" 
                                          src="{{ asset('layout/assets/images/service/default-logo.png') }}" 
                                          alt="Logo Preview" 

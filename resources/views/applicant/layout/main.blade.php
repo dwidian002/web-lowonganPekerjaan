@@ -216,6 +216,20 @@
     text-decoration: none;
 }
 
+.position {
+    color: #333;
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0;
+    transition: color 0.2s ease;
+}
+
+.position:hover {
+    color: #e82454;
+    text-decoration: none;
+}
+
 .job-title {
     font-size: 1.25rem;
     font-weight: 600;

@@ -73,9 +73,9 @@ class JobPostingController extends Controller
                 'location_id' => 'required|exists:locations,id',
                 'field_of_work_id' => 'required|exists:fields_of_work,id',
                 'gaji' => 'required|numeric|min:0',
-                'sembunyikan_gaji' => 'sometimes|boolean',
+                'sembunyikan_gaji' => 'nullable|boolean',
                 'job_description' => 'required|string',
-                'requirements_description' => 'required|string', // We validate with the form field name
+                'requirements_description' => 'required|string',
                 'job_category_id' => 'required|exists:job_categories,id',
                 'status' => 'required|in:active,inactive'
             ]);
@@ -90,10 +90,10 @@ class JobPostingController extends Controller
                 'company_profile_id' => $companyProfile->id,
                 'job_category_id' => $validated['job_category_id'],
                 'job_description' => $validated['job_description'],
-                'requirements_desciption' => $validated['requirements_description'], // Match the migration field name
+                'requirements_desciption' => $validated['requirements_description'],
                 'gaji' => $validated['gaji'],
                 'status' => $validated['status'] === 'active' ? 1 : 0,
-                'sembunyikan_gaji' => $request->boolean('sembunyikan_gaji'),
+                'sembunyikan_gaji' => $request->has('sembunyikan_gaji'),
             ]);
 
             return redirect()->route('job-posting.index')

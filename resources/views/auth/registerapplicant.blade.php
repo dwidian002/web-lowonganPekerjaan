@@ -27,7 +27,7 @@
                     </div>
                     @endif
 
-                    <form action="{{route('register.applicant.submit')}}" method="POST">
+                    <form action="{{route('register.applicant.submit')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="mb-3">
@@ -48,20 +48,36 @@
                                 <input type="text" name="name" class="form-control" placeholder="Enter Your Name" required>
                             </div>
                             <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select name="gender" class="form-control" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                                 <input type="date" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir" required>
                             </div>
                             <div class="mb-3">
                                 <label for="alamat" class="form-label">Address</label>
-                                <input type="text" name="alamat_lengkap" class="form-control" placeholder="Enter Your Address" required>
+                                <textarea name="alamat_lengkap" class="form-control" placeholder="Enter Your Address" ></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="phone_number" class="form-label">Phone Number</label>
                                 <input type="text" name="phone_number" class="form-control" placeholder="Enter Your Number" required>
                             </div>
                             <div class="mb-3">
-                                <label for="resume" class="form-label">Resume (Optional)</label>
-                                <textarea name="resume" class="form-control" placeholder="Resume"></textarea>
+                                <label for="about_me" class="form-label">About Me</label>
+                                <textarea name="about_me" class="form-control" placeholder="About me..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Foto Profile</label>
+                                <img id="fotoPreview" 
+                                     src="{{ asset('layout/assets/images/service/default-foto.jpg') }}" 
+                                     alt="Foto Preview" 
+                                     style="max-width: 100px; display: block; margin-bottom: 10px;">
+                                <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewFoto(event)">
                             </div>
                             <button type="submit" class="btn bg-gradient-danger w-100 my-4 mb-2">Register</button>
                         </div>
@@ -72,5 +88,20 @@
         </div>
     </div>
 </main>
+
+<script>
+    function previewFoto(event) {
+        const fotoPreview = document.getElementById('fotoPreview');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fotoPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 @endsection

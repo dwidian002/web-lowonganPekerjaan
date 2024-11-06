@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="form-check mb-4">
-                            <input type="checkbox" class="form-check-input" name="sembunyikan_gaji" id="hideSalary">
+                            <input type="checkbox" class="form-check-input" name="sembunyikan_gaji" id="hideSalary" value="1">
                             <label class="form-check-label" for="hideSalary">Hide Salary</label>
                         </div>
 
@@ -101,7 +101,7 @@
                             <select class="form-control" name="job_category_id" id="category">
 
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>

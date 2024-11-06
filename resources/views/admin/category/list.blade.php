@@ -36,7 +36,7 @@
                     @foreach ($category as $row)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$row->category_name}}</td>
+                            <td>{{$row->name}}</td>
                             <td>
                                 <a href="{{route('category.edit',$row->id)}}" class="btn btn-sm btn-warning" style="color: black;"><i class="fa fa-edit"></i> Edit</a>
                                 <a href="{{route('category.delete',$row->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-secondary" style="color: black;"><i class="fa fa-trash"></i> Delete</a>

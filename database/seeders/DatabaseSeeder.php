@@ -30,5 +30,30 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('locations')->insert([
+            'name' => 'DI Yogyakarta'
+        ]);
+
+        DB::table('job_categories')->insert([
+            'name' => 'Work From Home'
+        ]);
+
+        DB::table('fields_of_work')->insert([
+            'name' => 'Sales'
+        ]);
+
+        DB::table('type_company')->insert([
+            'name' => 'Swasta'
+        ]);
+
+        DB::table('industry')->insert([
+            'name' => 'Education & Training'
+        ]);
+
+        
+
+        
+        
     }
 }

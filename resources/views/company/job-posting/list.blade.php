@@ -73,7 +73,7 @@
                                 <span class="badge {{ $jobPosting->status ? 'badge-success' : 'badge-secondary' }}">
                                     {{ $jobPosting->status ? 'Active' : 'Inactive' }}
                                 </span>
-                                <span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->category_name }}</span>
+                                <span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->name }}</span>
                                 <span class="badge badge-primary mr-2">{{ $jobPosting->fieldOfWork->name }}</span>
                             </div>
         

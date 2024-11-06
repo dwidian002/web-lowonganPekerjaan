@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255)->unique();
-            $table->timestamps();
-        });        
+        Schema::table('applications', function (Blueprint $table) {
+            $table->string('portofolio');
+        });
     }
 
     /**
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_categories');
+        Schema::table('applications', function (Blueprint $table) {
+            $table->dropColumn('portofolio');
+        });
     }
 };

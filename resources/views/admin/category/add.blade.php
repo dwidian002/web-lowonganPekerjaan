@@ -10,10 +10,10 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Category</label>
-                    <input type="text" name="category_name" value="{{ old('name') }}"
+                    <input type="text" name="name" value="{{ old('name') }}"
                         class="form-control @error('name') is-invalid
             @enderror">
-                    @error('category_name')
+                    @error('name')
                         <span style="color: red; font-weight: 600; font-size:9pt">{{$message}}</font-sixe:9pt></span>
                     @enderror
                 </div>

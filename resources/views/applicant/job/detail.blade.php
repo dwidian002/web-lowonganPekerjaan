@@ -52,7 +52,34 @@
             
             <div class="col-lg-3 mt-5">
                 <div class="apply-button-wrapper mb-4">
-                    <a href="#" class="btn btn-main-2 btn-icon btn-round-full w-100">Apply</a>
+                    @if ($jobPosting->status)
+                        @if(Auth::check() && Auth::user()->role === 'applicant')
+                            @php
+                                $profile = \App\Models\ApplicantProfile::where('user_id', Auth::id())->first();
+                                $isProfileComplete = false;
+                                
+                                if ($profile) {
+                                    $skills = \App\Models\Skill::where('applicant_profile_id', $profile->id)->count();
+                                    $education = \App\Models\Education::where('applicant_profile_id', $profile->id)->count();
+                                    $experience = \App\Models\Experience::where('applicant_profile_id', $profile->id)->count();
+                                    
+                                    $isProfileComplete = ($skills > 0 && $education > 0 && $experience > 0);
+                                }
+                            @endphp
+
+                            @if($isProfileComplete)
+                                <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100">Apply</a>
+                            @else
+                                <button type="button" class="btn btn-info btn-round-full w-100" data-toggle="modal" data-target="#incompleteProfileModal">
+                                    Apply
+                                </button>
+                            @endif
+                        @else
+                            <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100">Apply</a>
+                        @endif
+                    @else
+                        <button type="button" class="btn btn-info btn-round-full w-100 disabled-button" disabled>Apply</button>
+                    @endif
                 </div>
                 <div class="company-sidebar">
                     <div class="sidebar-item">
@@ -73,7 +100,46 @@
     </div>
 </section>
 
+<!-- Incomplete Profile Modal -->
+<div class="modal fade" id="incompleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="incompleteProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="incompleteProfileModalLabel">Profile Tidak Lengkap</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @php
+                    $message = 'Profile belum dibuat, silakan lengkapi profile anda';
+                    if ($profile) {
+                        $message = 'Profile anda belum lengkap, lengkapi sekarang';
+                    }
+                @endphp
+                <p>{{ $message }}</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('exs.form') }}" class="btn btn-primary">Lengkapi Sekarang</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Nanti Saja</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
+    .disabled-button {
+        background-color: #ccc;
+        border-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+    }
+
+    .disabled-button:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
     .company-sidebar {
         background-color: #ebf1f4;
         border-radius: 8px;
@@ -103,7 +169,6 @@
         text-decoration: underline;
     }
 
-    /* Added new styles */
     .company-name {
         color: #333;
         margin-top: 1rem;
@@ -127,6 +192,23 @@
         max-width: 100%;
         height: auto;
         border-radius: 8px;
+    }
+
+    /* Modal styles */
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #eee;
+        background-color: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #eee;
+        background-color: #f8f9fa;
+        border-radius: 0 0 8px 8px;
     }
 </style>
 

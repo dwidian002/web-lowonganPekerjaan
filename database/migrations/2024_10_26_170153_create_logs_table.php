@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('previous_status');
             $table->foreignId('application_id')->constrained()->onDelete('cascade');
             $table->string('new_status');
-            $table->string('changed_add');
+            $table->timestamp('changed_at')->nullable();
             $table->timestamps();
         });
     }

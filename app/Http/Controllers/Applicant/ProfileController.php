@@ -85,6 +85,6 @@ class ProfileController extends Controller
             }
         }
 
-        return redirect()->route('indexUser')->with('pesan', 'Profile completed successfully!');
+        return redirect()->route('home')->with('pesan', 'Profile completed successfully!');
     }
 }

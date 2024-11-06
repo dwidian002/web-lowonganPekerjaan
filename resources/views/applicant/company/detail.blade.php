@@ -80,62 +80,63 @@
 				<div class="divider my-4 mb-4"></div>
             </div>
         </div>
-        
         <div class="row">
-			@forelse($companies->jobPostings as $jobPosting)
-			<div class="col-lg-4 col-md-6 mt-4 mb-4">
-				<a href="{{ route('job-posting.show', $jobPosting->id) }}" class="card-link-wrapper">
-					<div class="card h-100 shadow job-card">
-						<div class="card-body">
-							<div class="d-flex align-items-center mb-3">
-								<div class="company-logo mr-3">
-									@if ($jobPosting->companyProfile && $jobPosting->companyProfile->logo)
-										<img src="{{ asset('storage/' . $jobPosting->companyProfile->logo) }}" 
-											 alt="{{ $jobPosting->companyProfile->company_name }}" 
-											 class="rounded">
-									@else
-										<img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" 
-											 alt="Default Logo" 
-											 class="rounded">
-									@endif
-								</div>
-								<div>
-									<h5 class="company-name">{{ $jobPosting->companyProfile->company_name }}</h5>
-								</div>
-							</div>
-		
-							<h4 class="job-title mb-3">{{ $jobPosting->position }}</h4>
-		
-							<div class="job-tags mb-3">
-								<span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->category_name }}</span>
-								<span class="badge {{ $jobPosting->status ? 'badge-success' : 'badge-secondary' }}">
-									{{ $jobPosting->status ? 'Active' : 'Inactive' }}
-								</span>
-								<span class="badge badge-primary mr-2">{{ $jobPosting->fieldOfWork->name }}</span>
-							</div>
-		
-							<div class="job-info">
-								@unless($jobPosting->sembunyikan_gaji)
-									<div class="d-flex align-items-center mb-2">
-										<i class="icofont-money mr-2 text-warning"></i>
-										<span>Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }}</span>
-									</div>
-								@endunless
-								<div class="d-flex align-items-center">
-									<i class="icofont-location-pin mr-2 text-danger"></i>
-									<span>{{ $jobPosting->location->name }}</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			@empty
-			<div class="col-12 text-center">
-				<p>No job postings found.</p>
-			</div>
-			@endforelse
-		</div>
+            @forelse($companies->jobPostings as $jobPosting)
+            <div class="col-lg-4 col-md-6 mb-4">
+                <a href="{{ route('job.detail', $jobPosting->id) }}" class="card-link-wrapper">
+                    <div class="card h-100 shadow job-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="company-logo mr-3">
+                                    @if ($jobPosting->companyProfile && $jobPosting->companyProfile->logo)
+                                        <img src="{{ asset('storage/' . $jobPosting->companyProfile->logo) }}"
+                                             alt="{{ $jobPosting->companyProfile->company_name }}"
+                                             class="rounded"
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}"
+                                             alt="Default Logo"
+                                             class="rounded"
+                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h5>{{ $jobPosting->companyProfile->company_name }}</h5>
+                                </div>
+                            </div>
+        
+                            <h4 class="job-title mb-3 position">{{ $jobPosting->position }}</h4>
+
+                            <div class="job-tags mb-3">
+                                <span class="badge {{ $jobPosting->status ? 'badge-success' : 'badge-secondary' }}">
+                                    {{ $jobPosting->status ? 'Active' : 'Inactive' }}
+                                </span>
+                                <span class="badge badge-info mr-2">{{ $jobPosting->jobCategory->category_name }}</span>
+                                <span class="badge badge-primary mr-2">{{ $jobPosting->fieldOfWork->name }}</span>
+                            </div>
+        
+                            <div class="job-info">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="icofont-money mr-2 text-warning"></i>
+                                    @if($jobPosting->sembunyikan_gaji)
+                                        <span class="font-italic text-muted">(disembunyikan)</span>
+                                    @else
+                                        <span>Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }}</span>
+                                    @endif
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-location-pin mr-2 text-danger"></i>
+                                    <span>{{ $jobPosting->location->name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @empty
+            @endforelse
+        </div>
+
 
     </div>
 </section>

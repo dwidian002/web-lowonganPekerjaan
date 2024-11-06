@@ -49,7 +49,7 @@ class LoginController extends Controller
         $verification->delete();
 
         return redirect()->route('auth.index')
-            ->with('pesan', 'Email berhasil diverifikasi. Silakan login.');
+            ->with(['pesan', 'Email berhasil diverifikasi. Silakan login.', 'status' => 'success']);
     }
 
     public function login(Request $request)

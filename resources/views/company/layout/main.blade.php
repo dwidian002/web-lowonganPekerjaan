@@ -26,6 +26,9 @@
   <script src="{{ asset('layout/assets/plugins/jquery/jquery.js') }}"></script>
   <!-- jQuery Easing (dipindah setelah jQuery) -->
   <script src="{{ asset('layout/assets/plugins/counterup/jquery.easing.js') }}"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <style>
