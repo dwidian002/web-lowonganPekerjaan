@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('job_posting_id')->constrained('job_postings')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('application_status');
+            $table->enum('application_status', ['applied', 'in_review', 'interview', 'hired', 'rejected'])
+                  ->default('applied');
             $table->string('resume');
+            $table->string('portofolio');
             $table->timestamp('applied_at');
-            $table->string('cover_letter');
             $table->timestamps();
         });
     }

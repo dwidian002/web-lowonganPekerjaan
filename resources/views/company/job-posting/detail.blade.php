@@ -52,7 +52,21 @@
             
             <div class="col-lg-3 mt-5">
                 <div class="apply-button-wrapper mb-4">
+                    @if ($jobPosting->status == 1)
+                        <a href="{{ route('job-posting.close', $jobPosting->id) }}" class="btn btn-secondary btn-apply w-100">
+                            <i class="icofont-not-allowed"></i> Close Job
+                        </a>
+                    @else
+                        <a href="{{ route('job-posting.open', $jobPosting->id) }}" class="btn btn-success btn-apply w-100">
+                            <i class="icofont-search-job"></i> Open Job
+                        </a>
+                    @endif
+                </div>
+                <div class="apply-button-wrapper mb-4">
                     <a href="{{route('job-posting.edit',$jobPosting->id)}}" class="btn btn-warning btn-apply w-100"><i class="icofont-edit"></i> Edit Job</a>
+                </div>
+                <div class="apply-button-wrapper mb-4">
+                    <a href="{{route('job-posting.delete',$jobPosting->id)}}" class="btn btn-danger btn-apply w-100"><i class="icofont-trash"></i> Delete Job</a>
                 </div>
                 <div class="company-sidebar">
                     <div class="sidebar-item">
@@ -70,6 +84,61 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="section job-postings">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+				<h3>Application</h3>
+				<div class="divider my-4 mb-4"></div>
+            </div>
+        </div>
+        <div class="row">
+            @forelse($jobPosting->applications as $application)
+            <div class="col-lg-4 col-md-6 mb-4">
+                <a href="{{route('application.detail',$application->id)}}" class="card-link-wrapper">
+                    <div class="card h-100 shadow job-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="company-foto mr-3">
+                                    @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
+                                        <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
+                                             alt="{{ $application->user->applicantProfile->name }}"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
+                                             alt="Default foto"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h4 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h4>
+                                </div>
+                            </div>
+        
+                            <div class="job-info">
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-email text-danger"></i>
+                                    <span>{{ $application->user->email }}</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="icofont-phone text-dark"></i>
+                                    <span>{{ $application->user->applicantProfile->phone_number }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @empty
+            @endforelse
+        </div>
+
+
     </div>
 </section>
 

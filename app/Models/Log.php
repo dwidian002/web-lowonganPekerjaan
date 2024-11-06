@@ -9,9 +9,15 @@ class Log extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['previous_status', 'new_status', 'changed_add', 'application_id'];
+    protected $fillable = [
+        'previous_status',
+        'new_status',
+        'changed_at',
+        'application_id'
+    ];
 
-    public function application() {
+    public function application()
+    {
         return $this->belongsTo(Application::class);
     }
 }

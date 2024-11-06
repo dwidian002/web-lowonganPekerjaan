@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('previous_status');
+            $table->enum('previous_status', ['applied', 'in_review', 'interview', 'hired', 'rejected']);
+            $table->enum('new_status', ['applied', 'in_review', 'interview', 'hired', 'rejected']);
             $table->foreignId('application_id')->constrained()->onDelete('cascade');
-            $table->string('new_status');
             $table->timestamp('changed_at')->nullable();
             $table->timestamps();
         });

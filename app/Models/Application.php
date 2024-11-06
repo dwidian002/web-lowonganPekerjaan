@@ -13,7 +13,6 @@ class Application extends Model
         'application_status',
         'resume',
         'applied_at',
-        'cover_letter',
         'job_posting_id',
         'user_id',
         'portofolio'

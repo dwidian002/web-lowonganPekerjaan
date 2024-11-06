@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Company\ApplicationController;
 use App\Http\Controllers\Company\JobPostingController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -66,7 +67,11 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::post('/job-posting/store', [JobPostingController::class, 'store'])->name('job-posting.store');
     Route::get('/job-posting/edit/{id}', [JobPostingController::class, 'edit'])->name('job-posting.edit');
     Route::post('/job-posting/update/{id}', [JobPostingController::class, 'update'])->name('job-posting.update');
+    Route::get('/job-posting/close/{id}', [JobPostingController::class, 'close'])->name('job-posting.close');
+    Route::get('/job-posting/open/{id}', [JobPostingController::class, 'open'])->name('job-posting.open');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
+
+    Route::get('/applications/{id}', [ApplicationController::class, 'index'])->name('applications.index');
 });
 
 Route::middleware(['auth', 'applicant'])->group(function () {

@@ -116,32 +116,6 @@
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="form-group mb-4">
-                                <label class="font-weight-bold">Cover Letter</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="icofont-ui-file"></i>
-                                        </span>
-                                    </div>
-                                    <input type="file" class="custom-file-input @error('cover_letter') is-invalid @enderror" 
-                                           id="cover_letter" name="cover_letter" accept=".pdf,.doc,.docx" required hidden>
-                                    <label for="cover_letter" class="form-control text-truncate" style="cursor: pointer;">
-                                        Pilih file
-                                    </label>
-                                    <div class="input-group-append">
-                                        <label for="cover_letter" class="input-group-text" style="cursor: pointer;">
-                                            Browse
-                                        </label>
-                                    </div>
-                                </div>
-                                @error('cover_letter')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                                <small class="text-muted">Format: PDF, DOC, DOCX. Max: 2MB</small>
-                            </div>
-
                             <button type="submit" class="btn btn-primary btn-block">Submit Application</button>
                         </form>
                     </div>
@@ -151,13 +125,12 @@
     </div>
 </section>
 
-@push('scripts')
 <script>
     $(document).ready(function() {
         $('.custom-file-input').on('change', function() {
             if (this.files && this.files[0]) {
                 let fileName = this.files[0].name;
-                let fileSize = this.files[0].size / 1024 / 1024; // Convert to MB
+                let fileSize = this.files[0].size / 1024 / 1024;
                 let inputId = $(this).attr('id');
                 
                 if (fileSize > 2) { 
@@ -165,7 +138,6 @@
                     $(this).val(''); 
                     $(`label[for="${inputId}"]`).text('Pilih file');
                 } else {
-                    // Update both the form-control label and input-group-text
                     $(`label[for="${inputId}"].form-control`).text(fileName);
                     $(`label[for="${inputId}"].input-group-text`).text('Browse');
                 }
@@ -173,7 +145,7 @@
         });
     });
 </script>
-@endpush
+
 
 <style>
 .custom-file-input {
