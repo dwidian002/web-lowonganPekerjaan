@@ -71,7 +71,8 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/job-posting/open/{id}', [JobPostingController::class, 'open'])->name('job-posting.open');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
 
-    Route::get('/applications/{id}', [ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/applications/{id}', [ApplicationController::class, 'index'])->name('application.detail');
+    Route::patch('/applications/{application}/status', 'ApplicationController@updateStatus')->name('application.updateStatus');
 });
 
 Route::middleware(['auth', 'applicant'])->group(function () {

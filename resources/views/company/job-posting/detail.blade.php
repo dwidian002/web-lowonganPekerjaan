@@ -91,54 +91,114 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-				<h3>Application</h3>
-				<div class="divider my-4 mb-4"></div>
+                <h3>Application</h3>
+                <div class="divider my-4 mb-4"></div>
             </div>
         </div>
         <div class="row">
             @forelse($jobPosting->applications as $application)
             <div class="col-lg-4 col-md-6 mb-4">
-                <a href="{{route('application.detail',$application->id)}}" class="card-link-wrapper">
-                    <div class="card h-100 shadow job-card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="company-foto mr-3">
-                                    @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
-                                        <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
-                                             alt="{{ $application->user->applicantProfile->name }}"
-                                             class="rounded"
-                                             style="width: 100px; height: 100px; object-fit: cover;">
-                                    @else
-                                        <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
-                                             alt="Default foto"
-                                             class="rounded"
-                                             style="width: 100px; height: 100px; object-fit: cover;">
-                                    @endif
-                                </div>
-                                <div>
-                                    <h4 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h4>
-                                </div>
+                <div class="card h-100 shadow job-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="company-foto mr-3">
+                                @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
+                                    <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
+                                         alt="{{ $application->user->applicantProfile->name }}"
+                                         class="rounded"
+                                         style="width: 100px; height: 100px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
+                                         alt="Default foto"
+                                         class="rounded"
+                                         style="width: 100px; height: 100px; object-fit: cover;">
+                                @endif
                             </div>
-        
-                            <div class="job-info">
-                                <div class="d-flex align-items-center">
-                                    <i class="icofont-email text-danger"></i>
-                                    <span>{{ $application->user->email }}</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="icofont-phone text-dark"></i>
-                                    <span>{{ $application->user->applicantProfile->phone_number }}</span>
+                            <div>
+                                <h4 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h4>
+                            </div>
+                        </div>
+    
+                        <div class="job-info">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-email text-danger"></i>
+                                <span>{{ $application->user->email }}</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-phone text-dark"></i>
+                                <span>{{ $application->user->applicantProfile->phone_number }}</span>
+                            </div>
+                            
+                            <!-- Status Badge -->
+                            <div class="mt-3">
+                                <span class="badge badge-{{ $application->application_status === 'applied' ? 'primary' : 
+                                    ($application->application_status === 'in_review' ? 'info' : 
+                                    ($application->application_status === 'interview' ? 'warning' : 
+                                    ($application->application_status === 'hired' ? 'success' : 'danger'))) }}">
+                                    {{ ucfirst(str_replace('_', ' ', $application->application_status)) }}
+                                </span>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="mt-3">
+                                <div class="btn-group">
+                                    <a href="{{route('application.detail',$application->id)}}" class="btn btn-sm btn-primary">
+                                        Detail
+                                    </a>
+                                    
+                                    <!-- Review Actions Dropdown -->
+                                    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+                                        Update Status
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @if($application->application_status !== 'in_review')
+                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="in_review">
+                                                <button type="submit" class="dropdown-item">Mark as In Review</button>
+                                            </form>
+                                        @endif
+                                        
+                                        @if($application->application_status !== 'interview')
+                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="interview">
+                                                <button type="submit" class="dropdown-item">Schedule Interview</button>
+                                            </form>
+                                        @endif
+                                        
+                                        @if($application->application_status !== 'hired')
+                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="hired">
+                                                <button type="submit" class="dropdown-item">Mark as Hired</button>
+                                            </form>
+                                        @endif
+                                        
+                                        @if($application->application_status !== 'rejected')
+                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="rejected">
+                                                <button type="submit" class="dropdown-item">Reject Application</button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             @empty
+            <div class="col-12">
+                <p>No applications found.</p>
+            </div>
             @endforelse
         </div>
-
-
     </div>
 </section>
 

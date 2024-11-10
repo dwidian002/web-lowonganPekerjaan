@@ -25,7 +25,7 @@ class JobPostingController extends Controller
         }
 
         $jobPostings = JobPosting::where('company_profile_id', $companyProfile->id)
-            ->with(['location', 'jobCategory', 'companyProfile', 'fieldOfWork']) // Tambahkan fieldOfWork
+            ->with(['location', 'jobCategory', 'companyProfile', 'fieldOfWork'])
             ->latest()
             ->paginate(9);
 

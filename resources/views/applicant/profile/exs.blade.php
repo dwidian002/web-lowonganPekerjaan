@@ -34,10 +34,10 @@
                             <div id="education-container">
                                 <div class="mb-3">
                                     <input type="hidden" name="id" value="{{ $profile->id }}">
-                                    <input type="text" name="education[0][degree]" class="form-control" placeholder="Degree" required>
-                                    <input type="text" name="education[0][institution_name]" class="form-control mt-2" placeholder="Institution Name" required>
-                                    <input type="year" name="education[0][starting_year]" class="form-control mt-2" placeholder="Starting Year" required>
-                                    <input type="year" name="education[0][finishing_year]" class="form-control mt-2" placeholder="Finished Year" required>
+                                    <input type="text" name="education[0][degree]" class="form-control" placeholder="Degree">
+                                    <input type="text" name="education[0][institution_name]" class="form-control mt-2" placeholder="Institution Name">
+                                    <input type="year" name="education[0][starting_year]" class="form-control mt-2" placeholder="Starting Year">
+                                    <input type="year" name="education[0][finishing_year]" class="form-control mt-2" placeholder="Finished Year">
                                 </div>
                             </div>
 
@@ -46,10 +46,10 @@
                             <div id="experience-container">
                                 <div class="mb-3">
                                     <input type="hidden" name="id" value="{{ $profile->id }}">
-                                    <input type="text" name="experience[0][job_Title]" class="form-control" placeholder="Job Title" required>
-                                    <input type="text" name="experience[0][company_name]" class="form-control mt-2" placeholder="Company Name" required>
-                                    <input type="text" name="experience[0][position]" class="form-control mt-2" placeholder="Position" required>
-                                    <input type="text" name="experience[0][lama_bekerja]" class="form-control mt-2" placeholder="Duration" required>
+                                    <input type="text" name="experience[0][job_Title]" class="form-control" placeholder="Job Title">
+                                    <input type="text" name="experience[0][company_name]" class="form-control mt-2" placeholder="Company Name">
+                                    <input type="text" name="experience[0][position]" class="form-control mt-2" placeholder="Position">
+                                    <input type="text" name="experience[0][lama_bekerja]" class="form-control mt-2" placeholder="Duration">
                                 </div>
                             </div>
                             <button type="button" id="add-experience" class="add-btn w-100 mb-3">
@@ -61,7 +61,7 @@
                             <div id="skills-container">
                                 <div class="mb-3">
                                     <input type="hidden" name="id" value="{{ $profile->id }}">
-                                    <input type="text" name="skills[0][name]" class="form-control" placeholder="Skill Name" required>
+                                    <input type="text" name="skills[0][name]" class="form-control" placeholder="Skill Name">
                                 </div>
                             </div>
                             <button type="button" id="add-skill" class="add-btn w-100 mb-3">
@@ -84,10 +84,10 @@
         const experienceContainer = document.getElementById('experience-container');
         const newExperience = `
             <div class="mb-3">
-                <input type="text" name="experience[${experienceIndex}][job_Title]" class="form-control" placeholder="Job Title" required>
-                <input type="text" name="experience[${experienceIndex}][company_name]" class="form-control mt-2" placeholder="Company Name" required>
-                <input type="text" name="experience[${experienceIndex}][position]" class="form-control mt-2" placeholder="Position" required>
-                <input type="text" name="experience[${experienceIndex}][lama_bekerja]" class="form-control mt-2" placeholder="Duration" required>
+                <input type="text" name="experience[${experienceIndex}][job_Title]" class="form-control" placeholder="Job Title">
+                <input type="text" name="experience[${experienceIndex}][company_name]" class="form-control mt-2" placeholder="Company Name">
+                <input type="text" name="experience[${experienceIndex}][position]" class="form-control mt-2" placeholder="Position">
+                <input type="text" name="experience[${experienceIndex}][lama_bekerja]" class="form-control mt-2" placeholder="Duration">
             </div>
         `;
         experienceContainer.insertAdjacentHTML('beforeend', newExperience);
@@ -98,7 +98,7 @@
         const skillsContainer = document.getElementById('skills-container');
         const newSkill = `
             <div class="mb-3">
-                <input type="text" name="skills[${skillIndex}][name]" class="form-control" placeholder="Skill Name" required>
+                <input type="text" name="skills[${skillIndex}][name]" class="form-control" placeholder="Skill Name">
             </div>
         `;
         skillsContainer.insertAdjacentHTML('beforeend', newSkill);
