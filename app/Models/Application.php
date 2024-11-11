@@ -18,6 +18,10 @@ class Application extends Model
         'portofolio'
     ];
 
+    protected $casts = [
+        'applied_at' => 'datetime',
+    ];
+
     public function jobPosting()
     {
         return $this->belongsTo(JobPosting::class);

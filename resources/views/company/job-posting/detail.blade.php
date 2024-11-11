@@ -98,111 +98,122 @@
         <div class="row">
             @forelse($jobPosting->applications as $application)
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100 shadow job-card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="company-foto mr-3">
-                                @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
-                                    <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
-                                         alt="{{ $application->user->applicantProfile->name }}"
-                                         class="rounded"
-                                         style="width: 100px; height: 100px; object-fit: cover;">
-                                @else
-                                    <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
-                                         alt="Default foto"
-                                         class="rounded"
-                                         style="width: 100px; height: 100px; object-fit: cover;">
-                                @endif
+                @if ($application->application_status == 'applied')
+                    <a href="#" data-toggle="modal" data-target="#confirmModal" data-application="{{ $application->user->applicantProfile->name }}">
+                @else
+                    <a href="{{ route('company.application.detail', $application->id) }}">
+                @endif
+                    <div class="card h-100 shadow job-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="company-foto mr-3">
+                                    @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
+                                        <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
+                                             alt="{{ $application->user->applicantProfile->name }}"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
+                                             alt="Default foto"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h4 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h4>       
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h4>
-                            </div>
-                        </div>
-    
-                        <div class="job-info">
-                            <div class="d-flex align-items-center">
-                                <i class="icofont-email text-danger"></i>
-                                <span>{{ $application->user->email }}</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="icofont-phone text-dark"></i>
-                                <span>{{ $application->user->applicantProfile->phone_number }}</span>
-                            </div>
-                            
-                            <!-- Status Badge -->
-                            <div class="mt-3">
-                                <span class="badge badge-{{ $application->application_status === 'applied' ? 'primary' : 
-                                    ($application->application_status === 'in_review' ? 'info' : 
-                                    ($application->application_status === 'interview' ? 'warning' : 
-                                    ($application->application_status === 'hired' ? 'success' : 'danger'))) }}">
-                                    {{ ucfirst(str_replace('_', ' ', $application->application_status)) }}
-                                </span>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="mt-3">
-                                <div class="btn-group">
-                                    <a href="{{route('application.detail',$application->id)}}" class="btn btn-sm btn-primary">
-                                        Detail
-                                    </a>
-                                    
-                                    <!-- Review Actions Dropdown -->
-                                    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
-                                        Update Status
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        @if($application->application_status !== 'in_review')
-                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="in_review">
-                                                <button type="submit" class="dropdown-item">Mark as In Review</button>
-                                            </form>
-                                        @endif
-                                        
-                                        @if($application->application_status !== 'interview')
-                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="interview">
-                                                <button type="submit" class="dropdown-item">Schedule Interview</button>
-                                            </form>
-                                        @endif
-                                        
-                                        @if($application->application_status !== 'hired')
-                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="hired">
-                                                <button type="submit" class="dropdown-item">Mark as Hired</button>
-                                            </form>
-                                        @endif
-                                        
-                                        @if($application->application_status !== 'rejected')
-                                            <form action="{{ route('application.updateStatus', $application->id) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="rejected">
-                                                <button type="submit" class="dropdown-item">Reject Application</button>
-                                            </form>
-                                        @endif
-                                    </div>
+        
+                            <div class="job-info">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="icofont-calendar text-primary"></i>
+                                    <span class="ml-2">Applied at: {{ $application->applied_at->format('d M Y') }}</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="icofont-email text-danger"></i>
+                                    <span class="ml-2"> {{ $application->user->email }}</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="icofont-phone text-dark"></i>
+                                    <span class="ml-2">{{ $application->user->applicantProfile->phone_number }}</span>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="card-footer px-4 py-3 d-flex justify-content-between align-items-center
+                            @if ($application->application_status == 'applied')
+                                bg-dark text-white
+                            @elseif ($application->application_status == 'in_review')
+                                bg-info text-white
+                            @elseif ($application->application_status == 'interview')
+                                bg-warning text-dark
+                            @elseif ($application->application_status == 'hired')
+                                bg-success text-white
+                            @elseif ($application->application_status == 'rejected')
+                                bg-danger text-white
+                            @else
+                                bg-white border-top
+                            @endif">
+                            <span class="text-sm">{{ strtoupper($application->application_status) }}</span>
+                            <span class="text-sm">{{ $application->updated_at->format('d M Y') }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @empty
+            @endforelse  
+        </div>
+    </div>
+
+    @if ($application->application_status == 'applied')
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Application Review</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to review the application for {{ $application->user->applicantProfile->name }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <a href="{{ route('company.application.detail', $application->id) }}?confirmed" class="btn btn-primary">Yes</a>
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="col-12">
-                <p>No applications found.</p>
-            </div>
-            @endforelse
         </div>
-    </div>
+    @endif
 </section>
 
+<script>
+    $('#confirmModal').on('show.bs.modal', function (event) {
+        var link = $(event.relatedTarget);
+        $('#confirmModal .btn-primary').attr('href', link.attr('href'));
+    });
+</script>
+
+
 <style>
+
+    .text-uppercase {
+        text-transform: uppercase;
+    }
+    .card-footer {
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-footer:hover {
+        background-color: #f1f3f5;
+    }
+
+    .text-sm {
+        font-size: 0.875rem;
+    }
+
     .company-sidebar {
         background-color: #ebf1f4;
         border-radius: 8px;
@@ -232,7 +243,6 @@
         text-decoration: underline;
     }
 
-    /* Added new styles */
     .company-name {
         color: #333;
         margin-top: 1rem;
@@ -258,5 +268,7 @@
         border-radius: 8px;
     }
 </style>
+
+
 
 @endsection

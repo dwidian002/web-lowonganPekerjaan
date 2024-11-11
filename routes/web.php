@@ -71,9 +71,11 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/job-posting/open/{id}', [JobPostingController::class, 'open'])->name('job-posting.open');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
 
-    Route::get('/applications/{id}', [ApplicationController::class, 'index'])->name('application.detail');
-    Route::patch('/applications/{application}/status', 'ApplicationController@updateStatus')->name('application.updateStatus');
+    Route::get('application/{id}', [ApplicationController::class, 'index'])->name('company.application.detail');
+    Route::get('application/{id}/confirm', [ApplicationController::class, 'confirmReview'])->name('company.application.confirm');
 });
+
+Route::patch('/applications/{application}/status', [ApplicationController::class,'updateStatus'])->name('application.updateStatus');
 
 Route::middleware(['auth', 'applicant'])->group(function () {
 

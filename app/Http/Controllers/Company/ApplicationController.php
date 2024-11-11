@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicantProfile;
 use App\Models\Application;
+use App\Models\Log;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -20,24 +21,43 @@ class ApplicationController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
+        $application->application_status = 'in_review';
+        $application->save();
+
+        Log::create([
+            'previous_status' => 'applied',
+            'new_status' => 'in_review',
+            'application_id' => $application->id,
+            'changed_at' => now(),
+        ]);
         return view('company.application.detail', compact('application'));
     }
 
-    public function updateStatus(Request $request, Application $application)
+
+    public function confirmReview($id)
     {
-        $request->validate([
-            'status' => 'required|in:applied,in_review,interview,hired,rejected'
-        ]);
+        $application = Application::findOrFail($id);
 
-        $application->update([
-            'application_status' => $request->status
-        ]);
+        if ($application->application_status === 'applied') {
+            $application->update([
+                'application_status' => 'in_review',
+            ]);
 
-        $application->logs()->create([
-            'status' => $request->status,
-            'changed_by' => auth()->id()
-        ]);
+            Log::create([
+                'previous_status' => 'applied',
+                'new_status' => 'in_review',
+                'application_id' => $application->id,
+                'changed_at' => now(),
+            ]);
 
-        return back()->with('success', 'Application status updated successfully');
+            if (request()->has('remember')) {
+                $minutes = 60 * 24 * 30;
+                cookie()->queue('confirmed_application_' . $id, true, $minutes);
+            } else {
+                session()->put('confirmed_application_' . $id, true);
+            }
+        }
+
+        return redirect()->route('company.application.detail', $id);
     }
 }
