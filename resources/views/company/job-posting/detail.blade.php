@@ -127,7 +127,7 @@
                             <div class="job-info">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="icofont-calendar text-primary"></i>
-                                    <span class="ml-2">Applied at: {{ $application->applied_at->format('d M Y') }}</span>
+                                    <span class="ml-2">Applied at: {{ $application->created_at->format('d M Y') }}</span>
                                 </div>
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="icofont-email text-danger"></i>

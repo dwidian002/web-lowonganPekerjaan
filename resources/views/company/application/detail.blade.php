@@ -90,19 +90,27 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="profile-details">
-                                        <div class="detail-row hover:bg-gray-50 p-3 rounded-lg transition-all">
-                                            <div class="detail-label text-dark"><strong>Name : </strong>{{ $application->user->applicantProfile->name ?? '-' }}</div>
+                                        <div class="detail-row">
+                                          <div class="detail-label"><strong>Name:</strong></div>
+                                          <div class="detail-value">{{ $application->user->applicantProfile->name ?? '-' }}</div>
                                         </div>
-                                        <div class="detail-row hover:bg-gray-50 p-3 rounded-lg transition-all">
-                                            <div class="detail-label text-dark"> <strong>Gender : </strong>{{ $application->user->applicantProfile->gender ?? '-' }}</div>
+                                        <div class="detail-row">
+                                          <div class="detail-label"><strong>Gender:</strong></div>
+                                          <div class="detail-value">{{ $application->user->applicantProfile->gender ?? '-' }}</div>
                                         </div>
-                                        <div class="detail-row hover:bg-gray-50 p-3 rounded-lg transition-all">
-                                            <div class="detail-label text-dark"><strong>Address : </strong>{{ $application->user->applicantProfile->alamat_lengkap ?? '-' }}</div>
+                                        <div class="detail-row">
+                                            <div class="detail-label"><strong>Applied at:</strong></div>
+                                            <div class="detail-value">{{ $application->user->applicantProfile->created_at ? $application->user->applicantProfile->created_at->format('d M Y') : '-' }}</div>
                                         </div>
-                                        <div class="detail-row hover:bg-gray-50 p-3 rounded-lg transition-all">
-                                            <div class="detail-label text-dark"><strong>About : </strong>{{ $application->user->applicantProfile->about_me ?? '-' }}</div>
+                                        <div class="detail-row">
+                                          <div class="detail-label"><strong>Address:</strong></div>
+                                          <div class="detail-value">{{ $application->user->applicantProfile->alamat_lengkap ?? '-' }}</div>
                                         </div>
-                                    </div>
+                                        <div class="detail-row">
+                                          <div class="detail-label"><strong>About:</strong></div>
+                                          <div class="detail-value">{{ $application->user->applicantProfile->about_me ?? '-' }}</div>
+                                        </div>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -258,6 +266,14 @@
                     </div>
                   </div>
                 </div>
+
+
+                <div class="card shadow-lg rounded-lg overflow-hidden mt-4">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                      <h2 class="text-2xl font-bold text-gray-800">More Information</h2>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
     </div>
@@ -276,6 +292,30 @@
 </script>
 
 <style>
+
+    .profile-details {
+    flex-basis: 50%;
+    margin-left: 20px;
+    }
+
+    .detail-row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    }
+
+    .detail-label {
+    flex-basis: 30%;
+    font-weight: bold;
+    color: #333;
+    }
+
+    .detail-value {
+    flex-basis: 70%;
+    color: #666;
+    }
+
     .accordion {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -313,17 +353,6 @@
     .accordion-content {
     margin-top: 16px;
     display: none;
-    }
-
-    .detail-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    }
-
-    .detail-label {
-    font-weight: bold;
-    color: #6b7280;
     }
 
     .experience-card {
@@ -370,17 +399,6 @@
 
     .section-content {
     margin-top: 16px;
-    }
-
-    .detail-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    }
-
-    .detail-label {
-    font-weight: bold;
-    color: #6b7280;
     }
 
     .experience-card {
@@ -448,22 +466,6 @@
 
     .profile-image:hover {
         transform: scale(1.05);
-    }
-
-    .detail-row {
-        margin-bottom: 1rem;
-        transition: all var(--transition-speed);
-    }
-
-    .detail-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-    }
-
-    .detail-value {
-        color: var(--text-primary);
-        line-height: 1.5;
     }
 
     .btn {
@@ -760,9 +762,6 @@
             padding: 1.25rem;
         }
         
-        .detail-row {
-            padding: 0.75rem;
-        }
     }
 
     @keyframes fadeInUp {
