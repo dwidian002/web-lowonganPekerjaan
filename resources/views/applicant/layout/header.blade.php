@@ -60,9 +60,15 @@
         <a href="{{url('/logout')}}" class="custom-btn login-btn">
             <i class="fa fa-user"></i> Dashboard
         </a>
-        <a href="{{url('/logout')}}" class="custom-btn login-btn">
-            <i class="fa fa-user"></i> Logout
-        </a>
+        {{-- {{-- @if (auth()->user()->role == 'applicant')
+                <a href="{{ route('profile-applicant') }}" class="custom-btn login-btn" data-role="applicant">
+                    <i class="icofont-user"></i> Profile
+                </a>
+                @elseif (auth()->user()->role == 'company')
+                <a href="{{ route('profile-company') }}" class="custom-btn login-btn" data-role="company">
+                    <i class="icofont-user"></i> Profile
+                </a>
+            @endif --}}
         @endif
     </div>
     </div>

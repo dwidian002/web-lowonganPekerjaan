@@ -17,6 +17,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Company\ApplicationController;
 use App\Http\Controllers\Company\JobPostingController;
+use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
+use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +62,8 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'company'])->group(function () {
 
+    Route::get('/my-profile', [CompanyProfileController::class, 'index'])->name('profile-company');
+
 
     Route::get('/job-posting', [JobPostingController::class, 'index'])->name('job-posting.index');
     Route::get('/job-posting/detail/{id}', [JobPostingController::class, 'detail'])->name('job-posting.show');
@@ -75,9 +79,14 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('application/{id}/confirm', [ApplicationController::class, 'confirmReview'])->name('company.application.confirm');
 });
 
-Route::patch('/applications/{application}/status', [ApplicationController::class,'updateStatus'])->name('application.updateStatus');
-
+Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('application.updateStatus');
+Route::post('/applications/{application}/schedule-interview', [ApplicationController::class, 'scheduleInterview'])->name('applications.schedule-interview');
+Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
+Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 Route::middleware(['auth', 'applicant'])->group(function () {
+
+
+    Route::get('/my-profile', [ProfileController::class, 'index'])->name('profile-applicant');
 
     Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
@@ -86,7 +95,6 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 
     Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
     Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');
-    // Route::get('/my-profile', [ProfileController::class, 'index'])->name('my.profile');
     // Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     // Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
 });
@@ -150,7 +158,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 //Route untuk mengisi education, skills dan exerience applicant
 
-Route::get('/logout', [LogoutController::class, 'logout'])->name('auth.logout');
+Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 
 Route::get('files/{filename}', function ($filename) {

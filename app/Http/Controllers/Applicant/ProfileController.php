@@ -104,4 +104,14 @@ class ProfileController extends Controller
                 ->with('error', 'An error occurred while saving your profile. Please try again.');
         }
     }
+
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        $applicantProfile = $user->applicantProfile;
+
+        return view('applicant.profile.index', [
+            'applicantProfile' => $applicantProfile,
+        ]);
+    }
 }

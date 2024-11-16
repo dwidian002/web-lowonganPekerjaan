@@ -265,12 +265,22 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
-
-                <div class="card shadow-lg rounded-lg overflow-hidden mt-4">
-                    <div class="card-header bg-white border-0 pt-4 px-4">
-                      <h2 class="text-2xl font-bold text-gray-800">More Information</h2>
+                  <div class="card shadow-lg rounded-lg overflow-hidden mt-4">
+                    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-center">
+                        <a href="{{route ('job-posting.show', $application->jobPosting->id)}}" class="btn btn-outline-primary mr-3">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </a>
+                        @if($application->application_status === 'applied' || $application->application_status === 'in_review')
+                            <button class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#interviewModal" data-application-id="{{ $application->id }}">
+                                <i class="fas fa-comments mr-2"></i> Interview
+                            </button>
+                            <button class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#acceptModal" data-application-id="{{ $application->id }}">
+                                <i class="fas fa-check-circle mr-2"></i> Accept
+                            </button>
+                            <button class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#rejectModal" data-application-id="{{ $application->id }}">
+                                <i class="fas fa-times-circle mr-2"></i> Reject
+                            </button>
+                        @endif
                     </div>
                   </div>
                 </div>
@@ -279,19 +289,249 @@
     </div>
 </section>
 
-<script>
-    document.querySelectorAll('.accordion-toggle').forEach(btn => {
-      btn.addEventListener('click', function() {
-        this.classList.toggle('active');
-        this.parentNode.parentNode.classList.toggle('active');
-        this.children[0].classList.toggle('icofont-circled-down');
-        this.children[0].classList.toggle('icofont-circled-up');
-        this.parentNode.nextElementSibling.style.display = this.classList.contains('active') ? 'block' : 'none';
+<div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="interviewModalLabel">Schedule Interview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="interviewForm" action="" method="POST">
+          @csrf
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="interview_date" class="form-label">Interview Date and Time</label>
+              <input type="datetime-local" class="form-control" id="interview_date" name="interview_date" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="location" class="form-label">Interview Location</label>
+              <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="interview_type" class="form-label">Interview Type</label>
+              <select class="form-control" id="interview_type" name="interview_type" required>
+                <option value="online">Online Interview</option>
+                <option value="offline">Offline Interview</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="notes" class="form-label">Additional Notes</label>
+              <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send Mail Intervew</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="acceptModalLabel">Accept Application</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="acceptForm" action="" method="POST">
+          @csrf
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="start_date" class="form-label">Start Date</label>
+              <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="salary" class="form-label">Offered Salary</label>
+              <input type="number" class="form-control" id="salary" name="salary" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="additional_info" class="form-label">Additional Information</label>
+              <textarea class="form-control" id="additional_info" name="additional_info" rows="3" 
+                placeholder="Include any additional details about the job offer, benefits, or next steps"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Accept Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModalLabel">Reject Application</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="rejectForm" action="" method="POST">
+          @csrf
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="rejection_reason" class="form-label">Reason for Rejection</label>
+              <select class="form-control" id="rejection_reason" name="rejection_reason" required>
+                <option value="">Select a reason</option>
+                <option value="not_qualified">Not Qualified for Position</option>
+                <option value="experience_mismatch">Experience Does Not Match Requirements</option>
+                <option value="skills_mismatch">Skills Do Not Match Requirements</option>
+                <option value="position_filled">Position Has Been Filled</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="mb-3" id="other_reason_container" style="display: none;">
+              <label for="other_reason" class="form-label">Specify Other Reason</label>
+              <textarea class="form-control" id="other_reason" name="other_reason" rows="2"></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="feedback" class="form-label">Feedback for Candidate (Optional)</label>
+              <textarea class="form-control" id="feedback" name="feedback" rows="3" 
+                placeholder="Provide constructive feedback to help the candidate improve"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Reject Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          const tomorrowString = tomorrow.toISOString().split('T')[0];
+          
+          const interviewDateInput = document.getElementById('interview_date');
+          const startDateInput = document.getElementById('start_date');
+          
+          if (interviewDateInput) {
+              interviewDateInput.min = tomorrowString;
+          }
+          
+          if (startDateInput) {
+              startDateInput.min = tomorrowString;
+          }
+  
+          const modals = {
+              interview: {
+                  element: document.getElementById('interviewModal'),
+                  form: document.getElementById('interviewForm')
+              },
+              accept: {
+                  element: document.getElementById('acceptModal'),
+                  form: document.getElementById('acceptForm')
+              },
+              reject: {
+                  element: document.getElementById('rejectModal'),
+                  form: document.getElementById('rejectForm')
+              }
+          };
+  
+          ['interview', 'accept', 'reject'].forEach(modalType => {
+              const modal = modals[modalType];
+              if (modal.element) {
+                  modal.element.addEventListener('show.bs.modal', function(event) {
+                      const button = event.relatedTarget;
+                      const applicationId = button.getAttribute('data-application-id');
+                      const action = modalType === 'interview' ? 'schedule-interview' : modalType;
+                      modal.form.action = `/applications/${applicationId}/${action}`;
+                  });
+              }
+          });
+  
+          const rejectionReason = document.getElementById('rejection_reason');
+          const otherReasonContainer = document.getElementById('other_reason_container');
+          
+          if (rejectionReason && otherReasonContainer) {
+              rejectionReason.addEventListener('change', function() {
+                  otherReasonContainer.style.display = this.value === 'other' ? 'block' : 'none';
+              });
+          }
+  
+          const initializeAccordions = () => {
+              document.querySelectorAll('.accordion-toggle').forEach(button => {
+                  button.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      const accordionItem = this.closest('.accordion-item');
+                      const content = accordionItem.querySelector('.accordion-content');
+                      const icon = this.querySelector('.accordion-icon');
+                      
+                      accordionItem.classList.toggle('active');
+                      
+                      icon.classList.toggle('icofont-circled-down');
+                      icon.classList.toggle('icofont-circled-up');
+                      
+                      if (content.style.maxHeight) {
+                          content.style.maxHeight = null;
+                          content.style.display = 'none';
+                      } else {
+                          content.style.display = 'block';
+                          content.style.maxHeight = content.scrollHeight + "px";
+                      }
+                  });
+              });
+          };
+  
+          initializeAccordions();
       });
-    });
-</script>
+  </script>
+
 
 <style>
+
+    .btn {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.6rem 1.2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-primary {
+        color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .centered-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .centered-buttons a {
+        margin: 0 0.5rem;
+    }
 
     .profile-details {
     flex-basis: 50%;
