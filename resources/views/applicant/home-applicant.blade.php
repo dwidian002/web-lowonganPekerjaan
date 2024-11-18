@@ -13,18 +13,17 @@
         </div>
         @endif
 		<div class="row">
-			<div class="col-lg-6 col-md-12 col-xl-7">
+			<div class="col-lg-6 col-md-12 col-xl-7" style="margin-bottom: -70px;">
 				<div class="block">
 					<div class="divider mb-3"></div>
-					<span class="text-uppercase text-sm letter-spacing " style="color: white;">The Best Job Search Solution</span>
-					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1> 
-					<p style="color: white;">
+					<span class="text-small text-sm letter-spacing " style="color: dark;">The Best Job Search Solution</span>
+					<h1 class="text mb-3 mt-3" style="color: dark;">Your Most Trusted Job partner</h1> 
+					<p class="text-small">
                    — start applying now and create the career you dream of!
                    </p>
                     <div>
-                    <div class="divider mb-3"></div>
 					<div class="sidebar-widget search  mb-0">
-						<h4 style="color: white;">What Job Are You Looking For?</h4>
+						<h4 class="text-small">What Job Are You Looking For?</h4>
 						<form action="#" method="GET">
 							<div class="search-wrapper">
 								<div class="search-input-container">
@@ -59,117 +58,97 @@
 						</form>
 					</div>
 				</div>
-				<div class="divider mb-3"></div>
+				<div class="divider mtn-3"></div>
 			</div>
 		</div>
 	</div>
 </div>
 </section>
 
-<section class="features">
+<section class="features mtn-1000 mb-10y">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="feature-block d-lg-flex">
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
+			<div class="col-12 mb-2">
+				<h2 class="text-small">Latest Job Postings</h2>
+			</div>
+			
+			@forelse($latestJobs as $job)
+				<div class="col-lg-4 col-md-6 mb-4">
+					<div class="card h-100 shadow job-card">
+						<div class="card-body">
+							<div class="d-flex align-items-center mb-3">
+								<div class="company-logo mr-3">
+									@if ($job->companyProfile && $job->companyProfile->logo)
+										<img src="{{ asset('storage/' . $job->companyProfile->logo) }}" 
+											 alt="{{ $job->companyProfile->company_name }}" 
+											 class="rounded"
+											 style="width: 50px; height: 50px; object-fit: cover;">
+									@else
+										<img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" 
+											 alt="Default Logo" 
+											 class="rounded"
+											 style="width: 50px; height: 50px; object-fit: cover;">
+									@endif
+								</div>
+								<div>
+									<a href="{{ route('company.detail', $job->companyProfile->id) }}" class="company-name-link">
+										<h5 class="company-name">{{ $job->companyProfile->company_name }}</h5>
+									</a>
+								</div>
+							</div>
+							
+							<a href="{{ route('job.detail', $job->id) }}" class="text-decoration-none text-dark">
+								<h4 class="job-title mb-3 job-title-link">{{ $job->position }}</h4>
+			
+								<div class="job-tags mb-3">
+									<span class="badge {{ $job->status ? 'badge-success' : 'badge-secondary' }}">
+										{{ $job->status ? 'Active' : 'Inactive' }}
+									</span>
+									<span class="badge badge-info mr-2">{{ $job->jobCategory->category_name }}</span>
+									<span class="badge badge-primary mr-2">{{ $job->fieldOfWork->name }}</span>
+								</div>
+			
+								<div class="job-info">
+									<div class="d-flex align-items-center mb-2">
+										<i class="icofont-money mr-2 text-warning"></i>
+										@if($job->sembunyikan_gaji)
+											<span class="font-italic text-muted">(disembunyikan)</span>
+										@else
+											<span>Rp {{ number_format($job->gaji, 0, ',', '.') }}</span>
+										@endif
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="icofont-location-pin mr-2 text-danger"></i>
+										<span>{{ $job->location->name }}</span>
+									</div>
+								</div>
+							</a>
 						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-					</div>
-				
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
-						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-					</div>
-				
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
-						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
 					</div>
 				</div>
-			</div>
+			@empty
+				<div class="col-12 text-center">
+					<p>Tidak ada lowongan pekerjaan tersedia saat ini.</p>
+				</div>
+			@endforelse
 		</div>
-        <div class="row">
-            <div class="col-lg-12 text-center mt-4">
-                <a href="{{route('all.job')}}" class="btn btn-outline-danger btn-lg btn-round-full">View All Jobss <i class="icofont-simple-right ml-2  "></i></a>
-            </div>
-        </div>
-	</div>
-</section>
-
-
-
-<section class="section about">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-4 col-sm-6">
-				<div class="about-img">
-					<img src="layout/assets/images/about/img-1.jpg" alt="" class="img-fluid">
-					<img src="layout/assets/images/about/img-2.jpg" alt="" class="img-fluid mt-4">
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6">
-				<div class="about-img mt-4 mt-lg-0">
-					<img src="layout/assets/images/about/img-3.jpg" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="about-content pl-4 mt-4 mt-lg-0">
-					<h2 class="title-color">Company Partner</h2>
-					<p class="mt-4 mb-5">We collaborate with various leading companies that open up opportunities for you to develop and achieve your dream career goals.</p>
-
-					<a href="{{route('list.company')}}" class="btn btn-main-2 btn-round-full btn-icon">See All Companies<i class="icofont-simple-right ml-3"></i></a>
-				</div>
+	
+		<div class="row">
+			<div class="col-lg-12 text-center mt-4 mb-10">
+				<a href="{{ route('job-postings.all') }}" class="btn btn-main-2">
+					View All Jobs <i class="icofont-simple-right ml-2"></i>
+				</a>
 			</div>
 		</div>
 	</div>
 </section>
-<section class="cta-section ">
-	<div class="container">
+
+
+<section class="cta-section" style="margin-top: 50px;">
+	<div class="container mt-100">
 		<div class="cta position-relative">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-3 col-md-6 col-sm-6 mt-10">
 					<div class="counter-stat">
 						<i class="icofont-doctor"></i>
 						<span class="h3">58</span>k
@@ -207,9 +186,9 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-7 text-center">
 				<div class="section-title">
-					<h2>Award winning patient care</h2>
+					<h2>Field Of Jobs</h2>
 					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+					<p>Find various vacancies by job field.</p>
 				</div>
 			</div>
 		</div>
@@ -219,11 +198,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-laboratory text-lg"></i>
-						<h4 class="mt-3 mb-3">Laboratory services</h4>
-					</div>
-
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+						<h4 class="mt-3 mb-3">Programing & Sofftware Development</h4>
 					</div>
 				</div>
 			</div>
@@ -232,10 +207,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-heart-beat-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Heart Disease</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+						<h4 class="mt-3 mb-3">IT Consultancy & Advisory</h4>
 					</div>
 				</div>
 			</div>
@@ -244,10 +216,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-tooth text-lg"></i>
-						<h4 class="mt-3 mb-3">Dental Care</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+						<h4 class="mt-3 mb-3">Network & Infrastructure</h4>
 					</div>
 				</div>
 			</div>
@@ -257,11 +226,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-crutch text-lg"></i>
-						<h4 class="mt-3 mb-3">Body Surgery</h4>
-					</div>
-
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+						<h4 class="mt-3 mb-3">Data Management System</h4>
 					</div>
 				</div>
 			</div>
@@ -270,10 +235,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-brain-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Neurology Sargery</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+						<h4 class="mt-3 mb-3">IT Security & Compliance</h4>
 					</div>
 				</div>
 			</div>
@@ -282,10 +244,34 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Gynecology</h4>
+						<h4 class="mt-3 mb-3">Other</h4>
 					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="service-item mb-4">
+					<div class="icon d-flex align-items-center">
+						<i class="icofont-dna-alt-1 text-lg"></i>
+						<h4 class="mt-3 mb-3">Sales</h4>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="service-item mb-4">
+					<div class="icon d-flex align-items-center">
+						<i class="icofont-dna-alt-1 text-lg"></i>
+						<h4 class="mt-3 mb-3">Desain Komunikasi Visual</h4>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="service-item mb-4">
+					<div class="icon d-flex align-items-center">
+						<i class="icofont-dna-alt-1 text-lg"></i>
+						<h4 class="mt-3 mb-3">Information System & Technology Development</h4>
 					</div>
 				</div>
 			</div>

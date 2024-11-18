@@ -77,12 +77,15 @@ Route::middleware(['auth', 'company'])->group(function () {
 
     Route::get('application/{id}', [ApplicationController::class, 'index'])->name('company.application.detail');
     Route::get('application/{id}/confirm', [ApplicationController::class, 'confirmReview'])->name('company.application.confirm');
+
+    Route::get('/applications/{id}/detail', [ApplicationController::class, 'index'])->name('company.application.detail');
+    Route::get('/applications/{id}/status/{status}', [ApplicationController::class, 'updateStatus'])->name('application.updateStatus');
+    Route::post('/applications/{application}/schedule-interview', [ApplicationController::class, 'scheduleInterview'])->name('applications.schedule-interview');
+    Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
+    Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 });
 
-Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('application.updateStatus');
-Route::post('/applications/{application}/schedule-interview', [ApplicationController::class, 'scheduleInterview'])->name('applications.schedule-interview');
-Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
-Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
+
 Route::middleware(['auth', 'applicant'])->group(function () {
 
 
@@ -93,9 +96,12 @@ Route::middleware(['auth', 'applicant'])->group(function () {
     Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
     Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
 
+    Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
+
     Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
     Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');
-    // Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
+    
+    
     // Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
 });
 

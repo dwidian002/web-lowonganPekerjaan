@@ -7,6 +7,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\FieldOfWork;
 use App\Models\JobCategory;
+use App\Models\JobPosting;
 use App\Models\Location;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -19,10 +20,15 @@ class HomeController extends Controller
         $categories = JobCategory::all();
         $locations = Location::all();
         $fields = FieldOfWork::all();
+
+        $latestJobs = JobPosting::with(['location', 'fieldOfWork', 'companyProfile', 'jobCategory'])
+        ->where('status', true)
+        ->orderBy('created_at', 'desc')
+        ->take(6)->get();
         
 
         if (!Auth::check()) {
-            return view('applicant.home-applicant', compact('categories', 'locations', 'fields'));
+            return view('applicant.home-applicant', compact('categories', 'locations', 'fields','latestJobs'));
         }
         
         $user = Auth::user();
@@ -43,17 +49,19 @@ class HomeController extends Controller
                     session()->flash('incomplete_profile', 'Profile belum dibuat, silakan lengkapi profile anda');
                 }
 
-                return view('applicant.home-applicant', compact('categories', 'locations', 'fields'));
+                return view('applicant.home-applicant', compact('categories', 'locations', 'fields','latestJobs'));
 
             case 'company':
-                return view('company.home-company', compact('categories', 'locations', 'fields'));
+                return view('company.home-company', compact('categories', 'locations', 'fields','latestJobs'));
 
             case 'admin':
-                return view('admin.admin', compact('categories', 'locations', 'fields'));
+                return view('admin.admin', compact('categories', 'locations', 'fields','latestJobs'));
 
             default:
                 return redirect()->route('auth.index')
                     ->with('pesan', 'Role tidak valid');
         }
     }
+
+    
 }

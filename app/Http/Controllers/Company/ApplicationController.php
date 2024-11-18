@@ -20,7 +20,7 @@ class ApplicationController extends Controller
 
     public function scheduleInterview(Request $request, Application $application)
     {
-        $application->load(['user', 'jobPosting.companyProfile']); 
+        $application->load(['user', 'jobPosting.companyProfile']);
 
         $validated = $request->validate([
             'interview_date' => 'required|date|after:now',
@@ -79,27 +79,14 @@ class ApplicationController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        $application->application_status = 'in_review';
-        $application->save();
+        if (
+            $application->application_status === 'applied'
+            && request()->has('confirmed')
+            && !session()->has('application_viewed_' . $id)
+        ) {
 
-        Log::create([
-            'previous_status' => 'applied',
-            'new_status' => 'in_review',
-            'application_id' => $application->id,
-            'changed_at' => now(),
-        ]);
-        return view('company.application.detail', compact('application'));
-    }
-
-
-    public function confirmReview($id)
-    {
-        $application = Application::findOrFail($id);
-
-        if ($application->application_status === 'applied') {
-            $application->update([
-                'application_status' => 'in_review',
-            ]);
+            $application->application_status = 'in_review';
+            $application->save();
 
             Log::create([
                 'previous_status' => 'applied',
@@ -108,14 +95,34 @@ class ApplicationController extends Controller
                 'changed_at' => now(),
             ]);
 
-            if (request()->has('remember')) {
-                $minutes = 60 * 24 * 30;
-                cookie()->queue('confirmed_application_' . $id, true, $minutes);
-            } else {
-                session()->put('confirmed_application_' . $id, true);
-            }
+
+            session()->put('application_viewed_' . $id, true);
         }
 
-        return redirect()->route('company.application.detail', $id);
+        return view('company.application.detail', compact('application'));
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $application = Application::findOrFail($id);
+        $previousStatus = $application->application_status;
+
+        $allowedStatuses = ['interview', 'hired', 'rejected'];
+        if (!in_array($status, $allowedStatuses)) {
+            return redirect()->back()->with('error', 'Invalid status!');
+        }
+
+        $application->update([
+            'application_status' => $status
+        ]);
+
+        Log::create([
+            'previous_status' => $previousStatus,
+            'new_status' => $status,
+            'application_id' => $application->id,
+            'changed_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Application status updated successfully');
     }
 }

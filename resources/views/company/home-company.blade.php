@@ -16,9 +16,9 @@
 			<div class="col-lg-6 col-md-12 col-xl-7">
 				<div class="block">
 					<div class="divider mb-3"></div>
-					<span class="text-uppercase text-sm letter-spacing " style="color: white;">The Best Job Search Solution</span>
-					<h1 class="mb-3 mt-3" style="color: white;">Your Most Trusted Job partner</h1> 
-					<p style="color: white;">
+					<span class="text-uppercase text-sm letter-spacing " style="color: dark;">The Best Job Search Solution</span>
+					<h1 class="mb-3 mt-3" style=" bold; color: dark;">Your Most Trusted Job partner</h1> 
+					<p style="color: dark;">
                    — start applying now and create the career you dream of!
                    </p>
                     <div>

@@ -36,6 +36,74 @@
 
 <style>
 
+    .btn-container {
+        margin-bottom: 1rem;
+    }
+
+    .btn-main-2 {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 30px;
+        background-color: #e41e31;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-main-2:hover {
+        background-color: #1a2f5a;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-icon {
+        position: relative;
+    }
+
+    .btn-round-full {
+        border-radius: 50px;
+    }
+
+    .icofont-simple-right {
+        margin-left: 0.5rem;
+        font-size: 14px;
+    }
+
+    .btn-main-2 i {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .text-uppercase {
+        text-transform: uppercase;
+    }
+
+    .text-sm {
+        font-size: 14px;
+    }
+
+    .letter-spacing {
+        letter-spacing: 1px;
+    }
+
+    .text-dark {
+        color: #333; 
+    }
+
+    h1 {
+        font-weight: bold; 
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+
+    p {
+        color: #333; 
+    }
+
     .feature-item {
     margin-top: -80px !important;
     }

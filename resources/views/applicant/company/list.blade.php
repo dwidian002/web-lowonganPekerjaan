@@ -46,7 +46,6 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100 shadow job-card">
                         <div class="card-body">
-                            <!-- Company Header -->
                             <div class="d-flex align-items-center mb-3">
                                 <div class="company-logo mr-3">
                                     <a href="{{ route('company.detail', $company->id) }}">
@@ -64,8 +63,10 @@
                                     @endif
                                 </div>
                                 <div>
-                                    <h5 class="company-name mb-0">{{ $company->company_name }}</h5>
+                                    <a href="{{ route('company.detail', $company->id) }}" class="company-name-link">
+                                        <h5 class="company-name">{{ $company->company_name }}</h5>
                                 </div>
+                                </a>
                             </div>
 
                             <div class="job-tags mb-3">

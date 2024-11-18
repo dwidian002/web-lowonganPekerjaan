@@ -274,6 +274,8 @@
                             <button class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#interviewModal" data-application-id="{{ $application->id }}">
                                 <i class="fas fa-comments mr-2"></i> Interview
                             </button>
+                        @endif
+                        @if($application->application_status === 'applied' || $application->application_status === 'in_review' || $application->application_status === 'interview')
                             <button class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#acceptModal" data-application-id="{{ $application->id }}">
                                 <i class="fas fa-check-circle mr-2"></i> Accept
                             </button>
@@ -365,9 +367,9 @@
       </div>
     </div>
   </div>
+</div>
   
-
-  <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+ <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -408,6 +410,7 @@
       </div>
     </div>
   </div>
+</div>
   
   <script>
       document.addEventListener('DOMContentLoaded', function() {

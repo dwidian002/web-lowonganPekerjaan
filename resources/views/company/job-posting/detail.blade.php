@@ -99,7 +99,8 @@
             @forelse($jobPosting->applications as $application)
             <div class="col-lg-4 col-md-6 mb-4">
                 @if ($application->application_status == 'applied')
-                    <a href="#" data-toggle="modal" data-target="#confirmModal" data-application="{{ $application->user->applicantProfile->name }}">
+                <a href="#" data-toggle="modal" data-target="#confirmModal-{{ $application->id }}" 
+                   data-application="{{ $application->user->applicantProfile->name }}">
                 @else
                     <a href="{{ route('company.application.detail', $application->id) }}">
                 @endif
@@ -165,27 +166,33 @@
         </div>
     </div>
 
+    @foreach($jobPosting->applications as $application)
     @if ($application->application_status == 'applied')
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmModal-{{ $application->id }}" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">Confirm Application Review</h5>
+                        <h5 class="modal-title">
+                            Confirm Application Review
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to review the application for {{ $application->user->applicantProfile->name }}?
+                        Are you sure you want to review the application for 
+                        {{ $application->user->applicantProfile->name }}?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <a href="{{ route('company.application.detail', $application->id) }}?confirmed" class="btn btn-primary">Yes</a>
+                        <a href="{{ route('company.application.detail', $application->id) }}?confirmed" 
+                           class="btn btn-primary">Yes</a>
                     </div>
                 </div>
             </div>
         </div>
-    @endif
+        @endif
+    @endforeach
 </section>
 
 <script>
