@@ -24,18 +24,10 @@
                     <div>
 					<div class="sidebar-widget search  mb-0">
 						<h4 class="text-small">What Job Are You Looking For?</h4>
-						<form action="#" method="GET">
+						<form action="{{ route('job-postings.all') }}" method="GET">
 							<div class="search-wrapper">
 								<div class="search-input-container">
-									<input type="text" name="search" class="search-input" placeholder="Search">
-								</div>
-								<div class="select-container">
-									<select name="kategori" class="select-input">
-										<option value="">Pilih Kategori</option>
-										@foreach($categories as $category)
-											<option value="{{ $category->id }}">{{ $category->name }}</option>
-										@endforeach
-									</select>
+									<input type="text" name="search" class="search-input" placeholder="Search Companies">
 								</div>
 								<div class="select-container">
 									<select name="lokasi" class="select-input">
@@ -46,7 +38,15 @@
 									</select>
 								</div>
 								<div class="select-container">
-									<select name="bidang" class="select-input">
+									<select name="category" class="select-input">
+										<option value="">Pilih Kategori</option>
+										@foreach($categories as $category)
+											<option value="{{ $category->id }}">{{ $category->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="select-container">
+									<select name="fields" class="select-input">
 										<option value="">Pilih Bidang</option>
 										@foreach($fields as $field)
 											<option value="{{ $field->id }}">{{ $field->name }}</option>
@@ -181,12 +181,12 @@
 		</div>
 	</div>
 </section>
-<section class="section service gray-bg">
+<section class="section service gray-bg" style="margin-bottom: -100px;">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 text-center">
-				<div class="section-title">
-					<h2>Field Of Jobs</h2>
+				<div class="section-title" style="margin-bottom: 30px">
+					<h2 class="text-small">Field Of Jobs</h2>
 					<div class="divider mx-auto my-4"></div>
 					<p>Find various vacancies by job field.</p>
 				</div>
@@ -194,331 +194,122 @@
 		</div>
 
 		<div class="row">
+			@foreach($fields as $field)
 			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-laboratory text-lg"></i>
-						<h4 class="mt-3 mb-3">Programing & Sofftware Development</h4>
+				<a href="{{ route('job-postings.all', ['bidang' => $field->id]) }}" class="text-decoration-none">
+					<div class="service-item mb-4">
+						<div class="icon d-flex align-items-center">
+							@switch($field->name)
+								@case('Programing & Sofftware Development')
+									<i class="icofont-code text-lg"></i>
+									@break
+								@case('IT Consultancy & Advisory')
+									<i class="icofont-business-man text-lg"></i>
+									@break
+								@case('Network & Infrastructure')
+									<i class="icofont-network text-lg"></i>
+									@break
+								@case('Data Management System')
+									<i class="icofont-database text-lg"></i>
+									@break
+								@case('IT Security & Compliance')
+									<i class="icofont-shield text-lg"></i>
+									@break
+								@case('Other')
+									<i class="icofont-gear text-lg"></i>
+									@break
+								@case('Sales')
+									<i class="icofont-chart-growth text-lg"></i>
+									@break
+								@case('Desain Komunikasi Visual')
+									<i class="icofont-paint text-lg"></i>
+									@break
+								@case('Information System & Technology Development')
+									<i class="icofont-server text-lg"></i>
+									@break
+								@default
+									<i class="icofont-gear text-lg"></i>
+							@endswitch
+							<h4 class="mt-3 mb-3">{{ $field->name }}</h4>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-heart-beat-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">IT Consultancy & Advisory</h4>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-tooth text-lg"></i>
-						<h4 class="mt-3 mb-3">Network & Infrastructure</h4>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-crutch text-lg"></i>
-						<h4 class="mt-3 mb-3">Data Management System</h4>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-brain-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">IT Security & Compliance</h4>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Other</h4>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Sales</h4>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Desain Komunikasi Visual</h4>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Information System & Technology Development</h4>
-					</div>
-				</div>
-			</div>
+			@endforeach
 		</div>
 	</div>
 </section>
-<section class="section appoinment">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-6 ">
-				<div class="appoinment-content">
-					<img src="layout/assets/images/about/img-3.jpg" alt="" class="img-fluid">
-					<div class="emergency">
-						<h2 class="text-lg"><i class="icofont-phone-circle text-lg"></i>+23 345 67980</h2>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-10 ">
-				<div class="appoinment-wrap mt-5 mt-lg-0">
-					<h2 class="mb-2 title-color">Book appoinment</h2>
-					<p class="mb-4">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque similique praesentium soluta.</p>
-					     <form id="#" class="appoinment-form" method="post" action="#">
-                    <div class="row">
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                  <option>Choose Department</option>
-                                  <option>Software Design</option>
-                                  <option>Development cycle</option>
-                                  <option>Software Development</option>
-                                  <option>Maintenance</option>
-                                  <option>Process Query</option>
-                                  <option>Cost and Duration</option>
-                                  <option>Modal Delivery</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect2">
-                                  <option>Select Doctors</option>
-                                  <option>Software Design</option>
-                                  <option>Development cycle</option>
-                                  <option>Software Development</option>
-                                  <option>Maintenance</option>
-                                  <option>Process Query</option>
-                                  <option>Cost and Duration</option>
-                                  <option>Modal Delivery</option>
-                                </select>
-                            </div>
-                        </div>
-
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="date" id="date" type="text" class="form-control" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="time" id="time" type="text" class="form-control" placeholder="Time">
-                            </div>
-                        </div>
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="name" id="name" type="text" class="form-control" placeholder="Full Name">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="phone" id="phone" type="Number" class="form-control" placeholder="Phone Number">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group-2 mb-4">
-                        <textarea name="message" id="message" class="form-control" rows="6" placeholder="Your Message"></textarea>
-                    </div>
-
-                    <a class="btn btn-main btn-round-full" href="appoinment.html" >Make Appoinment <i class="icofont-simple-right ml-2  "></i></a>
-                </form>
-            </div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="section testimonial-2 gray-bg">
+<section class="section clients " style="margin-top: -135px;">
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-lg-7">
+			<div class="col-lg-7" style="margin-bottom: 15px;">
 				<div class="section-title text-center">
-					<h2>We served over 5000+ Patients</h2>
+					<h2>Company Partner</h2>
 					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+					<p>We collaborate with various leading companies that open up opportunities for you to develop and achieve your dream career goals.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-12 testimonial-wrap-2">
-				<div class="testimonial-block style-2  gray-bg">
-					<i class="icofont-quote-right"></i>
-
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info ">
-						<h4>Amazing service!</h4>
-						<span>John Partho</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb2.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Expert doctors!</h4>
-						<span>Mullar Sarth</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb3.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Good Support!</h4>
-						<span>Kolis Mullar</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb4.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Nice Environment!</h4>
-						<span>Partho Sarothi</span>
-						<p class="mt-4">
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Modern Service!</h4>
-						<span>Kolis Mullar</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					<i class="icofont-quote-right"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="section clients">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-7">
-				<div class="section-title text-center">
-					<h2>Partners who support us</h2>
-					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
+	<div class="container" >
 		<div class="row clients-logo">
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/1.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/pertamina.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/2.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/pln.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/3.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/astra.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/4.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/del.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/5.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/bni.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/6.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/mind.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/3.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/bri.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/4.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/sm.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/5.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/adr.jpg" alt="" class="img-fluid">
 				</div>
 			</div>
 			<div class="col-lg-2">
 				<div class="client-thumb">
-					<img src="layout/assets/images/about/6.png" alt="" class="img-fluid">
+					<img src="layout/assets/images/about/bca.jpg" alt="" class="img-fluid">
 				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 13px">
+			<div class="col-lg-12 text-center mt-4 mb-10">
+				<a href="{{ route('list.company') }}" class="btn btn-main-2">
+					See All Companies <i class="icofont-simple-right ml-2"></i>
+				</a>
 			</div>
 		</div>
 	</div>

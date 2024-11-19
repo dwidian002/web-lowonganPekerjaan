@@ -13,6 +13,7 @@ use App\Models\UserVerifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -114,4 +115,45 @@ class ProfileController extends Controller
             'applicantProfile' => $applicantProfile,
         ]);
     }
+
+    public function edit($id)
+    {
+        $applicantProfile = ApplicantProfile::find($id);
+        return view('applicant.profile.edit', compact('applicantProfile'));
+    }
+    public function update(Request $request)
+{
+    $this->validate($request, [
+        'name' => 'required|string',
+        'gender' => 'required|in:Male,Female',
+        'tanggal_lahir' => 'required|date',
+        'alamat_lengkap' => 'required|string',
+        'phone_number' => 'required|string',
+        'about_me' => 'required|string',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    $applicantProfile = ApplicantProfile::where('user_id', Auth::id())->firstOrFail();
+
+    $fotoPath = $applicantProfile->foto;
+    if ($request->hasFile('foto')) {
+        if ($fotoPath && $fotoPath !== 'layout/assets/images/service/default-foto.jpg') {
+            Storage::delete('public/' . $fotoPath);
+        }
+        $fotoPath = $request->file('foto')->store('fotos', 'public');
+    }
+
+    $applicantProfile->update([
+        'name' => $request->name,
+        'gender' => $request->gender,
+        'tanggal_lahir' => $request->tanggal_lahir,
+        'alamat_lengkap' => $request->alamat_lengkap,
+        'phone_number' => $request->phone_number,
+        'about_me' => $request->about_me,
+        'foto' => $fotoPath
+    ]);
+
+    return redirect()->route('profile-applicant')
+        ->with('success', 'Profile updated successfully');
+}
 }

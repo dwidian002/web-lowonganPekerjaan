@@ -20,29 +20,40 @@
                 <form action="{{ route('job-postings.all') }}" method="GET" class="d-flex">
                     <div class="search-wrapper">
                         <div class="search-input-container">
-                            <input type="text" name="search" class="search-input" placeholder="Cari posisi atau perusahaan">
+                            <input type="text" name="search" class="search-input" 
+                                   placeholder="Search Companies" 
+                                   value="{{ request('search') }}">
                         </div>
                         <div class="select-container">
                             <select name="category" class="select-input">
                                 <option value="">Semua Kategori</option>
                                 @foreach($jobCategories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}"
+                                        {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="select-container">
                             <select name="lokasi" class="select-input">
-                                <option value="">Pilih Lokasi</option>
+                                <option value="">Semua Lokasi</option>
                                 @foreach($locations as $location)
-                                    <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                @endforeach
+                                <option value="{{ $location->id }}"
+                                    {{ request('lokasi') == $location->id ? 'selected' : '' }}>
+                                    {{ $location->name }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="select-container">
                             <select name="bidang" class="select-input">
-                                <option value="">Pilih Bidang</option>
+                                <option value="">Semua Bidang</option>
                                 @foreach($fields as $field)
-                                    <option value="{{ $field->id }}">{{ $field->name }}</option>
+                                    <option value="{{ $field->id }}" 
+                                            {{ $selectedField == $field->id ? 'selected' : '' }}>
+                                        {{ $field->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -108,8 +119,11 @@
                 </div>
             </div>
             @empty
-                <div class="col-12 text-center">
-                    <p>Tidak ada lowongan pekerjaan tersedia saat ini.</p>
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <h4>Pekerjaan tidak ditemukan</h4>
+                        <p>Silahkan coba pencarian dengan kata kunci lain atau ubah filter pencarian Anda.</p>
+                    </div>
                 </div>
             
             @endforelse

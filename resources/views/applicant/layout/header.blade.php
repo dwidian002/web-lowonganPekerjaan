@@ -13,35 +13,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{route('home')}}">Home</a>
           </li>
-           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="department.html" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Department <i class="icofont-thin-down"></i></a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown02">
-                    <li><a class="dropdown-item" href="department.html">Departments</a></li>
-                    <li><a class="dropdown-item" href="department-single.html">Department Single</a></li>
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                    <li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
-                    <li><a class="dropdown-item" href="doctor-single.html">Doctor Single</a></li>
-                    <li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
-                </ul>
-              </li>
-
-           <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                    <li><a class="dropdown-item" href="blog-sidebar.html">Blog with Sidebar</a></li>
-
-                    <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li>
-                </ul>
-              </li>
-           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{route('job-postings.all')}}">All Job</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('list.company')}}">Companies</a></li>
+           <li class="nav-item"><a class="nav-link" href="contact.html">About us</a></li>
         </div>
         @if(!auth()->check())
         <a href="{{url('/login')}}" class="custom-btn login-btn">
@@ -60,7 +34,7 @@
         <a href="{{url('/logout')}}" class="custom-btn login-btn">
             <i class="fa fa-user"></i> Dashboard
         </a>
-        {{-- {{-- @if (auth()->user()->role == 'applicant')
+            @if (auth()->user()->role == 'applicant')
                 <a href="{{ route('profile-applicant') }}" class="custom-btn login-btn" data-role="applicant">
                     <i class="icofont-user"></i> Profile
                 </a>
@@ -68,7 +42,7 @@
                 <a href="{{ route('profile-company') }}" class="custom-btn login-btn" data-role="company">
                     <i class="icofont-user"></i> Profile
                 </a>
-            @endif --}}
+            @endif
         @endif
     </div>
     </div>

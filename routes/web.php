@@ -90,13 +90,14 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 
 
     Route::get('/my-profile', [ProfileController::class, 'index'])->name('profile-applicant');
+    Route::get('/my-profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile-applicant.edit');
+    Route::post('/my-profile/update', [ProfileController::class, 'update'])->name('profile-applicant.update');
 
     Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
     Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
-    Route::get('/all-job', [JobController::class, 'index'])->name('all.job');
-    Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
 
     Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
+    Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
 
     Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
     Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');

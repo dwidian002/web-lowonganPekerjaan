@@ -33,6 +33,113 @@
 
 <style>
 
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .service-item .icon i {
+        color: #2c4187;
+        font-size: 2.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .service-item:hover .icon i {
+        transform: scale(1.1);
+    }
+
+    .service-item .icon h4 {
+        margin: 0;
+        color: #2c4187;
+        transition: color 0.3s ease;
+    }
+
+    .service-item:hover .icon h4 {
+        color: #d81c44;
+    }
+
+    .service-item {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(0,123,255,0.1), transparent);
+    transition: all 0.5s ease;
+}
+
+.service-item:hover::before {
+    left: 100%;
+}
+
+.service-item .icon {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover .icon {
+    transform: translateX(5px);
+}
+.service-item {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+        rgba(0,123,255,0.1) 0%, 
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    }
+
+    .service-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .service-item:hover::after {
+        opacity: 1;
+    }
+
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.4s ease;
+    }
+
+    .service-item:hover .icon i {
+        transform: rotate(15deg) scale(1.2);
+        color: #d81c44;
+    }
+
+    .service-item .icon h4 {
+        margin: 0;
+        transition: all 0.4s ease;
+    }
+
+    .service-item:hover .icon h4 {
+        transform: translateX(10px);
+        color: #d81c44;
+    }
+
     .job-title-link:hover {
         color: #e82454;
     }
@@ -412,7 +519,7 @@
     }
 
     .text-primary {
-        color: #a70027 !important;
+        color: #223a66 !important;
         font-weight: bold;
     }
 

@@ -20,6 +20,8 @@ class JobController extends Controller
             'fieldOfWork'
         ])->where('status', true);
 
+        $selectedField = $request->input('bidang');
+
         if ($request->has('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('position', 'like', '%' . $request->search . '%')
@@ -50,7 +52,8 @@ class JobController extends Controller
             'jobPostings',
             'jobCategories',
             'locations',
-            'fields'
+            'fields',
+            'selectedField'
         ));
     }
 
