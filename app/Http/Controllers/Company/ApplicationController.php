@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicantProfile;
 use App\Models\Application;
+use App\Models\JobPosting;
 use App\Models\Log;
 use App\Services\ApplicationNotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -68,13 +70,56 @@ class ApplicationController extends Controller
             return redirect()->back()->with('error', 'Failed to reject application: ' . $e->getMessage());
         }
     }
-    public function index($id)
+
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $companyProfile = $user->companyProfile;
+
+        if (!$companyProfile) {
+            return redirect()->route('register.company')
+                ->with('error', 'Please complete your company profile first.');
+        }
+
+        $query = Application::whereHas('jobPosting', function ($q) use ($companyProfile) {
+            $q->where('company_profile_id', $companyProfile->id);
+        })->with(['user.applicantProfile', 'jobPosting']);
+
+        if ($request->filled('search')) {
+            $query->whereHas('user.applicantProfile', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhereHas('user', function ($userQuery) use ($request) {
+                        $userQuery->where('email', 'like', '%' . $request->search . '%');
+                    });
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('application_status', $request->status);
+        }
+
+        if ($request->filled('job_posting')) {
+            $query->where('job_posting_id', $request->job_posting);
+        }
+
+        $applications = $query->latest('applied_at')->paginate(12);
+
+        $jobPostings = JobPosting::where('company_profile_id', $companyProfile->id)->get();
+
+        return view('company.application.index', compact(
+            'applications',
+            'jobPostings'
+        ));
+    }
+
+    public function detail($id)
     {
         $application = Application::with([
             'user.applicantProfile',
             'user.applicantProfile.education',
             'user.applicantProfile.skills',
             'user.applicantProfile.experiences',
+            'jobPosting'
         ])
             ->where('id', $id)
             ->firstOrFail();

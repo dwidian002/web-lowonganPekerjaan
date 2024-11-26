@@ -27,6 +27,7 @@
   <!-- jQuery Easing (dipindah setelah jQuery) -->
   <script src="{{ asset('layout/assets/plugins/counterup/jquery.easing.js') }}"></script>
 
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   
@@ -36,6 +37,189 @@
 
 <style>
 
+    .bg-info {
+        background-color: #0d929e !important;
+    }
+    .text-uppercase {
+        text-transform: uppercase;
+    }
+    .card-footer {
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-footer:hover {
+        background-color: #f1f3f5;
+    }
+
+    .text-sm {
+        font-size: 0.875rem;
+    }
+
+    .company-sidebar {
+        background-color: #ebf1f4;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    .sidebar-item {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar-item i {
+        margin-right: 10px;
+    }
+
+    .sidebar-item a {
+        color: inherit;
+    }
+
+    .company-name {
+        color: #333;
+        margin-top: 1rem;
+    }
+
+    .btn-apply {
+        padding: 10px 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-apply:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .logo-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .service-item .icon i {
+        color: #2c4187;
+        font-size: 2.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .service-item:hover .icon i {
+        transform: scale(1.1);
+    }
+
+    .service-item .icon h4 {
+        margin: 0;
+        color: #2c4187;
+        transition: color 0.3s ease;
+    }
+
+    .service-item:hover .icon h4 {
+        color: #d81c44;
+    }
+
+    .service-item {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    }
+
+    .service-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(0,123,255,0.1), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .service-item:hover::before {
+        left: 100%;
+    }
+
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .service-item:hover .icon {
+        transform: translateX(5px);
+    }
+    .service-item {
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+        rgba(0,123,255,0.1) 0%, 
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    }
+
+    .service-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .service-item:hover::after {
+        opacity: 1;
+    }
+
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.4s ease;
+    }
+
+    .service-item:hover .icon i {
+        transform: rotate(15deg) scale(1.2);
+        color: #d81c44;
+    }
+
+    .service-item .icon h4 {
+        margin: 0;
+        transition: all 0.4s ease;
+    }
+
+    .service-item:hover .icon h4 {
+        transform: translateX(10px);
+        color: #d81c44;
+    }
+
+    .job-title-link:hover {
+        color: #e82454;
+    }
+
     .btn-container {
         margin-bottom: 1rem;
     }
@@ -44,7 +228,7 @@
         display: inline-flex;
         align-items: center;
         padding: 12px 30px;
-        background-color: #e41e31;
+        background-color: #d11843;
         color: white;
         text-decoration: none;
         border-radius: 50px;
@@ -91,7 +275,7 @@
     }
 
     .text-dark {
-        color: #333; 
+        color: #333;
     }
 
     h1 {
@@ -101,7 +285,7 @@
     }
 
     p {
-        color: #333; 
+        color: #333;
     }
 
     .feature-item {
@@ -276,6 +460,10 @@
         border-radius: 8px;
     }
 
+    .company-name-link {
+        text-decoration: none;
+    }
+
     .company-name {
         color: #333;
         font-size: 1.5rem !important;
@@ -283,6 +471,25 @@
         line-height: 1.2;
         margin-bottom: 0;
         transition: color 0.2s ease;
+    }
+
+    .company-name:hover {
+        color: #e82454;
+        text-decoration: none;
+    }
+
+    .position {
+        color: #333;
+        font-size: 1.5rem !important;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0;
+        transition: color 0.2s ease;
+    }
+
+    .position:hover {
+        color: #e82454;
+        text-decoration: none;
     }
 
     .job-title {
@@ -338,40 +545,6 @@
         margin-bottom: 2rem;
     }
 
-    .company-name-link {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .job-details-link {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-    }
-
-    .job-details-link:hover {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .job-details-link:hover .job-title {
-        color: #e82454;
-    }
-
-    .job-content {
-        cursor: pointer;
-    }
-
-    .job-card {
-        transition: transform 0.2s ease-in-out;
-        border-radius: 12px;
-    }
-
-    .job-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-    }
-
     @media (max-width: 991px) {
         .page-title {
             padding: 40px 0;
@@ -421,32 +594,16 @@
         }
     }
 
-    .job-card {
-            transition: all 0.3s ease;
-        }
-        
-        .card-link-wrapper {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .card-link-wrapper:hover {
-            text-decoration: none;
-        }
-        
-        .job-card .job-title {
-            color: #333;
-            transition: color 0.3s ease;
-        }
-        
-        .card-link-wrapper:hover .job-title {
-            color: #e82454; 
-        }
-        
-        .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
+    .text-primary {
+        color: #223a66 !important;
+        font-weight: bold;
+    }
+
+    .text-small {
+        color: #223a66 !important;
+        font-weight: bold;
+    }
+    
 </style>
 
 <body id="top">
@@ -506,6 +663,7 @@
     <script src="{{ asset('layout/assets/plugins/google-map/map.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>    
     
+
     <script src="{{ asset('layout/assets/js/script.js') }}"></script>
     <script src="{{ asset('layout/assets/js/contact.js') }}"></script>
 

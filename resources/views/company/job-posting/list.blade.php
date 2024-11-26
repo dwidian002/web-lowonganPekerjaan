@@ -6,7 +6,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="block text-center">
-                    <span class="text-white">Our services</span>
                     <h1 class="text-capitalize mb-5 text-lg">All Jobs</h1>
 
                     <div class="search-container">
@@ -41,6 +40,54 @@
                 </button>
             </div>
         @endif
+
+        <div class="search-container mb-5">
+            <div class="col-12">
+                <form action="{{ route('job-posting.index') }}" method="GET" class="d-flex">
+                    <div class="search-wrapper">
+                        <div class="search-input-container">
+                            <input type="text" name="search" class="search-input" 
+                                   placeholder="Search Companies" 
+                                   value="{{ request('search') }}">
+                        </div>
+                        <div class="select-container">
+                            <select name="category" class="select-input">
+                                <option value="">Semua Kategori</option>
+                                @foreach($jobCategories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="select-container">
+                            <select name="lokasi" class="select-input">
+                                <option value="">Semua Lokasi</option>
+                                @foreach($locations as $location)
+                                    <option value="{{ $location->id }}"
+                                        {{ request('lokasi') == $location->id ? 'selected' : '' }}>
+                                        {{ $location->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="select-container">
+                            <select name="field" class="select-input">
+                                <option value="">Semua Bidang</option>
+                                @foreach($fields as $field)
+                                    <option value="{{ $field->id }}" 
+                                        {{ request('field') == $field->id ? 'selected' : '' }}>
+                                        {{ $field->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-main-2 btn-icon btn-round-full">SEARCH</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div class="row">
             @forelse($jobPostings as $jobPosting)
@@ -96,6 +143,12 @@
                 </a>
             </div>
             @empty
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <h4>Job Not Found</h4>
+                        <p>Please try searching with other keywords or change your search filter.</p>
+                    </div>
+                </div>
             @endforelse
         </div>
 
@@ -108,5 +161,66 @@
         @endif
     </div>
 </section>
+
+<style>
+    .search-wrapper {
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .search-input-container,
+    .select-container {
+        margin-right: 60px;
+        flex-grow: 1;
+    }
+    
+    .search-input,
+    .select-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+    
+    .search-input:focus,
+    .select-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    }
+    
+    .btn-primary {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    
+    @media (max-width: 768px) {
+        .search-wrapper {
+            flex-direction: column;
+        }
+    
+        .search-input-container,
+        .select-container {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+</style>
 
 @endsection

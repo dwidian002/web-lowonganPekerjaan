@@ -150,30 +150,30 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-sm-6 mt-10">
 					<div class="counter-stat">
-						<i class="icofont-doctor"></i>
-						<span class="h3">58</span>k
+						<i class="icofont-bank-alt"></i>
+						<span class="h3">{{$totalCompany}}</span>
 						<p>Company Partner</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-flag"></i>
-						<span class="h3">700</span>+
+						<i class="icofont-search-job"></i>
+						<span class="h3">{{$totalJobPosting}}</span>
 						<p>Job Postings</p>
 					</div>
 				</div>
 				
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-badge"></i>
-						<span class="h3">40</span>+
+						<i class="icofont-ui-clip-board"></i>
+						<span class="h3">{{$totalApplication}}</span>
 						<p>Applayed</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-globe"></i>
-						<span class="h3">20</span>
+						<i class="icofont-users-alt-2"></i>
+						<span class="h3">{{$totalApplicant}}</span>
 						<p>Applicant</p>
 					</div>
 				</div>
@@ -195,46 +195,46 @@
 
 		<div class="row">
 			@foreach($fields as $field)
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<a href="{{ route('job-postings.all', ['bidang' => $field->id]) }}" class="text-decoration-none">
-					<div class="service-item mb-4">
-						<div class="icon d-flex align-items-center">
-							@switch($field->name)
-								@case('Programing & Sofftware Development')
-									<i class="icofont-code text-lg"></i>
-									@break
-								@case('IT Consultancy & Advisory')
-									<i class="icofont-business-man text-lg"></i>
-									@break
-								@case('Network & Infrastructure')
-									<i class="icofont-network text-lg"></i>
-									@break
-								@case('Data Management System')
-									<i class="icofont-database text-lg"></i>
-									@break
-								@case('IT Security & Compliance')
-									<i class="icofont-shield text-lg"></i>
-									@break
-								@case('Other')
-									<i class="icofont-gear text-lg"></i>
-									@break
-								@case('Sales')
-									<i class="icofont-chart-growth text-lg"></i>
-									@break
-								@case('Desain Komunikasi Visual')
-									<i class="icofont-paint text-lg"></i>
-									@break
-								@case('Information System & Technology Development')
-									<i class="icofont-server text-lg"></i>
-									@break
-								@default
-									<i class="icofont-gear text-lg"></i>
-							@endswitch
-							<h4 class="mt-3 mb-3">{{ $field->name }}</h4>
+				<div class="col-lg-4 col-md-6 col-sm-6">
+					<a href="{{ route('job-postings.all', ['bidang' => $field->id]) }}" class="text-decoration-none">
+						<div class="service-item  mb-3">
+							<div class="icon d-flex align-items-center">
+								@switch($field->name)
+									@case('Programing & Sofftware Development')
+										<i class="icofont-code text-lg fs-2"></i>
+										@break
+									@case('IT Consultancy & Advisory')
+										<i class="icofont-business-man text-lg fs-2"></i>
+										@break
+									@case('Network & Infrastructure')
+										<i class="icofont-network text-lg fs-2"></i>
+										@break
+									@case('Data Management System')
+										<i class="icofont-database text-lg fs-2"></i>
+										@break
+									@case('IT Security & Compliance')
+										<i class="icofont-shield text-lg fs-2"></i>
+										@break
+									@case('Other')
+										<i class="icofont-gear text-lg fs-2"></i>
+										@break
+									@case('Sales')
+										<i class="icofont-chart-growth text-lg fs-2"></i>
+										@break
+									@case('Desain Komunikasi Visual')
+										<i class="icofont-paint text-lg fs-2"></i>
+										@break
+									@case('Information System & Technology Development')
+										<i class="icofont-server text-lg fs-2"></i>
+										@break
+									@default
+										<i class="icofont-gear text-lg fs-2"></i>
+								@endswitch
+								<h4 class="mt-2 mb-2 fs-6">{{ $field->name }}</h4>
+							</div>
 						</div>
-					</div>
-				</a>
-			</div>
+					</a>
+				</div>
 			@endforeach
 		</div>
 	</div>
@@ -244,7 +244,7 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-7" style="margin-bottom: 15px;">
 				<div class="section-title text-center">
-					<h2>Company Partner</h2>
+					<h2 class="text-small">Company Partner</h2>
 					<div class="divider mx-auto my-4"></div>
 					<p>We collaborate with various leading companies that open up opportunities for you to develop and achieve your dream career goals.</p>
 				</div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApplicantProfile;
+use App\Models\Application;
+use App\Models\CompanyProfile;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\FieldOfWork;
@@ -20,6 +22,11 @@ class HomeController extends Controller
         $categories = JobCategory::all();
         $locations = Location::all();
         $fields = FieldOfWork::all();
+
+        $totalCompany = CompanyProfile::count();
+        $totalJobPosting = JobPosting::count();
+        $totalApplication = Application::count();
+        $totalApplicant = ApplicantProfile::count();
 
         $latestJobs = JobPosting::with(['location', 'fieldOfWork', 'companyProfile', 'jobCategory'])
             ->where('status', true)
@@ -57,7 +64,17 @@ class HomeController extends Controller
         $jobPostings = $query->paginate(9);
 
         if (!Auth::check()) {
-            return view('applicant.home-applicant', compact('categories', 'locations', 'fields', 'latestJobs','jobPostings'));
+            return view('applicant.home-applicant', compact(
+                'categories',
+                'locations',
+                'fields',
+                'latestJobs',
+                'jobPostings',
+                'totalCompany',
+                'totalJobPosting',
+                'totalApplication',
+                'totalApplicant'
+            ));
         }
 
         $user = Auth::user();
@@ -78,17 +95,98 @@ class HomeController extends Controller
                     session()->flash('incomplete_profile', 'Profile belum dibuat, silakan lengkapi profile anda');
                 }
 
-                return view('applicant.home-applicant', compact('categories', 'locations', 'fields', 'latestJobs','jobPostings'));
+                return view('applicant.home-applicant', compact(
+                    'categories',
+                    'locations',
+                    'fields',
+                    'latestJobs',
+                    'jobPostings',
+                    'jobPostings',
+                    'totalCompany',
+                    'totalJobPosting',
+                    'totalApplication',
+                    'totalApplicant'
+                ));
 
             case 'company':
-                return view('company.home-company', compact('categories', 'locations', 'fields', 'latestJobs','jobPostings'));
+                $companyProfile = CompanyProfile::where('user_id', $user->id)->first();
+
+                if ($companyProfile) {
+                    
+                    $latestJobs = JobPosting::with(['location', 'fieldOfWork', 'companyProfile', 'jobCategory'])
+                        ->where('status', true)
+                        ->where('company_profile_id', $companyProfile->id)
+                        ->orderBy('created_at', 'desc')
+                        ->take(6)
+                        ->get();
+
+                    $latestApplications = Application::with(['user.applicantProfile', 'jobPosting'])
+                        ->whereHas('jobPosting', function ($query) use ($companyProfile) {
+                            $query->where('company_profile_id', $companyProfile->id);
+                        })
+                        ->orderBy('applied_at', 'desc')
+                        ->take(6)
+                        ->get();
+
+                    $jobPostings = JobPosting::where('company_profile_id', $companyProfile->id)
+                        ->paginate(9);
+
+                    $totalJobPosting = JobPosting::where('company_profile_id', $companyProfile->id)
+                        ->count();
+
+                    $totalApplication = Application::whereHas('jobPosting', function ($query) use ($companyProfile) {
+                        $query->where('company_profile_id', $companyProfile->id);
+                    })->count();
+
+                    $totalAcceptedApplication = Application::whereHas('jobPosting', function ($query) use ($companyProfile) {
+                        $query->where('company_profile_id', $companyProfile->id);
+                    })->whereIn('application_status', ['hired'])
+                        ->count();
+
+                    $totalApplicant = Application::whereHas('jobPosting', function ($query) use ($companyProfile) {
+                        $query->where('company_profile_id', $companyProfile->id);
+                    })->distinct('user_id')->count('user_id');
+                } else {
+                    $latestJobs = collect();
+                    $latestApplications = collect();
+                    $jobPostings = collect();
+                    $totalJobPosting = 0;
+                    $totalApplication = 0;
+                    $totalAcceptedApplication = 0;
+                    $totalApplicant = 0;
+                }
+
+                return view('company.home-company', compact(
+                    'categories',
+                    'locations',
+                    'fields',
+                    'latestJobs',
+                    'latestApplications',
+                    'jobPostings',
+                    'totalJobPosting',
+                    'totalApplication',
+                    'totalAcceptedApplication', 
+                    'totalApplicant'
+                ));
 
             case 'admin':
-                return view('admin.admin', compact('categories', 'locations', 'fields', 'latestJobs','jobPostings'));
+                return view('admin.admin', compact(
+                    'categories',
+                    'locations',
+                    'fields',
+                    'latestJobs',
+                    'jobPostings',
+                    'jobPostings',
+                    'totalCompany',
+                    'totalJobPosting',
+                    'totalApplication',
+                    'totalApplicant'
+                ));
 
             default:
                 return redirect()->route('auth.index')
                     ->with('pesan', 'Role tidak valid');
         }
     }
+
 }

@@ -68,17 +68,17 @@
                             @endphp
 
                             @if($isProfileComplete)
-                                <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100">Apply</a>
+                                <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100 btn-apply">Apply</a>
                             @else
-                                <button type="button" class="btn btn-info btn-round-full w-100" data-toggle="modal" data-target="#incompleteProfileModal">
+                                <button type="button" class="btn btn-info btn-round-full w-100 btn-apply" data-toggle="modal" data-target="#incompleteProfileModal">
                                     Apply
                                 </button>
                             @endif
                         @else
-                            <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100">Apply</a>
+                            <a href="{{route('form.apply', $jobPosting->id)}}" class="btn btn-info btn-round-full w-100 btn-apply">Apply</a>
                         @endif
                     @else
-                        <button type="button" class="btn btn-info btn-round-full w-100 disabled-button" disabled>Apply</button>
+                        <button type="button" class="btn btn-info btn-round-full w-100 btn-apply disabled-button" disabled>Apply</button>
                     @endif
                 </div>
                 <div class="company-sidebar">
@@ -175,17 +175,24 @@
     }
 
     .btn-apply {
-        padding: 10px 20px;
+        background-color: #0d929e !important;
+        color: #fff !important;
+        font-size: 1rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        padding: 12px 24px;
         border-radius: 6px;
         transition: all 0.3s ease;
     }
 
     .btn-apply:hover {
+        background-color: #0a7782 !important;
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-apply:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .logo-img {

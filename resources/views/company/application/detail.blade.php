@@ -95,12 +95,16 @@
                                           <div class="detail-value">{{ $application->user->applicantProfile->name ?? '-' }}</div>
                                         </div>
                                         <div class="detail-row">
-                                          <div class="detail-label"><strong>Gender:</strong></div>
-                                          <div class="detail-value">{{ $application->user->applicantProfile->gender ?? '-' }}</div>
+                                            <div class="detail-label"><strong>Apply For:</strong></div>
+                                            <div class="detail-value">{{ $application->jobPosting->position ?? '-' }}</div>
                                         </div>
                                         <div class="detail-row">
                                             <div class="detail-label"><strong>Applied at:</strong></div>
                                             <div class="detail-value">{{ $application->user->applicantProfile->created_at ? $application->user->applicantProfile->created_at->format('d M Y') : '-' }}</div>
+                                        </div>
+                                        <div class="detail-row">
+                                          <div class="detail-label"><strong>Gender:</strong></div>
+                                          <div class="detail-value">{{ $application->user->applicantProfile->gender ?? '-' }}</div>
                                         </div>
                                         <div class="detail-row">
                                           <div class="detail-label"><strong>Address:</strong></div>

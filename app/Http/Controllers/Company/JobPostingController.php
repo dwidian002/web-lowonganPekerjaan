@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class JobPostingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $companyProfile = $user->companyProfile;
@@ -24,12 +24,44 @@ class JobPostingController extends Controller
                 ->with('error', 'Please complete your company profile first.');
         }
 
-        $jobPostings = JobPosting::where('company_profile_id', $companyProfile->id)
+        $query = JobPosting::where('company_profile_id', $companyProfile->id)
             ->with(['location', 'jobCategory', 'companyProfile', 'fieldOfWork'])
             ->latest()
-            ->paginate(9);
+            ->where('status', true);
 
-        return view('company.job-posting.list', compact('jobPostings'));
+
+        if ($request->has('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('position', 'like', '%' . $request->search . '%')
+                    ->orWhereHas('companyProfile', function ($company) use ($request) {
+                        $company->where('company_name', 'like', '%' . $request->search . '%');
+                    });
+            });
+        }
+
+        if ($request->has('category') && $request->category) {
+            $query->where('job_category_id', $request->category);
+        }
+
+        if ($request->has('lokasi') && $request->lokasi) {
+            $query->where('location_id', $request->lokasi);
+        }
+
+        if ($request->has('bidang') && $request->bidang) {
+            $query->where('field_of_work_id', $request->bidang);
+        }
+
+        $jobPostings = $query->paginate(12);
+        $jobCategories = JobCategory::all();
+        $locations = Location::all();
+        $fields = FieldOfWork::all();
+
+        return view('company.job-posting.list', compact(
+            'jobPostings',
+            'jobCategories',
+            'locations',
+            'fields',
+        ));
     }
 
     public function add()
@@ -184,7 +216,7 @@ class JobPostingController extends Controller
     public function close($id)
     {
         $jobPosting = JobPosting::findOrFail($id);
-        $jobPosting->status = 0; 
+        $jobPosting->status = 0;
         $jobPosting->save();
 
         return redirect()->route('job-posting.index')->with('success', 'Job posting has been closed.');
@@ -193,7 +225,7 @@ class JobPostingController extends Controller
     public function open($id)
     {
         $jobPosting = JobPosting::findOrFail($id);
-        $jobPosting->status = 1; 
+        $jobPosting->status = 1;
         $jobPosting->save();
 
         return redirect()->route('job-posting.index')->with('success', 'Job posting has been opened.');

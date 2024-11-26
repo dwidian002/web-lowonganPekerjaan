@@ -13,12 +13,12 @@
         </div>
         @endif
 		<div class="row">
-			<div class="col-lg-6 col-md-12 col-xl-7">
+			<div class="col-lg-6 col-md-12 col-xl-7" style="margin-bottom: -70px;">
 				<div class="block">
 					<div class="divider mb-3"></div>
-					<span class="text-uppercase text-sm letter-spacing " style="color: dark;">The Best Job Search Solution</span>
+					<span class="text-small text-sm letter-spacing " style="color: dark;">The Best Job Search Solution</span>
 					<h1 class="mb-3 mt-3" style=" bold; color: dark;">Your Most Trusted Job partner</h1> 
-					<p style="color: dark;">
+					<p class="text-small">
                    — start applying now and create the career you dream of!
                    </p>
                     <div>
@@ -33,477 +33,246 @@
 </div>
 </section>
 
-<section class="features">
+<section class="features mtn-10000">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="feature-block d-lg-flex">
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
+			<div class="col-12 mb-2">
+				<h2 class="text-small">Latest Job Postings</h2>
+			</div>
+			
+			@forelse($latestJobs as $job)
+				<div class="col-lg-4 col-md-6 mb-4">
+					<div class="card h-100 shadow job-card">
+						<div class="card-body">
+							<div class="d-flex align-items-center mb-3">
+								<div class="company-logo mr-3">
+									@if ($job->companyProfile && $job->companyProfile->logo)
+										<img src="{{ asset('storage/' . $job->companyProfile->logo) }}" 
+											 alt="{{ $job->companyProfile->company_name }}" 
+											 class="rounded"
+											 style="width: 50px; height: 50px; object-fit: cover;">
+									@else
+										<img src="{{ asset('layout/assets/images/service/default-logo.jpg') }}" 
+											 alt="Default Logo" 
+											 class="rounded"
+											 style="width: 50px; height: 50px; object-fit: cover;">
+									@endif
+								</div>
+								<div>
+									<a href="{{ route('company.profile', $job->companyProfile->id) }}" class="company-name-link">
+										<h5 class="company-name">{{ $job->companyProfile->company_name }}</h5>
+									</a>
+								</div>
+							</div>
+							
+							<a href="{{ route('job-posting.show', $job->id) }}" class="text-decoration-none text-dark">
+								<h4 class="job-title mb-3 job-title-link">{{ $job->position }}</h4>
+			
+								<div class="job-tags mb-3">
+									<span class="badge {{ $job->status ? 'badge-success' : 'badge-secondary' }}">
+										{{ $job->status ? 'Active' : 'Inactive' }}
+									</span>
+									<span class="badge badge-info mr-2">{{ $job->jobCategory->category_name }}</span>
+									<span class="badge badge-primary mr-2">{{ $job->fieldOfWork->name }}</span>
+								</div>
+			
+								<div class="job-info">
+									<div class="d-flex align-items-center mb-2">
+										<i class="icofont-money mr-2 text-warning"></i>
+										@if($job->sembunyikan_gaji)
+											<span class="font-italic text-muted">(disembunyikan)</span>
+										@else
+											<span>Rp {{ number_format($job->gaji, 0, ',', '.') }}</span>
+										@endif
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="icofont-location-pin mr-2 text-danger"></i>
+										<span>{{ $job->location->name }}</span>
+									</div>
+								</div>
+							</a>
 						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-					</div>
-				
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
-						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
-					</div>
-				
-					<div class="feature-item mb-5 mb-lg-0">
-						<div class="feature-icon mb-4">
-                            <h3>
-							<i class="icofont-search-job text-danger"></i>
-                            CompanyName
-                            </h3>
-						</div>
-						<span class="badge badge-info">category</span> <span class="badge badge-success">status</span>
-						<h4 class="mb-0">Posisi</h4>
-                        <div class="mt-1">
-                            <i class="icofont-money text-warning"></i> gaji
-                        </div>
-                            <div>
-                            <i class="icofont-location-pin text-danger"></i> location
-                        </div>
-						<p class="mb-4">description</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">Apply</a>
 					</div>
 				</div>
-			</div>
+			@empty
+				<div class="col-12 text-center">
+					<p>Tidak ada lowongan pekerjaan tersedia saat ini.</p>
+				</div>
+			@endforelse
 		</div>
-        <div class="row">
-            <div class="col-lg-12 text-center mt-4">
-                <a href="{{route('all.job')}}" class="btn btn-outline-danger btn-lg btn-round-full">View All Jobss <i class="icofont-simple-right ml-2  "></i></a>
-            </div>
-        </div>
-	</div>
-</section>
-
-
-
-<section class="section about">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-4 col-sm-6">
-				<div class="about-img">
-					<img src="layout/assets/images/about/img-1.jpg" alt="" class="img-fluid">
-					<img src="layout/assets/images/about/img-2.jpg" alt="" class="img-fluid mt-4">
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6">
-				<div class="about-img mt-4 mt-lg-0">
-					<img src="layout/assets/images/about/img-3.jpg" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="about-content pl-4 mt-4 mt-lg-0">
-					<h2 class="title-color">Company Partner</h2>
-					<p class="mt-4 mb-5">We collaborate with various leading companies that open up opportunities for you to develop and achieve your dream career goals.</p>
-
-					<a href="{{route('list.company')}}" class="btn btn-main-2 btn-round-full btn-icon">See All Companies<i class="icofont-simple-right ml-3"></i></a>
-				</div>
+	
+		<div class="row">
+			<div class="col-lg-12 text-center mt-4 mb-10">
+				<a href="{{ route('job-posting.index') }}" class="btn btn-main-2">
+					View All Jobs <i class="icofont-simple-right ml-2"></i>
+				</a>
 			</div>
 		</div>
 	</div>
 </section>
-<section class="cta-section ">
-	<div class="container">
+
+
+<section class="cta-section" style="margin-top: 50px;">
+	<div class="container mt-100">
 		<div class="cta position-relative">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-3 col-md-6 col-sm-6 mt-10">
 					<div class="counter-stat">
-						<i class="icofont-doctor"></i>
-						<span class="h3">58</span>k
-						<p>Company Partner</p>
+						<i class="icofont-search-job"></i>
+						<span class="h3">{{$totalJobPosting}}</span>
+						<p>Total Job Posting</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-flag"></i>
-						<span class="h3">700</span>+
-						<p>Job Postings</p>
+						<i class="icofont-search-job"></i>
+						<span class="h3">{{$totalApplication}}</span>
+						<p>Total Application</p>
 					</div>
 				</div>
 				
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-badge"></i>
-						<span class="h3">40</span>+
-						<p>Applayed</p>
+						<i class="icofont-list"></i>
+						<span class="h3">{{$totalAcceptedApplication}}</span>
+						<p>Total Application Hired</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
-						<i class="icofont-globe"></i>
-						<span class="h3">20</span>
-						<p>Applicant</p>
+						<i class="icofont-users-alt-2"></i>
+						<span class="h3">{{$totalApplicant}}</span>
+						<p>Applicants Who Applied</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
 <section class="section service gray-bg">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 text-center">
-				<div class="section-title">
-					<h2>Award winning patient care</h2>
+				<div class="section-title" style="margin-bottom: 30px">
+					<h2 class="text-small">Latest Applications</h2>
 					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-laboratory text-lg"></i>
-						<h4 class="mt-3 mb-3">Laboratory services</h4>
-					</div>
-
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-heart-beat-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Heart Disease</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-tooth text-lg"></i>
-						<h4 class="mt-3 mb-3">Dental Care</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-crutch text-lg"></i>
-						<h4 class="mt-3 mb-3">Body Surgery</h4>
-					</div>
-
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-brain-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Neurology Sargery</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="service-item mb-4">
-					<div class="icon d-flex align-items-center">
-						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Gynecology</h4>
-					</div>
-					<div class="content">
-						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="section appoinment">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-6 ">
-				<div class="appoinment-content">
-					<img src="layout/assets/images/about/img-3.jpg" alt="" class="img-fluid">
-					<div class="emergency">
-						<h2 class="text-lg"><i class="icofont-phone-circle text-lg"></i>+23 345 67980</h2>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-10 ">
-				<div class="appoinment-wrap mt-5 mt-lg-0">
-					<h2 class="mb-2 title-color">Book appoinment</h2>
-					<p class="mb-4">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque similique praesentium soluta.</p>
-					     <form id="#" class="appoinment-form" method="post" action="#">
-                    <div class="row">
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                  <option>Choose Department</option>
-                                  <option>Software Design</option>
-                                  <option>Development cycle</option>
-                                  <option>Software Development</option>
-                                  <option>Maintenance</option>
-                                  <option>Process Query</option>
-                                  <option>Cost and Duration</option>
-                                  <option>Modal Delivery</option>
-                                </select>
+            @forelse($latestApplications as $application)
+            <div class="col-lg-4 col-md-6 mb-4">
+                @if ($application->application_status == 'applied')
+                <a href="#" data-toggle="modal" data-target="#confirmModal-{{ $application->id }}" 
+                   data-application="{{ $application->user->applicantProfile->name }}">
+                @else
+                    <a href="{{ route('company.application.detail', $application->id) }}">
+                @endif
+                    <div class="card h-100 shadow job-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="company-foto mr-3">
+                                    @if ($application->user->applicantProfile && $application->user->applicantProfile->foto)
+                                        <img src="{{ asset('storage/' . $application->user->applicantProfile->foto) }}"
+                                             alt="{{ $application->user->applicantProfile->name }}"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
+                                             alt="Default foto"
+                                             class="rounded"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h2 class="job-title mb-3 position">{{ $application->user->applicantProfile->name }}</h2> 
+									</div>
+                            </div>
+        
+                            <div class="job-info">
+								<div class="d-flex align-items-center mb-2">
+									<a href="{{ route('job-posting.show', $application->jobPosting->id) }}" class="company-name-link">
+										<i class="icofont-search-job text-primary"></i>
+										<span class="ml-2">Applied for:  {{ $application->jobPosting->position }}</span>
+									</a>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="icofont-calendar text-primary"></i>
+                                    <span class="ml-2">Applied at: {{ $application->created_at->format('d M Y') }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect2">
-                                  <option>Select Doctors</option>
-                                  <option>Software Design</option>
-                                  <option>Development cycle</option>
-                                  <option>Software Development</option>
-                                  <option>Maintenance</option>
-                                  <option>Process Query</option>
-                                  <option>Cost and Duration</option>
-                                  <option>Modal Delivery</option>
-                                </select>
-                            </div>
-                        </div>
-
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="date" id="date" type="text" class="form-control" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="time" id="time" type="text" class="form-control" placeholder="Time">
-                            </div>
-                        </div>
-                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="name" id="name" type="text" class="form-control" placeholder="Full Name">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input name="phone" id="phone" type="Number" class="form-control" placeholder="Phone Number">
-                            </div>
+                        
+                        <div class="card-footer px-4 py-3 d-flex justify-content-between align-items-center
+                            @if ($application->application_status == 'applied')
+                                bg-dark text-white
+                            @elseif ($application->application_status == 'in_review')
+                                bg-info text-white
+                            @elseif ($application->application_status == 'interview')
+                                bg-warning text-dark
+                            @elseif ($application->application_status == 'hired')
+                                bg-success text-white
+                            @elseif ($application->application_status == 'rejected')
+                                bg-danger text-white
+                            @else
+                                bg-white border-top
+                            @endif">
+                            <span class="text-sm">{{ strtoupper($application->application_status) }}</span>
+                            <span class="text-sm">{{ $application->updated_at->format('d M Y') }}</span>
                         </div>
                     </div>
-                    <div class="form-group-2 mb-4">
-                        <textarea name="message" id="message" class="form-control" rows="6" placeholder="Your Message"></textarea>
-                    </div>
-
-                    <a class="btn btn-main btn-round-full" href="appoinment.html" >Make Appoinment <i class="icofont-simple-right ml-2  "></i></a>
-                </form>
+                </a>
             </div>
+            @empty
+			<div class="col-12 text-center">
+				<p>Tidak ada application tersedia saat ini.</p>
+			</div>
+            @endforelse  
+        </div>
+		<div class="row">
+			<div class="col-lg-12 text-center mt-4 mb-10">
+				<a href="{{ route('application.index') }}" class="btn btn-main-2">
+					View All Application
+				</a>
 			</div>
 		</div>
 	</div>
+	@foreach($latestApplications as $application)
+        @if ($application->application_status == 'applied')
+        <div class="modal fade" id="confirmModal-{{ $application->id }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Confirm Application Review
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to review the application for 
+                        {{ $application->user->applicantProfile->name }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <a href="{{ route('company.application.detail', $application->id) }}?confirmed" 
+                           class="btn btn-primary">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+    @endforeach
 </section>
-<section class="section testimonial-2 gray-bg">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-7">
-				<div class="section-title text-center">
-					<h2>We served over 5000+ Patients</h2>
-					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-12 testimonial-wrap-2">
-				<div class="testimonial-block style-2  gray-bg">
-					<i class="icofont-quote-right"></i>
-
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info ">
-						<h4>Amazing service!</h4>
-						<span>John Partho</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb2.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Expert doctors!</h4>
-						<span>Mullar Sarth</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb3.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Good Support!</h4>
-						<span>Kolis Mullar</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb4.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Nice Environment!</h4>
-						<span>Partho Sarothi</span>
-						<p class="mt-4">
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					<i class="icofont-quote-right"></i>
-				</div>
-
-				<div class="testimonial-block style-2  gray-bg">
-					<div class="testimonial-thumb">
-						<img src="layout/assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
-					</div>
-
-					<div class="client-info">
-						<h4>Modern Service!</h4>
-						<span>Kolis Mullar</span>
-						<p>
-							They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
-						</p>
-					</div>
-					<i class="icofont-quote-right"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="section clients">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-7">
-				<div class="section-title text-center">
-					<h2>Partners who support us</h2>
-					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="row clients-logo">
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/1.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/2.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/3.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/4.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/5.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/6.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/3.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/4.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/5.png" alt="" class="img-fluid">
-				</div>
-			</div>
-			<div class="col-lg-2">
-				<div class="client-thumb">
-					<img src="layout/assets/images/about/6.png" alt="" class="img-fluid">
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<script>
+    $('#confirmModal').on('show.bs.modal', function (event) {
+        var link = $(event.relatedTarget);
+        $('#confirmModal .btn-primary').attr('href', link.attr('href'));
+    });
+</script>
 <!-- footer Start -->
 <footer class="footer section gray-bg">
 	<div class="container">

@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Company\ApplicationController;
 use App\Http\Controllers\Company\JobPostingController;
 use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
+use App\Http\Controllers\Company\RecruitmentStatsController;
 use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -62,9 +63,6 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'company'])->group(function () {
 
-    Route::get('/my-profile', [CompanyProfileController::class, 'index'])->name('profile-company');
-
-
     Route::get('/job-posting', [JobPostingController::class, 'index'])->name('job-posting.index');
     Route::get('/job-posting/detail/{id}', [JobPostingController::class, 'detail'])->name('job-posting.show');
     Route::get('/job-posting/add', [JobPostingController::class, 'add'])->name('job-posting.add');
@@ -75,15 +73,24 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/job-posting/open/{id}', [JobPostingController::class, 'open'])->name('job-posting.open');
     Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
 
-    Route::get('application/{id}', [ApplicationController::class, 'index'])->name('company.application.detail');
-    Route::get('application/{id}/confirm', [ApplicationController::class, 'confirmReview'])->name('company.application.confirm');
 
-    Route::get('/applications/{id}/detail', [ApplicationController::class, 'index'])->name('company.application.detail');
+    Route::get('/application', [ApplicationController::class, 'index'])->name('application.index');
+    Route::get('/applications/{id}/detail', [ApplicationController::class, 'detail'])->name('company.application.detail');
     Route::get('/applications/{id}/status/{status}', [ApplicationController::class, 'updateStatus'])->name('application.updateStatus');
     Route::post('/applications/{application}/schedule-interview', [ApplicationController::class, 'scheduleInterview'])->name('applications.schedule-interview');
     Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
     Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
+
+    Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('company.profile');
+    Route::get('/company-profile/edit/{id}', [CompanyProfileController::class, 'edit'])->name('profile-company.edit');
+    Route::post('/company-profile/update', [CompanyProfileController::class, 'update'])->name('profile-company.update');
 });
+
+Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
+Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
+
+Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
+
 
 
 Route::middleware(['auth', 'applicant'])->group(function () {
@@ -93,16 +100,11 @@ Route::middleware(['auth', 'applicant'])->group(function () {
     Route::get('/my-profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile-applicant.edit');
     Route::post('/my-profile/update', [ProfileController::class, 'update'])->name('profile-applicant.update');
 
-    Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
-    Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
-
-    Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
     Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
 
     Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
     Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');
-    
-    
+
     // Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
 });
 

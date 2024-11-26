@@ -1,4 +1,4 @@
-@extends('applicant.layout.main')
+@extends('company.layout.main')
 @section('content')
 
 <section class="page-title bg-1">
@@ -202,79 +202,6 @@
     });
 </script>
 
-
-<style>
-
-    .text-uppercase {
-        text-transform: uppercase;
-    }
-    .card-footer {
-        font-size: 0.875rem;
-        transition: background-color 0.3s ease;
-    }
-
-    .card-footer:hover {
-        background-color: #f1f3f5;
-    }
-
-    .text-sm {
-        font-size: 0.875rem;
-    }
-
-    .company-sidebar {
-        background-color: #ebf1f4;
-        border-radius: 8px;
-        padding: 20px;
-    }
-
-    .sidebar-item {
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-    }
-
-    .sidebar-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .sidebar-item i {
-        margin-right: 10px;
-    }
-
-    .sidebar-item a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .sidebar-item a:hover {
-        text-decoration: underline;
-    }
-
-    .company-name {
-        color: #333;
-        margin-top: 1rem;
-    }
-
-    .btn-apply {
-        padding: 10px 20px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-apply:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .logo-img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-</style>
 
 
 

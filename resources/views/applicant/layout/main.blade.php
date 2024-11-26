@@ -33,6 +33,10 @@
 
 <style>
 
+    .bg-info {
+        background-color: #0d929e !important;
+    }
+
     .service-item .icon {
         display: flex;
         align-items: center;
@@ -63,39 +67,39 @@
     position: relative;
     transition: all 0.3s ease;
     overflow: hidden;
-}
+    }
 
-.service-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(0,123,255,0.1), transparent);
-    transition: all 0.5s ease;
-}
+    .service-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(0,123,255,0.1), transparent);
+        transition: all 0.5s ease;
+    }
 
-.service-item:hover::before {
-    left: 100%;
-}
+    .service-item:hover::before {
+        left: 100%;
+    }
 
-.service-item .icon {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: transform 0.3s ease;
-}
+    .service-item .icon {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.3s ease;
+    }
 
-.service-item:hover .icon {
-    transform: translateX(5px);
-}
-.service-item {
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+    .service-item:hover .icon {
+        transform: translateX(5px);
+    }
+    .service-item {
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
-.service-item::after {
+    .service-item::after {
     content: '';
     position: absolute;
     top: 0;
