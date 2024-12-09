@@ -65,9 +65,7 @@
                 <div class="apply-button-wrapper mb-4">
                     <a href="{{route('job-posting.edit',$jobPosting->id)}}" class="btn btn-warning btn-apply w-100"><i class="icofont-edit"></i> Edit Job</a>
                 </div>
-                <div class="apply-button-wrapper mb-4">
-                    <a href="{{route('job-posting.delete',$jobPosting->id)}}" class="btn btn-danger btn-apply w-100"><i class="icofont-trash"></i> Delete Job</a>
-                </div>
+                
                 <div class="company-sidebar">
                     <div class="sidebar-item">
                         <i class="icofont-money mr-2 text-warning"></i>

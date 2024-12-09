@@ -43,7 +43,7 @@ class JobController extends Controller
             $query->where('field_of_work_id', $request->bidang);
         }
 
-        $jobPostings = $query->paginate(9);
+        $jobPostings = $query->paginate(9)->appends($request->query());
         $jobCategories = JobCategory::all();
         $locations = Location::all();
         $fields = FieldOfWork::all();

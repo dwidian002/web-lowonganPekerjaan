@@ -7,7 +7,7 @@
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>{{ session('incomplete_profile') }}</strong>
             <div class="mt-2">
-                <a href="{{ route('exs.form') }}" class="btn btn-primary">Lengkapi Sekarang</a>
+                <a href="{{ route('profile-more-info') }}" class="btn btn-primary">Lengkapi Sekarang</a>
                 <button type="button" class="btn btn-secondary" id="dismissAlert">Nanti Saja</button>
             </div>
         </div>
@@ -46,10 +46,12 @@
 									</select>
 								</div>
 								<div class="select-container">
-									<select name="fields" class="select-input">
+									<select name="bidang" class="select-input">
 										<option value="">Pilih Bidang</option>
 										@foreach($fields as $field)
-											<option value="{{ $field->id }}">{{ $field->name }}</option>
+											<option value="{{ $field->id }}">
+												{{ $field->name }}
+											</option>
 										@endforeach
 									</select>
 								</div>

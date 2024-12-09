@@ -178,31 +178,37 @@
                     <div class="accordion">
                       <div class="accordion-item">
                         <div class="accordion-header">
-                          <h6 class="text-xl font-semibold text-gray-800 mb-3">
-                            <i class="fas fa-graduation-cap text-blue-600 mr-2"></i> Last Education
-                          </h6>
-                          <button class="accordion-toggle">
-                            <i class="icofont-circled-down accordion-icon"></i>
-                          </button>
+                            <h6 class="text-xl font-semibold text-gray-800 mb-3">
+                                <i class="fas fa-graduation-cap text-blue-600 mr-2"></i> Education
+                            </h6>
+                            <button class="accordion-toggle">
+                                <i class="icofont-circled-down accordion-icon"></i>
+                            </button>
                         </div>
                         <div class="accordion-content">
-                          <div class="detail-row">
-                            <div class="detail-label">Degree</div>
-                            <div class="detail-value">{{ $application->user->applicantProfile->education->degree ?? '-' }}</div>
-                          </div>
-                          <div class="detail-row">
-                            <div class="detail-label">Institution</div>
-                            <div class="detail-value">{{ $application->user->applicantProfile->education->institution_name ?? '-' }}</div>
-                          </div>
-                          <div class="detail-row">
-                            <div class="detail-label">Duration</div>
-                            <div class="detail-value">
-                              {{ $application->user->applicantProfile->education->starting_year ?? '-' }} -
-                              {{ $application->user->applicantProfile->education->finishing_year ?? '-' }}
-                            </div>
-                          </div>
+                            @if($application->user->applicantProfile->educations->count() > 0)
+                                @foreach($application->user->applicantProfile->educations as $education)
+                                    <div class="detail-row">
+                                        <div class="detail-label">Degree</div>
+                                        <div class="detail-value">{{ $education->degree ?? '-' }}</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Institution</div>
+                                        <div class="detail-value">{{ $education->institution_name ?? '-' }}</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Duration</div>
+                                        <div class="detail-value">
+                                            {{ $education->starting_year ?? '-' }} -
+                                            {{ $education->finishing_year ?? '-' }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-gray-500">No education information available</div>
+                            @endif
                         </div>
-                      </div>
+                    </div>
                   
                       <div class="accordion-item">
                         <div class="accordion-header">

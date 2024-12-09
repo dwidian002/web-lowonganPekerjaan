@@ -16,6 +16,10 @@ class Log extends Model
         'application_id'
     ];
 
+    protected $casts = [
+        'changed_at' => 'datetime'
+    ];
+
     public function application()
     {
         return $this->belongsTo(Application::class);

@@ -22,9 +22,9 @@
                    — start applying now and create the career you dream of!
                    </p>
                     <div>
-                    <div class="divider mb-3"></div>
+                    <div class="divider mb-5"></div>
 					<div class="btn-container mb-3">
-						<a href="{{route('job-posting.index')}}" class="btn btn-main-2 btn-icon btn-round-full">Show Your Job Postings <i class="icofont-simple-right ml-2  "></i></a>
+						<a href="{{route('job-posting.add')}}" class="btn btn-main-2 btn-icon btn-round-full">Create Your New Job Posting <i class="icofont-simple-right ml-2  "></i></a>
 					</div>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 									@endif
 								</div>
 								<div>
-									<a href="{{ route('company.profile', $job->companyProfile->id) }}" class="company-name-link">
+									<a href="{{ route('profile-company', $job->companyProfile->id) }}" class="company-name-link">
 										<h5 class="company-name">{{ $job->companyProfile->company_name }}</h5>
 									</a>
 								</div>

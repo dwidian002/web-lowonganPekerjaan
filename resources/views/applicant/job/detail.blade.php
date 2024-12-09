@@ -100,7 +100,6 @@
     </div>
 </section>
 
-<!-- Incomplete Profile Modal -->
 <div class="modal fade" id="incompleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="incompleteProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,7 +119,7 @@
                 <p>{{ $message }}</p>
             </div>
             <div class="modal-footer">
-                <a href="{{ route('exs.form') }}" class="btn btn-primary">Lengkapi Sekarang</a>
+                <a href="{{ route('profile-more-info') }}" class="btn btn-primary">Lengkapi Sekarang</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Nanti Saja</button>
             </div>
         </div>
@@ -175,7 +174,7 @@
     }
 
     .btn-apply {
-        background-color: #0d929e !important;
+        background-color: #18bbca !important;
         color: #fff !important;
         font-size: 1rem;
         font-weight: 600;

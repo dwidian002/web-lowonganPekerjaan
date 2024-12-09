@@ -30,9 +30,9 @@ class ApplicantProfile extends Model
         return $this->hasMany(Experience::class);
     }
 
-    public function education()
+    public function educations()
     {
-        return $this->hasOne(Education::class);
+        return $this->hasMany(Education::class);
     }
 
     public function skills()

@@ -63,9 +63,12 @@ class HomeController extends Controller
 
         $jobPostings = $query->paginate(9);
 
+        $selectedField = $request->input('bidang');
+
         if (!Auth::check()) {
             return view('applicant.home-applicant', compact(
                 'categories',
+                'selectedField',
                 'locations',
                 'fields',
                 'latestJobs',
@@ -96,11 +99,12 @@ class HomeController extends Controller
                 }
 
                 return view('applicant.home-applicant', compact(
+                    'selectedField',
+                    'profile',
                     'categories',
                     'locations',
                     'fields',
                     'latestJobs',
-                    'jobPostings',
                     'jobPostings',
                     'totalCompany',
                     'totalJobPosting',
@@ -157,6 +161,8 @@ class HomeController extends Controller
                 }
 
                 return view('company.home-company', compact(
+                    'companyProfile',
+                    'selectedField',
                     'categories',
                     'locations',
                     'fields',

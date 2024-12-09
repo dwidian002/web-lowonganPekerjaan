@@ -56,7 +56,7 @@ class JobPostingController extends Controller
         $locations = Location::all();
         $fields = FieldOfWork::all();
 
-        return view('company.job-posting.list', compact(
+        return view('company.job-posting.list', data: compact(
             'jobPostings',
             'jobCategories',
             'locations',
@@ -229,5 +229,19 @@ class JobPostingController extends Controller
         $jobPosting->save();
 
         return redirect()->route('job-posting.index')->with('success', 'Job posting has been opened.');
+    }
+
+    public function delete($id)
+    {
+        try {
+            $jobPosting = JobPosting::findOrFail($id);
+            $jobPosting->delete();
+
+            return redirect()->route('job-posting.index')
+                ->with('success', 'Job berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus job: ' . $e->getMessage());
+        }
     }
 }

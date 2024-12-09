@@ -33,6 +33,11 @@
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('layout/assets/js/delete-confirmation.js') }}"></script>
+<script src="{{ asset('layout/assets/js/logout-confirm.js') }}"></script>
+
 </head>
 
 <style>
@@ -400,7 +405,7 @@
     }
 
     .company-sidebar {
-        padding-top: 3.7rem;
+        padding-top: 1.5rem;
     }
 
     .sidebar-item {

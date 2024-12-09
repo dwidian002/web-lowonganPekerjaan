@@ -1,67 +1,161 @@
 @extends('layoutlogin.login')
 @section('login')
 
-<main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
-        <span class="mask bg-gradient-dark opacity-6"></span>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 text-center mx-auto">
-                    <h1 class="text-white mb-2 mt-3">Welcome Back!</h1>
-                    <p class="text-lead text-white">Please Login</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="login-container">
     <div class="container">
-        <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-            <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-                <div class="card z-index-0">
-                    <div class="card-header text-center pt-4">
-                        <h5>Login Here</h5>
-                    </div>
-
-                    @if(session()->has('pesan'))
-                    <div class="alert alert-danger">
-                        {{session()->get('pesan')}}
-                    </div>
-                    @endif
-
-                    <form action="{{route('auth.verify')}}" method="POST">
-                        @csrf
-                        <div class="card-body">
-                            <div class="form-group">
-                                <input type="email" name="email" class="form-control form-control-user"
-                                    id="exampleInputEmail" aria-describedby="emailHelp"
-                                    placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control form-control-user"
-                                    id="exampleInputPassword" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">LOGIN</button>
-                        </div>
-                        <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{url('/register')}}" class="text-dark font-weight-bolder">Sign in</a></p>
-                    </form>
-
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12">
+                <div class="login-wrapper row no-gutters">
+                    <div class="col-md-6 login-image-side"></div>
                     
+                    <div class="col-md-6 login-form-side">
+                        <div class="login-form-header">
+                            <h2>Selamat Datang</h2>
+                            <p class="text-muted">Silakan login ke akun Anda</p>
+                        </div>
+
+                        @if(session()->has('pesan'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('pesan') }}
+                        </div>
+                        @endif
+
+                        <form action="{{ route('auth.verify') }}" method="POST">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" 
+                                       placeholder="Masukkan email" required>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" 
+                                       placeholder="Masukkan password" required>
+                            </div>
+                            
+                            <button type="submit" class="btn login-btn w-100">
+                                LOGIN
+                            </button>
+                        </form>
+
+                        @if(session('unverified_email'))
+                        <div class="text-center mt-3">
+                            <p class="text-danger">Email belum terverifikasi</p>
+                            <form action="{{ route('verification.resend') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="email" value="{{ session('unverified_email') }}">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Kirim Ulang Verifikasi
+                                </button>
+                            </form>
+                        </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    @if(session('unverified_email'))
-        <div class="mt-4">
-            <p class="text-sm text-red-600">Email belum terverifikasi</p>
-            <form action="{{ route('verification.resend') }}" method="POST" class="mt-2">
-                @csrf
-                <input type="hidden" name="email" value="{{ session('unverified_email') }}">
-                <button type="submit" class="text-sm text-indigo-600 hover:text-indigo-500">
-                    Kirim ulang email verifikasi
-                </button>
-            </form>
-        </div>
-    @endif
-</main>
+<style>
+    .login-container {
+        background: linear-gradient(45deg, #e8edf7, #355892);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-wrapper {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .login-image-side {
+        background-image: url('assets/img/y.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 500px;
+    }
+
+    .login-form-side {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .login-form-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .login-btn {
+        background: linear-gradient(90deg, #4e73df, #203572);
+        color: white;
+        border: none;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-btn:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+    }
+
+    .login-btn:hover:before {
+        transform: translateX(0);
+    }
+
+    .form-control {
+        background-color: #f8f9fc;
+        border: none;
+        border-bottom: 2px solid #4e73df;
+        transition: border-color 0.3s ease;
+        padding: 10px 15px;
+        position: relative;
+        animation: inputFill 0.5s ease-out forwards;
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-bottom-color: #224abe;
+        background-color: #f1f3ff;
+    }
+
+    @keyframes inputFill {
+        0% {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .login-image-side {
+            display: none;
+        }
+    }
+</style>
 
 @endsection

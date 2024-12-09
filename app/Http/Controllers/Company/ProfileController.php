@@ -25,10 +25,10 @@ class ProfileController extends Controller
 
     public function edit($id)
     {
-        $companyProfile = CompanyProfile::find($id);
-        $industries = Industry::find($id);
-        $companyTypes = TypeCompany::find($id);
-        $locations = Location::find($id);
+        $companyProfile = CompanyProfile::findOrFail($id);
+        $industries = Industry::all();
+        $companyTypes = TypeCompany::all();
+        $locations = Location::all();
         return view('company.profile.edit', compact(
             'companyProfile',
             'industries',
@@ -42,16 +42,16 @@ class ProfileController extends Controller
         $this->validate($request, [
             'company_name' => 'required|string|max:255',
             'industry' => 'required|exists:industry,id',
-            'typeCompany' => 'required|exists:typeCompany,id',
-            'tahun_berdiri' => 'required|integer',
+            'type_company' => 'required|exists:type_company,id',
+            'tahun_berdiri' => 'required|integer|max:'.date('Y'),
             'location' => 'required|exists:locations,id',
             'alamat_lengkap' => 'required|string',
             'description' => 'required|string',
             'website' => 'required|url',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $companyProfile = CompanyProfile::where('user_id', Auth::id())->firstOrFail();
+        $companyProfile = CompanyProfile::findOrFail($request->id);
 
         $logoPath = $companyProfile->logo;
         if ($request->hasFile('logo')) {
@@ -62,16 +62,18 @@ class ProfileController extends Controller
         }
 
         $companyProfile->update([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'tanggal_lahir' => $request->tanggal_lahir,
+            'company_name' => $request->company_name,
+            'industry_id' => $request->industry,
+            'type_company_id' => $request->type_company,
+            'tahun_berdiri' => $request->tahun_berdiri,
+            'location_id' => $request->location,
             'alamat_lengkap' => $request->alamat_lengkap,
-            'phone_number' => $request->phone_number,
-            'about_me' => $request->about_me,
+            'description' => $request->description,
+            'website' => $request->website,
             'logo' => $logoPath
         ]);
 
-        return redirect()->route('company.profile')
+        return redirect()->route('profile-company')
             ->with('success', 'Profile updated successfully');
     }
 }

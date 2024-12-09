@@ -21,6 +21,7 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{ asset('layout/assets/css/style.css') }}">
+  <link href="{{ asset('layout/assets/css/profile.css') }}" rel="stylesheet">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -29,6 +30,21 @@
   <script src="{{ asset('layout/assets/plugins/jquery/jquery.js') }}"></script>
   <!-- jQuery Easing (dipindah setelah jQuery) -->
   <script src="{{ asset('layout/assets/plugins/counterup/jquery.easing.js') }}"></script>
+
+  <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('layout/assets/js/delete-confirmation.js') }}"></script>
+<script src="{{ asset('layout/assets/js/logout-confirm.js') }}"></script>
+  
 </head>
 
 <style>

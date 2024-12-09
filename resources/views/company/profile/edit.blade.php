@@ -7,11 +7,12 @@
         <div class="edit-profile-card">
             <div class="edit-profile-header">
                 <h1>Edit Company Profile</h1>
-                <a href="{{ route('company.profile') }}" class="btn btn-back">Back to Profile</a>
+                <a href="{{ route('profile-company') }}" class="btn btn-back">Back to Profile</a>
             </div>
 
             <form action="{{ route('profile-company.update') }}" method="POST" enctype="multipart/form-data" class="edit-profile-form">
                 @csrf
+                <input type="hidden" name="id" value="{{ $companyProfile->id }}">
                 <div class="profile-avatar-upload">
                     <div class="avatar-preview">
                         <img src="{{ $companyProfile->logo ? asset('storage/' . $companyProfile->logo) : asset('layout/assets/images/service/default-logo.jpg') }}" 
@@ -49,8 +50,8 @@
                     </div>
 
                     <div class="profile-detail-item">
-                        <label for="industry">Industry</label>
-                        <select id="industry" name="industry" required>
+                        <label for="industries">Industry</label>
+                        <select id="industries" name="industry" required>
                             @foreach($industries as $industry)
                                 <option value="{{ $industry->id }}" 
                                     {{ old('industry', $companyProfile->industry_id) == $industry->id ? 'selected' : '' }}>
@@ -64,16 +65,16 @@
                     </div>
 
                     <div class="profile-detail-item">
-                        <label for="typeCompany">Company Type</label>
-                        <select id="typeCompany" name="typeCompany" required>
-                            @foreach($companyTypes as $type)
-                                <option value="{{ $type->id }}" 
-                                    {{ old('typeCompany', $companyProfile->type_company_id) == $type->id ? 'selected' : '' }}>
-                                    {{ $type->name }}
+                        <label for="companyTypes">Company Type</label>
+                        <select id="companyTypes" name="type_company" required>
+                            @foreach($companyTypes as $type_company)
+                                <option value="{{ $type_company->id }}" 
+                                    {{ old('type_company', $companyProfile->type_company_id) == $type_company->id ? 'selected' : '' }}>
+                                    {{ $type_company->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('typeCompany')
+                        @error('type_company')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
@@ -146,7 +147,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <a href="{{ route('company.profile') }}" class="btn btn-cancel">Cancel</a>
+                    <a href="{{ route('profile-company') }}" class="btn btn-cancel">Cancel</a>
                     <button type="submit" class="btn btn-save">Save Changes</button>
                 </div>
             </form>

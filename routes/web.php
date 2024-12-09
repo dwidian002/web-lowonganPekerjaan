@@ -9,8 +9,11 @@ use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\TypeCompanyController;
 use App\Http\Controllers\Applicant\ApplyJobController;
 use App\Http\Controllers\Applicant\CompanyController;
+use App\Http\Controllers\Applicant\EducationController;
+use App\Http\Controllers\Applicant\ExperienceController;
 use App\Http\Controllers\Applicant\JobController;
 use App\Http\Controllers\Applicant\ProfileController;
+use App\Http\Controllers\Applicant\SkillController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
@@ -51,9 +54,6 @@ Route::post('/email/resend', [LoginController::class, 'resendVerification'])->na
 Route::get('register/applicant', [RegisterController::class, 'showApplicantRegisterForm'])->name('register.applicant');
 Route::post('register/applicant/submit', [RegisterController::class, 'registerApplicant'])->name('register.applicant.submit');
 
-Route::get('/profile/education-skills-experience/', [ProfileController::class, 'exsForm'])->name('exs.form');
-Route::post('/profile/education-skills-experience/', [ProfileController::class, 'storeExs'])->name('exs.store');
-
 Route::get('register/company', [RegisterController::class, 'showCompanyRegisterForm'])->name('register.company');
 Route::post('register/company/submit', [RegisterController::class, 'registerCompany'])->name('register.company.submit');
 
@@ -71,7 +71,7 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::post('/job-posting/update/{id}', [JobPostingController::class, 'update'])->name('job-posting.update');
     Route::get('/job-posting/close/{id}', [JobPostingController::class, 'close'])->name('job-posting.close');
     Route::get('/job-posting/open/{id}', [JobPostingController::class, 'open'])->name('job-posting.open');
-    Route::get('/job-posting/delete{id}', [JobPostingController::class, 'delete'])->name('job-posting.delete');
+    Route::delete('/job-posting/{id}/delete', [JobPostingController::class, 'delete'])->name('job-posting.delete');
 
 
     Route::get('/application', [ApplicationController::class, 'index'])->name('application.index');
@@ -81,7 +81,7 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
     Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 
-    Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('company.profile');
+    Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('profile-company');
     Route::get('/company-profile/edit/{id}', [CompanyProfileController::class, 'edit'])->name('profile-company.edit');
     Route::post('/company-profile/update', [CompanyProfileController::class, 'update'])->name('profile-company.update');
 });
@@ -99,6 +99,22 @@ Route::middleware(['auth', 'applicant'])->group(function () {
     Route::get('/my-profile', [ProfileController::class, 'index'])->name('profile-applicant');
     Route::get('/my-profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile-applicant.edit');
     Route::post('/my-profile/update', [ProfileController::class, 'update'])->name('profile-applicant.update');
+    Route::get('/my-profile/more-info', [ProfileController::class, 'information'])->name('profile-more-info');
+
+    Route::post('/my-profile/education/store', [EducationController::class, 'store'])->name('education.store');
+    Route::post('/my-profile/education/update/{id}', [EducationController::class, 'update'])->name('education.update');
+    Route::delete('/my-profile/education/delete/{id}', [EducationController::class, 'delete'])->name('education.delete');
+
+    Route::post('/my-profile/experience/store', [ExperienceController::class, 'store'])->name('experience.store');
+    Route::post('/my-profile/experience/update/{id}', [ExperienceController::class, 'update'])->name('experience.update');
+    Route::delete('/my-profile/experience/delete/{id}', [ExperienceController::class, 'delete'])->name('experience.delete');
+
+    Route::post('/my-profile/skill/store', [SkillController::class, 'store'])->name('skill.store');
+    Route::post('/my-profile/skill/update/{id}', [SkillController::class, 'update'])->name('skill.update');
+    Route::delete('/my-profile/skill/delete/{id}', [SkillController::class, 'delete'])->name('skill.delete');
+
+    Route::get('/my-application', [ProfileController::class, 'myApplication'])->name('application.my-application');
+    Route::get('/download-resume/{application}', [ProfileController::class, 'downloadResume'])->name('download.resume');
 
     Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
 

@@ -61,7 +61,7 @@
                                 <div class="col">
                                     <h5 class="mb-1">{{ $applicantProfile->name ?? '{nama}' }}</h5>
                                     <div class="mt-3">
-                                        <a href="#" class="btn btn-outline-primary btn-sm px-2 py-1">Show Profile</a>
+                                        <a href="{{route('profile-applicant')}}" class="btn btn-outline-primary btn-sm px-2 py-1">Show Profile</a>
                                     </div>
                                     <div class="text-success mt-2">
                                         <small><i class="fas fa-check-circle mr-1"></i> Pastikan data profile anda sudah benar!</small>
@@ -148,23 +148,57 @@
 
 
 <style>
-.custom-file-input {
-    cursor: pointer;
-}
 
-.form-control.text-truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    .btn-primary {
+        background-color: #18a9ca !important;
+        color: #fff !important;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
 
-.input-group label.form-control {
-    margin-bottom: 0;
-}
+    .btn-primary:hover {
+        background-color: #097085 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.input-group label.form-control.text-truncate {
-    background-color: #fff;
-    cursor: pointer;
-}
+    .btn-profile-applicant {
+        background-color: white !important;
+        border-block-color: #ba0808 !important;
+        color: #fff !important;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-profile-applicant:hover {
+        background-color: #ba0808 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .form-control.text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .input-group label.form-control {
+        margin-bottom: 0;
+    }
+
+    .input-group label.form-control.text-truncate {
+        background-color: #fff;
+        cursor: pointer;
+    }
 </style>
 @endsection

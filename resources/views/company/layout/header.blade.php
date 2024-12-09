@@ -15,8 +15,6 @@
           </li>
           <li class="nav-item"><a class="nav-link" href="{{route('job-posting.index')}}">Job Postings</a></li>
           <li class="nav-item"><a class="nav-link" href="{{route('application.index')}}">Applications</a></li>
-         <li class="nav-item"><a class="nav-link" href="contact.html">About us</a></li>
-         
         </div>
         @if(!auth()->check())
         <a href="{{url('/login')}}" class="custom-btn login-btn">
@@ -32,113 +30,220 @@
             </div>
         </div>
         @else
-        <a href="{{url('/logout')}}" class="custom-btn login-btn">
-            <i class="fa fa-user"></i> Dashboard
-        </a>
-            @if (auth()->user()->role == 'company')
-            <a href="{{ route('company.profile') }}" class="custom-btn login-btn" data-role="company">
-                <i class="icofont-user"></i> Profile
-            </a>
-            @endif
+        <div class="dropdown">
+            <button class="profile-btn dropdown-toggle">
+                @php
+                    $profileImage = 'default-logo.png';
+                    $company_name = 'Company Name';
+                    if (auth()->check()) {
+                        $companyProfile = auth()->user()->companyProfile ?? null;
+                        
+                        if ($companyProfile) {
+                            $profileImage = $companyProfile->logo ?? 'default-logo.png';
+                            $company_name = $companyProfile->company_name ?? 'Company Name';
+                        }
+                    }
+                @endphp
+                <img src="{{ asset('storage/' . $profileImage) }}" alt="Profile" class="profile-image">
+                <span class="font-semibold text-gray-700">{{ $company_name }}</span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ route('profile-company') }}">
+                    <i class="icofont-ui-user"></i> Profile
+                </a>
+                <a class="dropdown-item" href="{{ route('logout') }}">
+                    <i class="icofont-logout"></i> Logout
+                </a>
+            </div>
+        </div>
         @endif
     </div>
     </div>
 </nav>
 <style>
+
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1000;
+        display: none;
+        min-width: 200px;
+        border-radius: 0.75rem;
+        background-color: white;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        padding: 0.5rem 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .dropdown:hover .dropdown-menu,
+    .dropdown-menu:hover {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        color: #4a5568;
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f0f4f8;
+        color: #4299e1;
+        transform: translateX(5px);
+    }
+
+    .dropdown-item i {
+        margin-right: 0.5rem;
+        color: #4299e1;
+    }
+
+    /* Rest of the previous styles remain the same */
+    .navbar-brand img {
+        transition: transform 0.3s ease;
+        max-height: 3rem;
+    }
+
+    .navbar-brand img:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-link {
+        position: relative;
+        color: #4a5568;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #4299e1;
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #4299e1;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .nav-link.active {
+        color: #4299e1;
+    }
+
+    .nav-link.active::after {
+        width: 100%;
+        background-color: #4299e1;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
     .custom-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 5px 15px;
-        font-size: 14px;
-        background-color: white;
-        border: 2px solid #008000;
-        border-radius: 25px;
-        text-decoration: none;
+        padding: 0.45rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 500; 
+        font-size: 0.935rem;
         transition: all 0.3s ease;
-        font-weight: bold;
-        color: #008000;
-        margin-right: 5px;
-    }
-
-    .custom-btn i {
-        background-color: #008000;
-        color: white;
-        padding: 7px;
-        border-radius: 50%;
-        margin-right: 8px;
-        font-size: 14px;
-    }
-
-    .custom-btn:hover {
-        background-color: #008000;
-        color: white;
-        border-color: #008000;
-    }
-
-    .custom-btn:hover i {
-        background-color: white;
-        color: #008000;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
     }
 
     .login-btn {
-        border-color: #0056b3;
-        color: #0056b3;
-    }
-
-    .login-btn i {
-        background-color: #0056b3;
-    }
-
-    .login-btn:hover {
-        background-color: #0056b3;
-        color: white;
-        border-color: #0056b3;
-    }
-
-    .login-btn:hover i {
+        border: 2px solid #4299e1;
+        color: #4299e1;
         background-color: white;
-        color: #0056b3;
     }
 
     .register-btn {
-        background-color: #008000;
+        background-color: #3ab943;
         color: white;
-        border-color: #008000;
+        border: 2px solid #48bb78;
     }
 
-    .register-btn i {
-        background-color: white;
-        color: #008000;
+    .login-btn:hover {
+        background-color: #4299e1;
+        color: white;
     }
 
     .register-btn:hover {
-        background-color: white;
-        color: #008000;
-        border-color: #008000;
+        background-color: #38a169;
+        border-color: #38a169;
     }
 
-    .register-btn:hover i {
-        background-color: #008000;
-        color: white;
+    .profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background-color: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
+        padding: 0.25rem 0.75rem;
+        transition: all 0.3s ease;
     }
 
-    .dropdown-menu {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        padding: 5px 0;
+    .profile-btn:hover {
+        border: 1px solid #4299e1;
+        background-color: #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    .dropdown-item {
-        color: #0056b3;
-        font-size: 14px;
-        padding: 10px 20px;
-        transition: background-color 0.3s ease;
+    .profile-image {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4299e1;
     }
 
-    .dropdown-item:hover {
-        background-color: #f1f1f1;
-        color: #008000;
+    .dropdown:hover .register-btn,
+    .register-btn:hover {
+        background-color: #38a169 !important;
+        border-color: #38a169 !important;
+    }
+
+    .dropdown:hover .profile-btn,
+    .profile-btn:hover {
+        border: 1px solid #4299e1 !important;
+        background-color: #e2e8f0 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
     }
 </style>
         </ul>

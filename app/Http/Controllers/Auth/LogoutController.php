@@ -10,9 +10,10 @@ class LogoutController extends Controller
 {
     public function logout()
     {
-        if (Auth::guard('user')->check()) {
-            Auth::guard('user')->logout();
-        }
-        return  redirect(route('auth.index'));
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect(route('auth.index'));
     }
 }

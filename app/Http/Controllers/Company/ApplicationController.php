@@ -116,7 +116,7 @@ class ApplicationController extends Controller
     {
         $application = Application::with([
             'user.applicantProfile',
-            'user.applicantProfile.education',
+            'user.applicantProfile.educations',
             'user.applicantProfile.skills',
             'user.applicantProfile.experiences',
             'jobPosting'

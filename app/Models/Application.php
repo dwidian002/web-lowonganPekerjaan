@@ -22,6 +22,11 @@ class Application extends Model
         'applied_at' => 'datetime',
     ];
 
+    public function applicantProfile()
+    {
+        return $this->belongsTo(ApplicantProfile::class, 'user_id', 'user_id');
+    }
+
     public function jobPosting()
     {
         return $this->belongsTo(JobPosting::class);

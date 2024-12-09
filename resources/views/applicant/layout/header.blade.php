@@ -15,226 +15,250 @@
           </li>
            <li class="nav-item"><a class="nav-link" href="{{route('job-postings.all')}}">All Job</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('list.company')}}">Companies</a></li>
-           <li class="nav-item"><a class="nav-link" href="contact.html">About us</a></li>
         </div>
         @if(!auth()->check())
-        <a href="{{url('/login')}}" class="custom-btn login-btn">
-            <i class="icofont-user"></i> Login
-        </a>
-        <div class="nav-item dropdown">
-            <a class="custom-btn dropdown-toggle register-btn" href="#" role="button" data-bs-toggle="dropdown" id="registerDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="icofont-plus"></i> Register
-            </a>
-            <div class="dropdown-menu" aria-labelledby="registerDropdown">
-                <a class="dropdown-item" href="{{ url('register/company') }}">As Company</a> <!-- Redirect ke form Company -->
-                <a class="dropdown-item" href="{{ url('register/applicant') }}">As Applicant</a> <!-- Redirect ke form Applicant -->
+            <div class="flex items-center space-x-4">
+                <a href="{{url('/login')}}" class="custom-btn login-btn">
+                    <span class="btn-icon">
+                        <i class="icofont-user"></i>
+                         Login
+                    </span>
+                </a>
+                <div class="dropdown">
+                    <a href="#" class="custom-btn register-btn dropdown-toggle">
+                        <span class="btn-icon">
+                            <i class="icofont-plus-circle"></i>
+                             Register
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url('register/company') }}">
+                            <i class="icofont-briefcase"></i> As Company
+                        </a>
+                        <a class="dropdown-item" href="{{ url('register/applicant') }}">
+                            <i class="icofont-user-alt-3"></i> As Applicant
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @else
+        <div class="dropdown">
+            <button class="profile-btn dropdown-toggle">
+                @php
+                    $profileImage = 'default-foto.jpg';
+                    $profileName = 'User';
+                    
+                    if (auth()->user()->applicantProfile) {
+                        $profileImage = auth()->user()->applicantProfile->foto ?? 'default-foto.jpg';
+                        $profileName = auth()->user()->applicantProfile->name ?? 'User';
+                    }
+                @endphp
+                <img src="{{ asset('storage/' . $profileImage) }}" alt="Profile" class="profile-image">
+                <span class="font-semibold text-gray-700">{{ $profileName }}</span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{route('application.my-application')}}">
+                    <i class="icofont-ui-folder"></i> My Applications
+                </a>
+                <a class="dropdown-item" href="{{ route('profile-applicant') }}">
+                    <i class="icofont-ui-user"></i> Profile
+                </a>
+                <a class="dropdown-item" href="{{ route('profile-more-info') }}">
+                    <i class="icofont-briefcase"></i> More Information
+                </a>
+                <a class="dropdown-item" href="{{ route('logout') }}">
+                    <i class="icofont-logout"></i> Logout
+                </a>
             </div>
         </div>
-        @else
-        <a href="#" class="custom-btn login-btn" id="dashboard-btn">
-            <i class="icofont-ui-home"></i> Dashboard
-        </a>
-            @if (auth()->user()->role == 'applicant')
-                <a href="{{ route('profile-applicant') }}" class="custom-btn login-btn" data-role="applicant">
-                    <i class="icofont-user"></i> Profile
-                </a>
-            @endif
         @endif
     </div>
     </div>
 </nav>
-<div class="sidebar">
-    <div class="sidebar-inner">
-        <div class="sidebar-header">
-            <h3>Applicant Menu</h3>
-            <button class="close-btn" id="close-sidebar">
-                <i class="icofont-close"></i>
-            </button>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Data diri</a></li>
-            <li><a href="#">Status lamaran</a></li>
-            <li><a href="#">Layout</a></li>
-        </ul>
-    </div>
-</div>
-<script>
-    const dashboardBtn = document.getElementById('dashboard-btn');
-    const closeSidebarBtn = document.getElementById('close-sidebar');
-    const sidebar = document.querySelector('.sidebar');
-
-    dashboardBtn.addEventListener('click', () => {
-        sidebar.classList.add('show');
-    });
-
-    closeSidebarBtn.addEventListener('click', () => {
-        sidebar.classList.remove('show');
-    });
-</script>
 <style>
 
-.sidebar {
-        position: fixed;
-        right: -100%;
-        top: 0;
-        bottom: 0;
-        width: 300px;
-        background-color: #3A3B3C;
-        color: #fff;
-        padding: 20px;
-        transition: right 0.3s ease-in-out;
-        z-index: 1000;
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
     }
 
-    .sidebar.show {
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
         right: 0;
+        z-index: 1000;
+        display: none;
+        min-width: 200px;
+        border-radius: 0.75rem;
+        background-color: white;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        padding: 0.5rem 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .sidebar-inner {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+    .dropdown:hover .dropdown-menu,
+    .dropdown-menu:hover {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
     }
 
-    .sidebar-header {
+    .dropdown-item {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #555;
+        padding: 0.5rem 1rem;
+        color: #4a5568;
+        transition: all 0.2s ease;
     }
 
-    .sidebar-header h3 {
-        font-size: 18px;
+    .dropdown-item:hover {
+        background-color: #f0f4f8;
+        color: #4299e1;
+        transform: translateX(5px);
+    }
+
+    .dropdown-item i {
+        margin-right: 0.5rem;
+        color: #4299e1;
+    }
+
+    /* Rest of the previous styles remain the same */
+    .navbar-brand img {
+        transition: transform 0.3s ease;
+        max-height: 3rem;
+    }
+
+    .navbar-brand img:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-link {
+        position: relative;
+        color: #4a5568;
         font-weight: 600;
+        transition: all 0.3s ease;
     }
 
-    .close-btn {
-        background-color: transparent;
-        border: none;
-        color: #fff;
-        font-size: 24px;
-        cursor: pointer;
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #4299e1;
+        transition: width 0.3s ease;
     }
 
-    .sidebar-menu {
-        list-style-type: none;
-        padding: 0;
-        margin-top: 20px;
+    .nav-link:hover {
+        color: #4299e1;
     }
 
-    .sidebar-menu li {
-        margin-bottom: 10px;
+    .nav-link:hover::after {
+        width: 100%;
     }
 
-    .sidebar-menu li a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 16px;
-        transition: color 0.3s ease-in-out;
+    .nav-link.active {
+        color: #4299e1;
     }
 
-    .sidebar-menu li a:hover {
-        color: #ccc;
+    .nav-link.active::after {
+        width: 100%;
+        background-color: #4299e1;
     }
 
+    .flex {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
 
-    
     .custom-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 5px 15px;
-        font-size: 14px;
-        background-color: white;
-        border: 2px solid #008000;
-        border-radius: 25px;
-        text-decoration: none;
+        padding: 0.45rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 500; 
+        font-size: 0.935rem;
         transition: all 0.3s ease;
-        font-weight: bold;
-        color: #008000;
-        margin-right: 5px;
-    }
-
-    .custom-btn i {
-        background-color: #008000;
-        color: white;
-        padding: 7px;
-        border-radius: 50%;
-        margin-right: 8px;
-        font-size: 14px;
-    }
-
-    .custom-btn:hover {
-        background-color: #008000;
-        color: white;
-        border-color: #008000;
-    }
-
-    .custom-btn:hover i {
-        background-color: white;
-        color: #008000;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
     }
 
     .login-btn {
-        border-color: #0056b3;
-        color: #0056b3;
-    }
-
-    .login-btn i {
-        background-color: #0056b3;
-    }
-
-    .login-btn:hover {
-        background-color: #0056b3;
-        color: white;
-        border-color: #0056b3;
-    }
-
-    .login-btn:hover i {
+        border: 2px solid #4299e1;
+        color: #4299e1;
         background-color: white;
-        color: #0056b3;
     }
 
     .register-btn {
-        background-color: #008000;
+        background-color: #3ab943;
         color: white;
-        border-color: #008000;
+        border: 2px solid #48bb78;
     }
 
-    .register-btn i {
-        background-color: white;
-        color: #008000;
+    .login-btn:hover {
+        background-color: #4299e1;
+        color: white;
     }
 
     .register-btn:hover {
-        background-color: white;
-        color: #008000;
-        border-color: #008000;
+        background-color: #38a169;
+        border-color: #38a169;
     }
 
-    .register-btn:hover i {
-        background-color: #008000;
-        color: white;
+    .profile-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background-color: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
+        padding: 0.25rem 0.75rem;
+        transition: all 0.3s ease;
     }
 
-    .dropdown-menu {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        padding: 5px 0;
+    .profile-btn:hover {
+        border: 1px solid #4299e1;
+        background-color: #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    .dropdown-item {
-        color: #0056b3;
-        font-size: 14px;
-        padding: 10px 20px;
-        transition: background-color 0.3s ease;
+    .profile-image {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4299e1;
     }
 
-    .dropdown-item:hover {
-        background-color: #f1f1f1;
-        color: #008000;
+    .dropdown:hover .register-btn,
+    .register-btn:hover {
+        background-color: #38a169 !important;
+        border-color: #38a169 !important;
+    }
+
+    .dropdown:hover .profile-btn,
+    .profile-btn:hover {
+        border: 1px solid #4299e1 !important;
+        background-color: #e2e8f0 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
     }
 </style>
         </ul>
