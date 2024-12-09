@@ -1,13 +1,13 @@
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-    <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-      <img src="assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-      <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
+    <a class="navbar-brand m-0" href="{{route('home')}}" target="_blank">
+      <img src="{{ asset('assets/img/wonderwoman.jpg') }}" class="navbar-brand-img h-100" alt="main_logo" >
+      <span class="ms-1 font-weight-bold">WonderWoman Job</span>
     </a>
   </div>
   <hr class="horizontal dark mt-0">
-  <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+  <div class="  w-auto " id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link active" href="./pages/dashboard.html">
@@ -17,38 +17,104 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/tables.html">
+      <li class="nav">
+        <a class="nav-link active" href="{{route('location.index')}}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            <i class="fa fa-map-marker text-danger text-sm opacity-10 "></i>
           </div>
-          <span class="nav-link-text ms-1">Tables</span>
+          <span class="nav-link-text">Location</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/billing.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-building text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text">Company</span>
+          </a>
+          <div class="collapse" id="user-collapse">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item">
+                <a href="{{route('company.index')}}" class="nav-link">
+                  <span class="sidenav-mini-icon"> B </span>
+                  <span class="sidenav-normal"> Account of Company </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('industry.index')}}" class="nav-link">
+                  <span class="sidenav-mini-icon"> D </span>
+                  <span class="sidenav-normal"> Industry </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('type-company.index')}}" class="nav-link">
+                  <span class="sidenav-mini-icon"> F </span>
+                  <span class="sidenav-normal"> type Company </span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <span class="nav-link-text ms-1">Billing</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/virtual-reality.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
+        </li>
+      </ul>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#job-collapse" aria-expanded="false">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-briefcase text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text">Job</span>
+          </a>
+          <div class="collapse" id="job-collapse">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <span class="sidenav-mini-icon"> C </span>
+                  <span class="sidenav-normal"> Job Postings </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('category.index')}}" class="nav-link">
+                  <span class="sidenav-mini-icon"> E </span>
+                  <span class="sidenav-normal"> Job Category </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('field-work.index')}}" class="nav-link">
+                  <span class="sidenav-mini-icon"> E </span>
+                  <span class="sidenav-normal"> Field Of Work </span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <span class="nav-link-text ms-1">Virtual Reality</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/rtl.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+        </li>
+      </ul>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#applicant-collapse" aria-expanded="false">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-users text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text">Applicant</span>
+          </a>
+          <div class="collapse" id="applicant-collapse">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <span class="sidenav-mini-icon"> C </span>
+                  <span class="sidenav-normal"> Applicant Account </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <span class="sidenav-mini-icon"> E </span>
+                  <span class="sidenav-normal"> Application </span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <span class="nav-link-text ms-1">RTL</span>
-        </a>
-      </li>
+        </li>
+      </ul>
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
       </li>
@@ -77,18 +143,5 @@
         </a>
       </li>
     </ul>
-  </div>
-  <div class="sidenav-footer mx-3 ">
-    <div class="card card-plain shadow-none" id="sidenavCard">
-      <img class="w-50 mx-auto" src="assets/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
-      <div class="card-body text-center p-3 w-100 pt-0">
-        <div class="docs-info">
-          <h6 class="mb-0">Need help?</h6>
-          <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-        </div>
-      </div>
-    </div>
-    <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-    <a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
   </div>
 </aside>

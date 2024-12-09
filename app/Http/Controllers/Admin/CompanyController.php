@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyProfile;
+use App\Models\JobPosting;
 use App\Models\Location;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,35 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $companyProfiles = CompanyProfile::with('location')->get();
+        $companyProfiles = CompanyProfile::with([
+            'location',
+            'industry',
+            'typeCompany'
+        ])
+            ->latest()
+            ->paginate(10);
+
         return view('admin.company.list', compact('companyProfiles'));
     }
+
+    public function detail($id)
+    {
+        $company = CompanyProfile::with([
+            'location',
+            'industry',
+            'typeCompany',
+            'jobPostings' => function ($query) {
+                $query->with([
+                    'location',
+                    'fieldOfWork',
+                    'jobCategory'
+                ]);
+            }
+        ])->findOrFail($id);
+
+        return view('admin.company.detail', compact('company'));
+    }
+
 
     public function add()
     {
@@ -60,5 +87,26 @@ class CompanyController extends Controller
             }
         }
     }
+    public function jobPostingDetail($id)
+    {
+        $jobPosting = JobPosting::with([
+            'companyProfile',
+            'location',
+            'fieldOfWork',
+            'jobCategory'
+        ])->findOrFail($id);
 
+        return view('admin.company.job-detail', compact('jobPosting'));
+    }
+
+    public function delete($id)
+    {
+        $jobPosting = JobPosting::findOrFail($id);
+        $companyId = $jobPosting->company_profile_id;
+
+        $jobPosting->delete();
+
+        return redirect()->route('company.detail', $companyId)
+            ->with('pesan', ['success', 'Job posting deleted successfully']);
+    }
 }

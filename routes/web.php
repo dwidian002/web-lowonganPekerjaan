@@ -165,6 +165,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
     Route::get('/company', [AdminCompanyController::class, 'index'])->name('company.index');
+    Route::get('/company/detail/{id}', [AdminCompanyController::class, 'detail'])->name('company.detail');
+    Route::get('/company/job-detail/{id}', [AdminCompanyController::class, 'jobPostingDetail'])->name('job.view');
+    Route::get('/job-posting/delete/{id}', [JobPostingController::class, 'delete'])->name('job.delete');
     Route::get('/company/add', [AdminCompanyController::class, 'add'])->name('company.add');
     Route::post('/company/store', [AdminCompanyController::class, 'store'])->name('company.store');
     Route::get('/company/edit/{id}', [AdminCompanyController::class, 'edit'])->name('company.edit');
