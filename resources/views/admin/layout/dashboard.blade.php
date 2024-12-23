@@ -45,6 +45,14 @@
     @yield('content')
 
 
+    <script>
+      function confirmLogout() {
+          if(confirm('Apakah Anda yakin ingin logout?')) {
+              document.getElementById('logout-form').submit();
+          }
+      }
+  </script>
+
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">

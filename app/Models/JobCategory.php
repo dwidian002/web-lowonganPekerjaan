@@ -9,7 +9,7 @@ class JobCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_name'];
+    protected $fillable = ['name'];
 
     public function jobPostings() {
         return $this->belongsToMany(JobPosting::class,);

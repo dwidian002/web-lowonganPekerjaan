@@ -72,7 +72,7 @@
                         </div>
                         <div class="info-card full-width">
                             <label>Description</label>
-                            <div class="info-value">{{ $companyProfile->description ?? '-' }}</div>
+                            <div class="info-value">{!! nl2br(e($companyProfile->description ?? '-')) !!}</div>
                         </div>
                     </div>
                 </section>

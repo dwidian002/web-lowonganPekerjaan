@@ -89,7 +89,7 @@ class ApplyJobController extends Controller
 
             DB::commit();
 
-            return redirect()->route('job.detail', ['id' => $request->job_posting_id])
+            return redirect()->route('job-detail', ['id' => $request->job_posting_id])
                 ->with('success', 'Lamaran berhasil dikirim');
         } catch (\Exception $e) {
             DB::rollback();

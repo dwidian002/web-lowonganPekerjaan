@@ -68,7 +68,7 @@
           <div class="collapse" id="job-collapse">
             <ul class="nav nav-sm flex-column">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route ('all-job')}}" class="nav-link">
                   <span class="sidenav-mini-icon"> C </span>
                   <span class="sidenav-normal"> Job Postings </span>
                 </a>
@@ -100,13 +100,13 @@
           <div class="collapse" id="applicant-collapse">
             <ul class="nav nav-sm flex-column">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('applicant.index')}}" class="nav-link">
                   <span class="sidenav-mini-icon"> C </span>
                   <span class="sidenav-normal"> Applicant Account </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('application.list')}}" class="nav-link">
                   <span class="sidenav-mini-icon"> E </span>
                   <span class="sidenav-normal"> Application </span>
                 </a>
@@ -119,29 +119,16 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="./pages/profile.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Profile</span>
+        <form id="logout-form" action="{{ route('logout') }}">
+            @csrf
+        </form>
+        <a class="nav-link" href="#" onclick="confirmLogout()">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fa fa-user text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Logout</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/sign-in.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Sign In</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="./pages/sign-up.html">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-collection text-info text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Sign Up</span>
-        </a>
-      </li>
+    </li>
     </ul>
   </div>
 </aside>

@@ -99,7 +99,7 @@
 								</div>
 							</div>
 							
-							<a href="{{ route('job.detail', $job->id) }}" class="text-decoration-none text-dark">
+							<a href="{{ route('job-detail', $job->id) }}" class="text-decoration-none text-dark">
 								<h4 class="job-title mb-3 job-title-link">{{ $job->position }}</h4>
 			
 								<div class="job-tags mb-3">

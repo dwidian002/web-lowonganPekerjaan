@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicantController;
+use App\Http\Controllers\Admin\ApplicationController as AdminApplicationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyController as AdminCompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FieldOfWorkController;
 use App\Http\Controllers\Admin\IndustryController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\TypeCompanyController;
 use App\Http\Controllers\Applicant\ApplyJobController;
@@ -60,6 +63,12 @@ Route::post('register/company/submit', [RegisterController::class, 'registerComp
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
+Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
+
+Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
+
+
 
 Route::middleware(['auth', 'company'])->group(function () {
 
@@ -86,12 +95,6 @@ Route::middleware(['auth', 'company'])->group(function () {
     Route::post('/company-profile/update', [CompanyProfileController::class, 'update'])->name('profile-company.update');
 });
 
-Route::get('/list-company', [CompanyController::class, 'list'])->name('list.company');
-Route::get('/company/{id}', [CompanyController::class, 'detail'])->name('company.detail');
-
-Route::get('/job-postings', [JobController::class, 'index'])->name('job-postings.all');
-
-
 
 Route::middleware(['auth', 'applicant'])->group(function () {
 
@@ -116,7 +119,7 @@ Route::middleware(['auth', 'applicant'])->group(function () {
     Route::get('/my-application', [ProfileController::class, 'myApplication'])->name('application.my-application');
     Route::get('/download-resume/{application}', [ProfileController::class, 'downloadResume'])->name('download.resume');
 
-    Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job.detail');
+    Route::get('/job-detail/{id}', [JobController::class, 'detail'])->name('job-detail');
 
     Route::get('/apply-job/{id}', [ApplyJobController::class, 'index'])->name('form.apply');
     Route::post('/apply-job', [ApplyJobController::class, 'store'])->name('store.apply');
@@ -165,14 +168,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
     Route::get('/company', [AdminCompanyController::class, 'index'])->name('company.index');
-    Route::get('/company/detail/{id}', [AdminCompanyController::class, 'detail'])->name('company.detail');
-    Route::get('/company/job-detail/{id}', [AdminCompanyController::class, 'jobPostingDetail'])->name('job.view');
-    Route::get('/job-posting/delete/{id}', [JobPostingController::class, 'delete'])->name('job.delete');
-    Route::get('/company/add', [AdminCompanyController::class, 'add'])->name('company.add');
-    Route::post('/company/store', [AdminCompanyController::class, 'store'])->name('company.store');
-    Route::get('/company/edit/{id}', [AdminCompanyController::class, 'edit'])->name('company.edit');
-    Route::post('/company/update', [AdminCompanyController::class, 'update'])->name('company.update');
-    Route::get('/company/delete{id}', [AdminCompanyController::class, 'delete'])->name('company.delete');
+    Route::get('/company/detail/{id}', [AdminCompanyController::class, 'detail'])->name('company.view');
+    Route::get('/company/delete/{id}', [AdminCompanyController::class, 'delete'])->name('company.delete');
+
+    Route::get('/applicant', [ApplicantController::class, 'index'])->name('applicant.index');
+    Route::get('/applicant/detail/{id}', [ApplicantController::class, 'detail'])->name('applicant.detail');
+    Route::get('/applicant/delete/{id}', [ApplicantController::class, 'delete'])->name('applicant.delete');
+
+    Route::get('/list-application', [AdminApplicationController::class, 'list'])->name('application.list');
+    Route::get('/application-view/{id}', [AdminApplicationController::class, 'detail'])->name('application.view');
+    Route::get('/application/delete/{id}', [AdminApplicationController::class, 'delete'])->name('application.delete');
+
+    Route::get('/all-job', [AdminJobController::class, 'index'])->name('all-job');
+    Route::get('/job-view/{id}', [AdminJobController::class, 'detail'])->name('job.view');
+    Route::get('/job-posting/delete/{id}', [AdminJobController::class, 'delete'])->name('job.delete');
 });
 
 

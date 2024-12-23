@@ -36,8 +36,8 @@
 
                 <div class="company-content">
                     <div class="content-section mb-4">
-                        <h3 class="section-title">Description</h3>
-                        <p class="section-text">{{ $companies->description }}</p>
+                        <h3 class="section-title">Description</h3> 
+                        <p class="section-text">{!! nl2br(e($companies->description)) !!}</p>
                     </div>
 
                     <div class="content-section mb-4">
@@ -83,7 +83,7 @@
         <div class="row">
             @forelse($companies->jobPostings as $jobPosting)
             <div class="col-lg-4 col-md-6 mb-4">
-                <a href="{{ route('job.detail', $jobPosting->id) }}" class="card-link-wrapper">
+                <a href="{{ route('job-detail', $jobPosting->id) }}" class="card-link-wrapper">
                     <div class="card h-100 shadow job-card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">

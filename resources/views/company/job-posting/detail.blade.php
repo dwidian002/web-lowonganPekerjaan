@@ -39,13 +39,13 @@
 
                 <div class="company-content">
                     <div class="content-section mb-4">
-                        <h3 class="section-title">Job Description</h3>
-                        <p class="section-text">{{ $jobPosting->job_description }}</p>
+                        <h3 class="section-title">Job Description</h3> 
+                        <p class="section-text">{!! nl2br(e($jobPosting->job_description)) !!}</p>
                     </div>
 
                     <div class="content-section mb-4">
-                        <h3 class="section-title">Requirements Description</h3>
-                        <p class="section-text">{{ $jobPosting->requirements_desciption }}</p>
+                        <h3 class="section-title">Requirements Description</h3> 
+                        <p class="section-text"> {!! nl2br(e($jobPosting->requirements_desciption)) !!}</p>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,11 @@
                 <div class="company-sidebar">
                     <div class="sidebar-item">
                         <i class="icofont-money mr-2 text-warning"></i>
-                        <span>Rp. {{ $jobPosting->gaji }}</span>
+                        @if($jobPosting->sembunyikan_gaji)
+                            <span class="font-italic text-muted">Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }} (disembunyikan)</span>
+                        @else
+                            <span>Rp {{ number_format($jobPosting->gaji, 0, ',', '.') }}</span>
+                        @endif
                     </div>
                     <div class="sidebar-item">
                         <i class="icofont-location-pin mr-2 text-danger"></i>

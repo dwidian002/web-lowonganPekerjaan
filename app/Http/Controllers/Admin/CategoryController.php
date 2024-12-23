@@ -20,11 +20,11 @@ class CategoryController extends Controller
     public function store(Request $request) {
         
         $this->validate($request, [
-            'category_name'=>'required'
+            'name'=>'required'
         ]);
 
         $category = new JobCategory();
-        $category->category_name= $request->category_name;
+        $category->name= $request->name;
 
         try{
             $category->save();
@@ -44,11 +44,11 @@ class CategoryController extends Controller
 
         $this->validate($request, [
             'id'=>'required',
-            'category_name'=>'required',
+            'name'=>'required',
         ]);
 
         $category = JobCategory::findOrFail($request->id);
-        $category->category_name= $request->category_name;
+        $category->name= $request->name;
 
         try{
             $category->save();

@@ -28,8 +28,20 @@ class HomeController extends Controller
         $totalApplication = Application::count();
         $totalApplicant = ApplicantProfile::count();
 
-        $latestJobs = JobPosting::with(['location', 'fieldOfWork', 'companyProfile', 'jobCategory'])
+        $latestJobs = JobPosting::with([
+            'location',
+            'fieldOfWork',
+            'companyProfile',
+            'jobCategory'
+        ])
             ->where('status', true)
+            ->orderBy('created_at', 'desc')
+            ->take(6)->get();
+
+        $latestApplication = Application::with([
+            'applicantProfile',
+            'jobPosting.companyProfile'
+        ])
             ->orderBy('created_at', 'desc')
             ->take(6)->get();
 
@@ -116,7 +128,7 @@ class HomeController extends Controller
                 $companyProfile = CompanyProfile::where('user_id', $user->id)->first();
 
                 if ($companyProfile) {
-                    
+
                     $latestJobs = JobPosting::with(['location', 'fieldOfWork', 'companyProfile', 'jobCategory'])
                         ->where('status', true)
                         ->where('company_profile_id', $companyProfile->id)
@@ -171,7 +183,7 @@ class HomeController extends Controller
                     'jobPostings',
                     'totalJobPosting',
                     'totalApplication',
-                    'totalAcceptedApplication', 
+                    'totalAcceptedApplication',
                     'totalApplicant'
                 ));
 
@@ -181,6 +193,7 @@ class HomeController extends Controller
                     'locations',
                     'fields',
                     'latestJobs',
+                    'latestApplication',
                     'jobPostings',
                     'jobPostings',
                     'totalCompany',
@@ -194,5 +207,4 @@ class HomeController extends Controller
                     ->with('pesan', 'Role tidak valid');
         }
     }
-
 }

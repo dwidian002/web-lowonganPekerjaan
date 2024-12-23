@@ -42,6 +42,6 @@ class ApplicantProfile extends Model
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class, 'user_id', 'user_id');
     }
 }

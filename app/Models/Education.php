@@ -9,10 +9,16 @@ class Education extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['applicant_profile_id','degree', 'institution_name', 'starting_year', 'finishing_year'];
+    protected $fillable = [
+        'applicant_profile_id',
+        'degree',
+        'institution_name',
+        'starting_year',
+        'finishing_year'
+    ];
 
-    public function applicantProfile() {
+    public function applicantProfile()
+    {
         return $this->belongsTo(ApplicantProfile::class);
     }
 }
-

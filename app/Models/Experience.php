@@ -11,9 +11,15 @@ class Experience extends Model
 
     protected $table = 'experience';
 
-    protected $fillable = ['applicant_profile_id', 'job_Title', 'company_name', 'lama_bekerja'];
+    protected $fillable = [
+        'applicant_profile_id',
+        'job_Title',
+        'company_name',
+        'lama_bekerja'
+    ];
 
-    public function applicantProfile() {
+    public function applicantProfile()
+    {
         return $this->belongsTo(ApplicantProfile::class);
     }
 }

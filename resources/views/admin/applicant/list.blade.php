@@ -21,41 +21,40 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Logo</th>
+                            <th>Foto</th>
                             <th>Name</th>
-                            <th>Industry</th>
-                            <th>Company Type</th>
-                            <th>Location</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     @php $no = 1; @endphp
-                    @foreach ($companyProfiles as $row)
+                    @foreach ($applicantProfiles as $row)
                         <tr>
                             <td>{{$no++}}</td>
+                            
                             <td>
-                                @if($row->logo)
-                                    <img src="{{ asset('storage/' . $row->logo) }}" 
-                                         alt="Company Logo" 
+                                @if($row->foto)
+                                    <img src="{{ asset('storage/' . $row->foto) }}" 
+                                         alt="Applicant foto" 
                                          width="50" 
                                          height="50" 
                                          style="object-fit: cover; border-radius: 5px;">
                                 @else
-                                    <img src="{{ asset('layout/assets/images/service/default-logo.png') }}"
-                                        alt="Default logo"
+                                    <img src="{{ asset('layout/assets/images/service/default-foto.jpg') }}"
+                                        alt="Default foto"
                                         width="50"
                                         height="50"
                                         style="object-fit: cover; border-radius: 5px;">
                                 @endif
                             </td>
-                            <td>{{$row->company_name}}</td>
-                            <td>{{$row->industry->name ?? 'N/A'}}</td>
-                            <td>{{$row->typeCompany->name ?? 'N/A'}}</td>
-                            <td>{{$row->location->name ?? 'N/A'}}</td>
+                            <td>{{$row->name}}</td>
+                            <td>{{$row->tanggal_lahir ?? 'N/A'}}</td>
+                            <td>{{$row->gender ?? 'N/A'}}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{route('company.view', $row->id)}}" 
+                                    <a href="{{route('applicant.detail', $row->id)}}" 
                                        class="btn btn-sm btn-info mr-1">
                                         <i class="fa fa-eye"></i> Detail
                                     </a>
