@@ -79,7 +79,14 @@
         color: #d81c44;
     }
 
+    .service-item:hover {
+        border-radius: 2rem;
+        border: .2rem solid #d81c44;
+    }
+
     .service-item {
+    border-radius: 2rem;
+    border: .2rem solid #2c4187;
     position: relative;
     transition: all 0.3s ease;
     overflow: hidden;
